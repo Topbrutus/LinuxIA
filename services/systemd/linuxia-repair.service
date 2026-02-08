@@ -1,0 +1,10 @@
+[Unit]
+Description=LinuxIA auto-repair (VM100)
+ConditionPathExists=/opt/linuxia/scripts/linuxia-repair.sh
+After=network-online.target local-fs.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/linuxia/scripts/linuxia-repair.sh
+TimeoutStartSec=300

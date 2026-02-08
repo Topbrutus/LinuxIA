@@ -1,6 +1,9 @@
 # LinuxIA - Instructions pour agents (Codex)
 
 ## Contexte
+- Dans Codex (conteneur): repo cloné sous /workspace/LinuxIA
+- Sur VM100 réelle: repo sous /opt/linuxia
+
 - Repo LinuxIA (branche main)
 - Chemin réel sur VM100: /opt/linuxia
 - OS: openSUSE (pas de sudo en vrac; uniquement "sudo -i" quand nécessaire)

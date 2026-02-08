@@ -10,3 +10,6 @@ Génération d'un état de la VM100:
 Les fichiers générés (STATE_VM100.md, CONFIGSNAP_LATEST.txt, etc.) sont ignorés par git.
 
 - scripts/linuxia-healthcheck.sh
+
+- scripts/linuxia-repair.sh
+- services/systemd/linuxia-repair.service
