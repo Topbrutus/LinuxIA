@@ -50,3 +50,8 @@
 - Date: 2026-02-08T17:44:03-05:00
 - Evidence (repo): docs/verifications/verify_smb_access_20260208T224403Z.txt
 - Evidence (external): /run/media/gaby/LINUXUDF/linuxia_audit_trail/vm100/verifications/verify_smb_access_20260208T224403Z.txt
+
+## SMB access proof (FULL: Windows A+B + VM101 A+B)
+- Date: 2026-02-08T17:45:18-05:00
+- Evidence (repo): docs/verifications/verify_smb_access_full_20260208T224518Z.txt
+- Evidence (external): /run/media/gaby/LINUXUDF/linuxia_audit_trail/vm100/verifications/verify_smb_access_full_20260208T224518Z.txt
