@@ -1,0 +1,6 @@
+2026-02-08T17:44:03-05:00
+=== SMB ACCESS EVIDENCE (server-side) ===
+
+--- Share A (server path) ---
+
+--- Share B (server path) ---
