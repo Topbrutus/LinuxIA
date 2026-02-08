@@ -12,24 +12,24 @@ log() { printf '[%s] %s\n' "$(date -Is)" "$*"; }
 
 log "START repair routine"
 
-if /opt/linuxia/scripts/linuxia-healthcheck.sh; then
-  log "healthcheck OK, nothing to repair"
-  exit 0
-fi
-
-log "healthcheck FAIL, attempting safe fixes"
-
-timeout 60s mount -a || true
+# IMPORTANT:
+# - Ne pas faire "mount -a" ici.
+#   Sinon ntfs-3g tourne dans le cgroup du service, et systemd le tue à la fin => UNMOUNT.
+# - On se limite à relancer un remount dédié si présent, et à vérifier les bind mounts.
 
 if [ -x /usr/local/sbin/linuxia-samba-remount.sh ]; then
   timeout 180s /usr/local/sbin/linuxia-samba-remount.sh || true
 fi
 
-if /opt/linuxia/scripts/linuxia-healthcheck.sh; then
-  chown gaby:users /opt/linuxia/docs/STATE_HEALTHCHECK.md /opt/linuxia/docs/STATE_VM100.md /opt/linuxia/docs/CONFIGSNAP_LATEST.txt 2>/dev/null || true
-  log "repair succeeded"
-  exit 0
+fail=0
+
+findmnt -T /opt/linuxia/data/shareA >/dev/null 2>&1 || fail=1
+findmnt -T /opt/linuxia/data/shareB >/dev/null 2>&1 || fail=1
+
+if [ "$fail" -eq 1 ]; then
+  log "repair incomplete (shareA/shareB not mounted)"
+  exit 1
 fi
 
-log "repair failed (healthcheck still failing)"
-exit 1
+log "repair OK"
+exit 0
