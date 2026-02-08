@@ -1,0 +1,6 @@
+2026-02-08T18:30:44-05:00
+=== VM101-layer2 CIFS proof (server-side view) ===
+
+--- Share A (server path) ---
+
+--- Share B (server path) ---

@@ -55,3 +55,8 @@
 - Date: 2026-02-08T17:45:18-05:00
 - Evidence (repo): docs/verifications/verify_smb_access_full_20260208T224518Z.txt
 - Evidence (external): /run/media/gaby/LINUXUDF/linuxia_audit_trail/vm100/verifications/verify_smb_access_full_20260208T224518Z.txt
+
+## Checkpoint D — VM101-layer2 CIFS mount audited
+- Date: 2026-02-08T18:30:44-05:00
+- Evidence (repo): docs/verifications/verify_vm101_layer2_cifs_20260208T233044Z.txt
+- Evidence (external): /run/media/gaby/LINUXUDF/linuxia_audit_trail/vm100/verifications/verify_vm101_layer2_cifs_20260208T233044Z.txt
