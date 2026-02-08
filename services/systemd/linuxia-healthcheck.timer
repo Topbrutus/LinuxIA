@@ -2,7 +2,7 @@
 Description=Run LinuxIA healthcheck daily
 
 [Timer]
-OnCalendar=*-*-* 02:45:00
+OnCalendar=*-*-* 03:05:00
 Persistent=true
 Unit=linuxia-healthcheck.service
 
