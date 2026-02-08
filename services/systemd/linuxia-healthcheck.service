@@ -1,4 +1,6 @@
 [Unit]
+OnFailure=linuxia-repair.service
+OnFailureJobMode=replace
 Description=LinuxIA healthcheck (VM100)
 ConditionPathExists=/opt/linuxia/scripts/linuxia-healthcheck.sh
 After=network-online.target
