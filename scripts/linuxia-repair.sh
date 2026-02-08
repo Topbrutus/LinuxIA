@@ -10,23 +10,26 @@ fi
 
 log() { printf '[%s] %s\n' "$(date -Is)" "$*"; }
 
-# Objectif: remettre les montages critiques et, si dispo, relancer la routine Samba/NTFS
 log "START repair routine"
 
-# Tentative simple: remonter tout ce qui est dans fstab
+if /opt/linuxia/scripts/linuxia-healthcheck.sh; then
+  log "healthcheck OK, nothing to repair"
+  exit 0
+fi
+
+log "healthcheck FAIL, attempting safe fixes"
+
 timeout 60s mount -a || true
 
-# Si le remount Samba/NTFS existe, l'utiliser (plus robuste)
 if [ -x /usr/local/sbin/linuxia-samba-remount.sh ]; then
   timeout 180s /usr/local/sbin/linuxia-samba-remount.sh || true
 fi
 
-# Revalider via healthcheck mais exécuté en gaby (ownership propre)
-if [ "$(id -u)" -eq 0 ]; then
-  su - gaby -c /opt/linuxia/scripts/linuxia-healthcheck.sh
-else
-  /opt/linuxia/scripts/linuxia-healthcheck.sh
+if /opt/linuxia/scripts/linuxia-healthcheck.sh; then
+  chown gaby:users /opt/linuxia/docs/STATE_HEALTHCHECK.md /opt/linuxia/docs/STATE_VM100.md /opt/linuxia/docs/CONFIGSNAP_LATEST.txt 2>/dev/null || true
+  log "repair succeeded"
+  exit 0
 fi
 
-log "END repair routine"
-exit 0
+log "repair failed (healthcheck still failing)"
+exit 1
