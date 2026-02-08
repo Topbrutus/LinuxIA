@@ -9,3 +9,9 @@
 data/
 logs/
 workspace/
+
+# Éditeurs (éviter les fichiers de backup)
+*~
+*.swp
+*.swo
+*.bak
