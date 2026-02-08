@@ -1,0 +1,10 @@
+test_result:
+  date: "2026-02-08"
+  client_os: "Windows 10"
+  share_a_access: "✅ OK"
+  share_a_write: "✅ OK"
+  share_b_access: "✅ OK"
+  share_b_write: "✅ OK"
+  proof: "PowerShell transcript: C:\\Users\\GABY\\Desktop\\linuxia_smb_test_2026-02-08.txt"
+  issues:
+    - "NET HELPMSG 2250 lors du delete initial: normal (aucune connexion existante)"
