@@ -1,0 +1,9 @@
+[Unit]
+Description=LinuxIA auto-repair
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecCondition=/usr/bin/grep -q '^Result: FAIL$' /opt/linuxia/docs/STATE_HEALTHCHECK.md
+ExecStart=/opt/linuxia/scripts/linuxia-repair.sh
