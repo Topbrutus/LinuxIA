@@ -1,0 +1,10 @@
+[Unit]
+Description=LinuxIA config snapshot
+After=network-online.target linuxia-samba-remount.service
+Wants=network-online.target
+Requires=linuxia-samba-remount.service
+RequiresMountsFor=/opt/linuxia/data/shareA /opt/linuxia/data/shareB
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/linuxia-snapshot
