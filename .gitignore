@@ -15,3 +15,10 @@ workspace/
 *.swp
 *.swo
 *.bak
+
+# Generated state reports (auto)
+docs/STATE_VM100.md
+docs/CONFIGSNAP_LATEST.txt
+docs/STATE_*.md
+docs/CONFIGSNAP_*.txt
+scratch/
