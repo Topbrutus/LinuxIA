@@ -22,3 +22,4 @@ docs/CONFIGSNAP_LATEST.txt
 docs/STATE_*.md
 docs/CONFIGSNAP_*.txt
 scratch/
+docs/DEBUG_systemd_*.log
