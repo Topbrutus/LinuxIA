@@ -1,0 +1,10 @@
+[Unit]
+Description=Run LinuxIA healthcheck daily
+
+[Timer]
+OnCalendar=*-*-* 02:45:00
+Persistent=true
+Unit=linuxia-healthcheck.service
+
+[Install]
+WantedBy=timers.target

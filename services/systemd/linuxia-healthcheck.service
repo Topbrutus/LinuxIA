@@ -1,0 +1,12 @@
+[Unit]
+Description=LinuxIA healthcheck (VM100)
+ConditionPathExists=/opt/linuxia/scripts/linuxia-healthcheck.sh
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=gaby
+Group=users
+WorkingDirectory=/opt/linuxia
+ExecStart=/opt/linuxia/scripts/linuxia-healthcheck.sh
