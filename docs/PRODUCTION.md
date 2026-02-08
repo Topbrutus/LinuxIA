@@ -40,3 +40,8 @@
 - DATA_1TB_A: /dev/sdb6 -> /opt/linuxia/data/shareA + /srv/linuxia-share/DATA_1TB_A + /mnt/linuxia/DATA_1TB_A
 - DATA_1TB_B: /dev/sdc3 -> /opt/linuxia/data/shareB + /srv/linuxia-share/DATA_1TB_B + /mnt/linuxia/DATA_1TB_B
 - External media: /dev/sdd1 -> /run/media/gaby/LINUXUDF
+
+## Checkpoint C — Samba audited
+- Date: 2026-02-08T17:36:36-05:00
+- Evidence (repo): docs/verifications/verify_samba_20260208T223635Z.txt
+- Evidence (external): /run/media/gaby/LINUXUDF/linuxia_audit_trail/vm100/verifications/verify_samba_20260208T223635Z.txt
