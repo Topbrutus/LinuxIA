@@ -10,9 +10,9 @@ findmnt -T /opt/linuxia/data/shareB >/dev/null
 
 DIR="/opt/linuxia/data/shareA/archives/configsnap"
 
-if [ "0 0id -u)" -eq 0 ]; then
-  install -d -m 0775 -o gaby -g users ""
+if [ "$(id -u)" -eq 0 ]; then
+  install -d -m 0775 -o gaby -g users "$DIR"
 fi
 
-test -d ""
-test -w ""
+test -d "$DIR"
+test -w "$DIR"
