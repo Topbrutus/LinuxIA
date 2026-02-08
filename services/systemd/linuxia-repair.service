@@ -5,6 +5,7 @@ After=network-online.target local-fs.target
 Wants=network-online.target
 
 [Service]
+KillMode=process
 Type=oneshot
 ExecStart=/opt/linuxia/scripts/linuxia-repair.sh
 TimeoutStartSec=300
