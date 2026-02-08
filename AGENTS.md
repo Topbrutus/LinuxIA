@@ -2,7 +2,7 @@
 Version: 1.0
 Langue: Français uniquement.
 
-Codex lit ce fichier avant toute action. S’il y a conflit, ce contrat prime. :contentReference[oaicite:1]{index=1}
+Codex lit ce fichier avant toute action. S’il y a conflit, ce contrat prime.
 
 ## 0) Objectif du système (effet “magique” = discipline)
 Créer une orchestration reproductible où tout comportement “intelligent” est une MACRO explicitée (entrée → exécution → sortie) + preuve, jamais de magie.
@@ -75,4 +75,4 @@ RISKS:
 NEXT:
 
 ## 10) Règle “Plan long”
-Si la tâche dépasse ~10 minutes, implique plusieurs fichiers ou plusieurs étapes: produire un plan écrit dans `PLANS/<TASK_ID>.md` avant EXECUTE. :contentReference[oaicite:2]{index=2}
+Si la tâche dépasse ~10 minutes, implique plusieurs fichiers ou plusieurs étapes: produire un plan écrit dans `PLANS/<TASK_ID>.md` avant EXECUTE.
