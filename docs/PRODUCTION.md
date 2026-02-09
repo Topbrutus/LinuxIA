@@ -70,3 +70,8 @@
 - Date: 2026-02-08T22:28:02-05:00
 - Evidence (repo): docs/verifications/audit_samba_vm100_20260209T032802Z.txt
 - Notes: Non-interactive, anti-fausse preuve, timeouts to avoid hangs.
+
+## Checkpoint C — Samba audited (VM100)
+- Date: 2026-02-08T22:28:18-05:00
+- Evidence (repo): docs/verifications/audit_samba_vm100_20260209T032818Z.txt
+- Notes: Non-interactive, anti-fausse preuve, timeouts to avoid hangs.
