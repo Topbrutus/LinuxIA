@@ -65,3 +65,8 @@
 - Date: 2026-02-08T19:09:41-05:00
 - Evidence (repo): docs/verifications/vm101_cifs_client_20260209T000320Z.txt
 - Evidence (external): /run/media/gaby/LINUXUDF/linuxia_audit_trail/vm100/verifications/vm101_cifs_client_20260209T000320Z.txt
+
+## Checkpoint C — Samba audited (VM100)
+- Date: 2026-02-08T22:28:02-05:00
+- Evidence (repo): docs/verifications/audit_samba_vm100_20260209T032802Z.txt
+- Notes: Non-interactive, anti-fausse preuve, timeouts to avoid hangs.
