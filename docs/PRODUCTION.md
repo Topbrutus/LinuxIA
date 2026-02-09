@@ -60,3 +60,8 @@
 - Date: 2026-02-08T18:30:44-05:00
 - Evidence (repo): docs/verifications/verify_vm101_layer2_cifs_20260208T233044Z.txt
 - Evidence (external): /run/media/gaby/LINUXUDF/linuxia_audit_trail/vm100/verifications/verify_vm101_layer2_cifs_20260208T233044Z.txt
+
+## Evidence — VM101 CIFS client log imported
+- Date: 2026-02-08T19:09:41-05:00
+- Evidence (repo): docs/verifications/vm101_cifs_client_20260209T000320Z.txt
+- Evidence (external): /run/media/gaby/LINUXUDF/linuxia_audit_trail/vm100/verifications/vm101_cifs_client_20260209T000320Z.txt
