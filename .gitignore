@@ -23,3 +23,7 @@ docs/STATE_*.md
 docs/CONFIGSNAP_*.txt
 scratch/
 docs/DEBUG_systemd_*.log
+
+# local junk
+cd/
+ssh/
