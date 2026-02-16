@@ -1,136 +1,269 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
 
-EXIT_CODE=0
-FAIL_COUNT=0
-WARN_COUNT=0
+# LinuxIA — verify-platform.sh (READ-ONLY)
+# Goals:
+# - Be strict on critical LinuxIA operational guarantees (timers, failed units, core paths)
+# - Be tolerant on optional components (missing mounts/tools => WARN, not FAIL)
+# - Provide stable, parseable output + meaningful exit codes
+#
+# Exit codes:
+#   0 = OK
+#   1 = WARN (no FAIL)
+#   2 = FAIL
+
+# ----------------------------
+# Tunables (override via env)
+# ----------------------------
+DISK_WARN_THRESHOLD="${DISK_WARN_THRESHOLD:-80}"
+DISK_FAIL_THRESHOLD="${DISK_FAIL_THRESHOLD:-90}"
+
+# Critical LinuxIA timers expected on VM100
+REQUIRED_TIMERS=(
+  "linuxia-configsnap.timer"
+  "linuxia-healthcheck.timer"
+)
+
+# Critical paths (FAIL if missing)
+CRITICAL_PATHS=(
+  "/opt/linuxia"
+  "/opt/linuxia/scripts"
+  "/opt/linuxia/data"
+  "/opt/linuxia/data/shareA/archives/configsnap"
+)
+
+# Optional mounts/paths (WARN if missing or not mounted)
+OPTIONAL_PATHS=(
+  "/srv/artifacts-hot"
+  "/mnt/linuxia/DATA_1TB_A"
+  "/mnt/linuxia/DATA_1TB_B"
+)
+
+# Configsnap archive pattern (WARN if none found, FAIL if dir missing already handled in CRITICAL_PATHS)
+CONFIGSNAP_GLOB="linuxia-configsnap_*.tar.zst"
+
+# ----------------------------
+# Helpers
+# ----------------------------
 OK_COUNT=0
+WARN_COUNT=0
+FAIL_COUNT=0
+EXIT_CODE=0
 
-DISK_WARN_THRESHOLD=80
-DISK_FAIL_THRESHOLD=90
+ok()   { printf "[OK]   %s\n" "$*"; OK_COUNT=$((OK_COUNT+1)); }
+warn() { printf "[WARN] %s\n" "$*"; WARN_COUNT=$((WARN_COUNT+1)); [[ $EXIT_CODE -lt 1 ]] && EXIT_CODE=1; }
+fail() { printf "[FAIL] %s\n" "$*"; FAIL_COUNT=$((FAIL_COUNT+1)); EXIT_CODE=2; }
 
-check() {
-    local status=$1
-    local message=$2
-    case $status in
-        OK)
-            printf "[OK]   %s\n" "$message"
-            ((OK_COUNT++))
-            ;;
-        WARN)
-            printf "[WARN] %s\n" "$message"
-            ((WARN_COUNT++))
-            [[ $EXIT_CODE -lt 1 ]] && EXIT_CODE=1
-            ;;
-        FAIL)
-            printf "[FAIL] %s\n" "$message"
-            ((FAIL_COUNT++))
-            EXIT_CODE=2
-            ;;
-    esac
+need_cmd() {
+  command -v "$1" >/dev/null 2>&1 || warn "Missing command: $1 (some checks will be skipped)"
 }
 
-printf "=== LinuxIA Platform Verification ===\n\n"
+hr() { printf "%s\n" "------------------------------------------------------------"; }
 
-# Disk space checks
-for path in /opt/linuxia /mnt/linuxia/DATA_1TB_A /mnt/linuxia/DATA_1TB_B; do
-    if [[ -d "$path" ]]; then
-        if df "$path" &>/dev/null; then
-            usage=$(df "$path" | awk 'NR==2 {print $5}' | sed 's/%//')
-            if [[ $usage -ge $DISK_FAIL_THRESHOLD ]]; then
-                check FAIL "Disk space $path at ${usage}% (>= ${DISK_FAIL_THRESHOLD}%)"
-            elif [[ $usage -ge $DISK_WARN_THRESHOLD ]]; then
-                check WARN "Disk space $path at ${usage}% (>= ${DISK_WARN_THRESHOLD}%)"
-            else
-                check OK "Disk space $path at ${usage}%"
-            fi
-        else
-            check FAIL "Cannot determine disk usage for $path"
-        fi
+is_mounted() {
+  local p="$1"
+  mountpoint -q "$p" 2>/dev/null
+}
+
+disk_usage_pct() {
+  # returns integer percent for the filesystem containing $1, or empty if not available
+  local path="$1"
+  df -P "$path" 2>/dev/null | awk 'NR==2{gsub("%","",$5); print $5}'
+}
+
+check_disk_path() {
+  local path="$1"
+  local critical="$2"  # "yes" or "no"
+
+  if [[ ! -e "$path" ]]; then
+    if [[ "$critical" == "yes" ]]; then
+      fail "Path missing: $path"
     else
-        check FAIL "Path $path does not exist"
+      warn "Optional path missing: $path"
     fi
-done
+    return 0
+  fi
 
-# Mount point accessibility checks
-for mount in /mnt/linuxia/DATA_1TB_A /mnt/linuxia/DATA_1TB_B; do
-    if mountpoint -q "$mount" 2>/dev/null; then
-        check OK "Mount point $mount is mounted"
-    elif [[ -d "$mount" ]]; then
-        check WARN "Path $mount exists but is not a mount point"
+  local usage
+  usage="$(disk_usage_pct "$path" || true)"
+  if [[ -z "${usage:-}" ]]; then
+    warn "Disk usage unavailable for: $path"
+    return 0
+  fi
+
+  if [[ "$usage" -ge "$DISK_FAIL_THRESHOLD" ]]; then
+    fail "Disk usage $path at ${usage}% (>= ${DISK_FAIL_THRESHOLD}%)"
+  elif [[ "$usage" -ge "$DISK_WARN_THRESHOLD" ]]; then
+    warn "Disk usage $path at ${usage}% (>= ${DISK_WARN_THRESHOLD}%)"
+  else
+    ok "Disk usage $path at ${usage}%"
+  fi
+}
+
+check_failed_units() {
+  if ! command -v systemctl >/dev/null 2>&1; then
+    warn "systemctl not available; cannot check failed units"
+    return 0
+  fi
+
+  local failed
+  failed="$(systemctl list-units --state=failed --no-legend 2>/dev/null | awk '{print $1}' || true)"
+  if [[ -z "${failed:-}" ]]; then
+    ok "No failed systemd units"
+  else
+    fail "Failed systemd units detected:"
+    printf "%s\n" "$failed" | sed 's/^/  - /'
+  fi
+}
+
+check_timer() {
+  local t="$1"
+
+  if ! command -v systemctl >/dev/null 2>&1; then
+    warn "systemctl not available; cannot verify timer $t"
+    return 0
+  fi
+
+  # Unit file exists?
+  if ! systemctl list-unit-files "$t" --no-legend 2>/dev/null | awk '{print $1}' | grep -qx "$t"; then
+    fail "Missing timer unit file: $t"
+    return 0
+  fi
+
+  # Enabled?
+  if systemctl is-enabled "$t" >/dev/null 2>&1; then
+    ok "Timer enabled: $t"
+  else
+    fail "Timer NOT enabled: $t"
+  fi
+
+  # Active?
+  if systemctl is-active "$t" >/dev/null 2>&1; then
+    ok "Timer active: $t"
+  else
+    fail "Timer NOT active: $t"
+  fi
+}
+
+check_linuxia_timers() {
+  hr
+  echo "LinuxIA timers"
+  for t in "${REQUIRED_TIMERS[@]}"; do
+    check_timer "$t"
+  done
+}
+
+check_configsnap_archives() {
+  hr
+  echo "Configsnap archives"
+  local dir="/opt/linuxia/data/shareA/archives/configsnap"
+
+  if [[ ! -d "$dir" ]]; then
+    # This should already be FAIL via CRITICAL_PATHS, but keep it explicit
+    fail "Configsnap archive directory missing: $dir"
+    return 0
+  fi
+
+  shopt -s nullglob
+  local files=( "$dir"/$CONFIGSNAP_GLOB )
+  shopt -u nullglob
+
+  if ((${#files[@]} == 0)); then
+    warn "Configsnap directory exists but no archives found matching: $CONFIGSNAP_GLOB"
+    return 0
+  fi
+
+  # Show last 3 newest (by mtime)
+  ok "Configsnap archives found: ${#files[@]}"
+  ls -1t "${files[@]}" 2>/dev/null | head -n 3 | sed 's/^/  - /' || true
+}
+
+check_mount_optional() {
+  local path="$1"
+  if [[ ! -e "$path" ]]; then
+    warn "Optional mount path missing: $path"
+    return 0
+  fi
+  if command -v mountpoint >/dev/null 2>&1; then
+    if is_mounted "$path"; then
+      ok "Mounted: $path"
     else
-        check FAIL "Mount point $mount does not exist"
+      warn "Not mounted (optional): $path"
     fi
-done
+  else
+    warn "mountpoint not available; cannot confirm mount state for: $path"
+  fi
+}
 
-# Critical directory structure
-for dir in /opt/linuxia/data/shareA /opt/linuxia/data/shareB /opt/linuxia/logs /opt/linuxia/scripts; do
-    if [[ -d "$dir" ]]; then
-        if [[ -r "$dir" && -w "$dir" ]]; then
-            check OK "Directory $dir exists and is accessible"
-        else
-            check WARN "Directory $dir exists but has restricted permissions"
-        fi
+check_network_listeners() {
+  hr
+  echo "Network listeners (optional)"
+  if command -v ss >/dev/null 2>&1; then
+    ok "ss -lntup (first 60 lines)"
+    ss -lntup 2>/dev/null | head -n 60 || true
+  else
+    warn "ss not available; skipping listener check"
+  fi
+}
+
+# ----------------------------
+# Main
+# ----------------------------
+main() {
+  echo "=== LinuxIA verify-platform (READ-ONLY) ==="
+  echo "Host:   $(hostname)"
+  echo "Date:   $(date -Is)"
+  echo "Kernel: $(uname -a)"
+  echo
+
+  # Optional tool presence warnings
+  need_cmd df
+  need_cmd mount
+  need_cmd mountpoint
+  need_cmd systemctl
+  need_cmd ss
+  need_cmd journalctl
+
+  hr
+  echo "Critical paths"
+  for p in "${CRITICAL_PATHS[@]}"; do
+    if [[ -e "$p" ]]; then
+      ok "Path exists: $p"
     else
-        check FAIL "Directory $dir does not exist"
+      fail "Path missing: $p"
     fi
-done
+  done
 
-# Critical services
-for service in sshd; do
-    if systemctl is-active "$service" &>/dev/null; then
-        check OK "Service $service is active"
-    else
-        check FAIL "Service $service is not active"
-    fi
-done
+  hr
+  echo "Disk usage checks"
+  # Always check root
+  check_disk_path "/" "yes"
+  # Check /opt/linuxia specifically
+  check_disk_path "/opt/linuxia" "yes"
+  # Check optional storage paths too
+  for p in "${OPTIONAL_PATHS[@]}"; do
+    check_disk_path "$p" "no"
+  done
 
-# LinuxIA systemd timer health (basic check)
-timer_count=$(systemctl list-timers 'linuxia-*' --no-legend 2>/dev/null | wc -l)
-if [[ $timer_count -gt 0 ]]; then
-    check OK "LinuxIA timers registered ($timer_count found)"
-else
-    check WARN "No LinuxIA timers found (expected: linuxia-configsnap.timer, etc.)"
-fi
+  hr
+  echo "Failed units"
+  check_failed_units
 
-# Check for recent systemd failures
-if systemctl --failed --no-legend --no-pager 2>/dev/null | grep -q 'linuxia-'; then
-    failed_units=$(systemctl --failed --no-legend --no-pager | grep 'linuxia-' | awk '{print $1}')
-    for unit in $failed_units; do
-        check FAIL "SystemD unit $unit is in failed state"
-    done
-else
-    check OK "No failed LinuxIA systemd units"
-fi
+  check_linuxia_timers
+  check_configsnap_archives
 
-# Archive directory health
-configsnap_dir="/opt/linuxia/data/shareA/archives/configsnap"
-if [[ -d "$configsnap_dir" ]]; then
-    snapshot_count=$(find "$configsnap_dir" -type f -name "*.tar.zst" 2>/dev/null | wc -l)
-    if [[ $snapshot_count -gt 0 ]]; then
-        check OK "Config snapshots exist ($snapshot_count archives found)"
-    else
-        check WARN "Config snapshot directory exists but no archives found"
-    fi
-else
-    check FAIL "Config snapshot directory $configsnap_dir does not exist"
-fi
+  hr
+  echo "Optional mounts"
+  for p in "${OPTIONAL_PATHS[@]}"; do
+    check_mount_optional "$p"
+  done
 
-# SELinux status check
-if command -v getenforce &>/dev/null; then
-    selinux_mode=$(getenforce 2>/dev/null || echo "Unknown")
-    if [[ "$selinux_mode" == "Enforcing" ]]; then
-        check OK "SELinux is in Enforcing mode"
-    elif [[ "$selinux_mode" == "Permissive" ]]; then
-        check WARN "SELinux is in Permissive mode (should be Enforcing)"
-    else
-        check WARN "SELinux status: $selinux_mode"
-    fi
-else
-    check WARN "SELinux tools not available"
-fi
+  check_network_listeners
 
-printf "\n=== Summary ===\n"
-printf "OK: %d | WARN: %d | FAIL: %d\n" "$OK_COUNT" "$WARN_COUNT" "$FAIL_COUNT"
+  hr
+  echo "=== Summary ==="
+  printf "OK=%d WARN=%d FAIL=%d\n" "$OK_COUNT" "$WARN_COUNT" "$FAIL_COUNT"
+  exit "$EXIT_CODE"
+}
 
-exit $EXIT_CODE
+main "$@"
