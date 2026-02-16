@@ -25,6 +25,82 @@ REQUIRED_TIMERS=(
   "linuxia-health-report.timer"
 )
 
+# ----------------------------
+# Health report checks (WARN)
+# ----------------------------
+## HEALTH_REPORT_CHECKS_BEGIN
+HEALTH_LOG_DIR="${HEALTH_LOG_DIR:-/opt/linuxia/logs/health}"
+HEALTH_SHARE_DIR="${HEALTH_SHARE_DIR:-/opt/linuxia/data/shareA/reports/health}"
+HEALTH_GLOB="${HEALTH_GLOB:-health-*.txt}"
+HEALTH_MAX_AGE_SECONDS="${HEALTH_MAX_AGE_SECONDS:-172800}"  # 48h
+
+_hc_section(){ if declare -F section >/dev/null; then section "$@"; else echo "== $* =="; fi; }
+_hc_ok(){ if declare -F ok >/dev/null; then ok "$@"; else echo "OK: $*"; fi; }
+_hc_warn(){ if declare -F warn >/dev/null; then warn "$@"; else echo "WARN: $*" >&2; fi; }
+_hc_bump_warn(){
+  if declare -F bump_warn >/dev/null; then
+    bump_warn
+  else
+    WARN_COUNT="${WARN_COUNT:-0}"; WARN_COUNT=$((WARN_COUNT+1))
+    EXIT_CODE="${EXIT_CODE:-0}"; [ "$EXIT_CODE" -lt 1 ] && EXIT_CODE=1
+  fi
+}
+
+health_checks() {
+  _hc_section "Health reports"
+
+  if [[ ! -d "$HEALTH_LOG_DIR" ]]; then
+    _hc_warn "Health log dir missing: $HEALTH_LOG_DIR"
+    _hc_bump_warn
+    return 0
+  fi
+
+  local latest=""
+  latest="$(ls -1t "$HEALTH_LOG_DIR"/$HEALTH_GLOB 2>/dev/null | head -n 1 || true)"
+
+  if [[ -z "$latest" ]]; then
+    _hc_warn "No health reports found in $HEALTH_LOG_DIR"
+    _hc_bump_warn
+  else
+    _hc_ok "Latest health report: $latest"
+    if command -v stat >/dev/null 2>&1; then
+      local now ts age
+      now="$(date +%s)"
+      ts="$(stat -c %Y "$latest" 2>/dev/null || echo 0)"
+      if [[ "$ts" =~ ^[0-9]+$ ]] && [[ "$ts" -gt 0 ]]; then
+        age="$((now - ts))"
+        if (( age > HEALTH_MAX_AGE_SECONDS )); then
+          _hc_warn "Health report older than threshold: age=${age}s > ${HEALTH_MAX_AGE_SECONDS}s"
+          _hc_bump_warn
+        fi
+      fi
+    fi
+  fi
+
+  if [[ -d "$HEALTH_SHARE_DIR" ]]; then
+    local share_latest=""
+    share_latest="$(ls -1t "$HEALTH_SHARE_DIR"/$HEALTH_GLOB 2>/dev/null | head -n 1 || true)"
+    if [[ -z "$share_latest" ]]; then
+      _hc_warn "No health reports found in share dir: $HEALTH_SHARE_DIR"
+      _hc_bump_warn
+    else
+      _hc_ok "Latest shareA health report: $share_latest"
+      if [[ -n "$latest" ]]; then
+        if [[ "$(basename "$latest")" == "$(basename "$share_latest")" ]]; then
+          _hc_ok "Share copy matches latest filename"
+        else
+          _hc_warn "Share latest filename differs from local latest (may still be OK)"
+          _hc_bump_warn
+        fi
+      fi
+    fi
+  else
+    _hc_warn "Share health dir missing (skip copy check): $HEALTH_SHARE_DIR"
+    _hc_bump_warn
+  fi
+}
+## HEALTH_REPORT_CHECKS_END
+
 # Critical paths (FAIL if missing)
 CRITICAL_PATHS=(
   "/opt/linuxia"
@@ -264,6 +340,8 @@ main() {
   check_network_listeners
 
   hr
+    health_checks
+
   echo "=== Summary ==="
   printf "OK=%d WARN=%d FAIL=%d\n" "$OK_COUNT" "$WARN_COUNT" "$FAIL_COUNT"
   exit "$EXIT_CODE"
