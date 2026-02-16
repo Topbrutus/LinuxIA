@@ -39,13 +39,13 @@ _hc_ok(){ if declare -F ok >/dev/null; then ok "$@"; else echo "OK: $*"; fi; }
 _hc_warn(){ if declare -F warn >/dev/null; then warn "$@"; else echo "WARN: $*" >&2; fi; }
 _hc_bump_warn(){
   if declare -F bump_warn >/dev/null; then
-    bump_warn
+    bump_warn || true
   else
     WARN_COUNT="${WARN_COUNT:-0}"; WARN_COUNT=$((WARN_COUNT+1))
     EXIT_CODE="${EXIT_CODE:-0}"; [ "$EXIT_CODE" -lt 1 ] && EXIT_CODE=1
   fi
+  return 0
 }
-
 health_checks() {
   _hc_section "Health reports"
 
