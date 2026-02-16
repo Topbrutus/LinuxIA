@@ -165,7 +165,9 @@ check_configsnap_archives() {
   fi
 
   shopt -s nullglob
-  local files=( "$dir"/$CONFIGSNAP_GLOB )
+  local files=()
+  # shellcheck disable=SC2206
+  files=( "$dir"/$CONFIGSNAP_GLOB )
   shopt -u nullglob
 
   if ((${#files[@]} == 0)); then
