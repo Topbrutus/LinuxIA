@@ -289,5 +289,5 @@ fi
 ## Related Documentation
 
 - [LinuxIA Production Documentation](PRODUCTION.md)
-- [Service Definitions](../services/systemd/)
-- [Health Check Scripts](../scripts/)
+- Service systemd unit files: `/services/systemd/` directory in repository
+- Health check scripts: `/scripts/` directory in repository

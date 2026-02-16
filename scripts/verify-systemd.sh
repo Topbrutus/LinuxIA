@@ -45,6 +45,8 @@ status_fail() {
 }
 
 print_header() {
+    local hostname_value
+    hostname_value="$(hostname)"
     cat <<EOF
 ================================================================================
 LinuxIA Systemd Verification Report
@@ -52,7 +54,7 @@ LinuxIA Systemd Verification Report
 Script: ${SCRIPT_NAME}
 Timestamp (UTC): ${TIMESTAMP_UTC}
 Timestamp (Local): ${TIMESTAMP_LOCAL}
-Host: $(hostname)
+Host: ${hostname_value}
 ================================================================================
 
 EOF
@@ -163,9 +165,14 @@ show_timers() {
     fi
     
     printf "\n"
-    systemctl list-timers --all --no-pager 2>/dev/null | grep -E '(NEXT|linuxia-)' || {
+    local timer_output
+    timer_output=$(systemctl list-timers --all --no-pager 2>/dev/null | grep 'linuxia-' || true)
+    if [ -n "${timer_output}" ]; then
+        systemctl list-timers --all --no-pager 2>/dev/null | head -n 1
+        printf "%s\n" "${timer_output}"
+    else
         printf "  No active linuxia-* timers\n"
-    }
+    fi
     printf "\n"
     
     while IFS= read -r timer; do
