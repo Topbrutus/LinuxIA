@@ -1,3 +1,36 @@
+# LinuxIA — Agent Ops "preuve-first" (openSUSE / systemd / GitHub)
+
+But : automatiser des tâches Ops de manière **auditée**, **reproductible**, et **safe-by-default** (*read-only par défaut*).
+
+## Ce qui marche déjà (preuve)
+- ✅ `scripts/verify-platform.sh` : checks infra + timers + mounts + health reports (summary OK/WARN/FAIL)
+- ✅ Rapports "health" via systemd + copie best-effort sur shareA (chmod-safe)
+- ✅ CI verte sur PRs + merges squash
+
+## Démarrage rapide
+```bash
+cd /opt/linuxia
+bash scripts/verify-platform.sh
+```
+
+## Où sont les rapports
+
+* Local : `/opt/linuxia/logs/health/`
+* Copie (si shareA monté) : `/opt/linuxia/data/shareA/reports/health/`
+
+## Comment aider (sans qu'on ait à le demander)
+
+On cherche des contributeurs pour :
+
+* Docs / runbook : standardiser procédures + troubleshooting
+* CI/tests : renforcer "proof-first" (logs, exit codes, smoke checks)
+* Hardening : permissions, chmod-safe sur partages, patterns `set -e` robustes
+* Packaging : scripts/systemd units, conventions, structure repo
+
+➡️ Prends une issue "good first issue" ou propose une amélioration via PR.
+
+---
+
 # LinuxIA
 
 LinuxIA est un projet expérimental centré sur l’exploration, la compréhension
