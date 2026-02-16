@@ -27,3 +27,5 @@ docs/DEBUG_systemd_*.log
 # local junk
 cd/
 ssh/
+sudo
+sudo/
