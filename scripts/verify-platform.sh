@@ -22,7 +22,8 @@ DISK_FAIL_THRESHOLD="${DISK_FAIL_THRESHOLD:-90}"
 REQUIRED_TIMERS=(
   "linuxia-configsnap.timer"
   "linuxia-healthcheck.timer"
-  "linuxia-health-report.timer")
+  "linuxia-health-report.timer"
+)
 
 # Critical paths (FAIL if missing)
 CRITICAL_PATHS=(
