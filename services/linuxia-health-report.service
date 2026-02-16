@@ -1,0 +1,10 @@
+[Unit]
+Description=LinuxIA health report (read-only diagnostics)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+UMask=0002
+WorkingDirectory=/opt/linuxia
+ExecStart=/usr/bin/env bash /opt/linuxia/scripts/health-report.sh
