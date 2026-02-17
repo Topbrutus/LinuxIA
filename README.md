@@ -35,7 +35,7 @@ bash scripts/verify-platform.sh  # Should show: OK=24 WARN=0 FAIL=0
 
 ## 🤝 Contribute
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) | [Good First Issues](https://github.com/Topbrutus/LinuxIA/labels/good%20first%20issue)
+See [CONTRIBUTING.md](CONTRIBUTING.md) | [SECURITY.md](SECURITY.md) | [Good First Issues](https://github.com/Topbrutus/LinuxIA/labels/good%20first%20issue)
 
 ## 📜 License
 
