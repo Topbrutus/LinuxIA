@@ -1,40 +1,39 @@
 # Security Policy
 
-## 🛡️ Scope
+## Supported Versions
 
-LinuxIA est un projet de recherche en sécurité système. Nous prenons la sécurité au sérieux, mais **ce n'est pas un produit production-ready**.
+We provide security updates for the following versions:
 
-## 🔐 Reporting a vulnerability
+| Version | Supported          |
+| ------- | ------------------ |
+| main    | :white_check_mark: |
+| Latest Release | :white_check_mark: |
 
-**Si tu trouves une vulnérabilité critique** (RCE, escalade de privilèges, fuite de secrets):
+## Reporting a Vulnerability
 
-1. **N'ouvre PAS d'issue publique**
-2. Contacte [@Topbrutus](https://github.com/Topbrutus) en privé via:
-   - GitHub Security Advisory (bouton "Report a vulnerability")
-   - Email (si disponible sur le profil)
-3. Inclus:
-   - Description détaillée (étapes de reproduction)
-   - Impact potentiel (CVSS si applicable)
-   - Suggestion de correctif (si tu en as une)
+If you discover a potential security vulnerability in this project, please report it privately. **Do not create a public issue.**
 
-## ⏱️ Réponse
+Please report vulnerabilities via:
+- **GitHub Security Advisory**: Use the "Report a vulnerability" button on the "Security" tab.
+- **Email**: Send a detailed report to topbrutus@proton.me
 
-- **Accusé réception:** < 72h
-- **Fix + disclosure coordonnée:** selon gravité (7-90 jours)
+Please include the following in your report:
+- A detailed description of the vulnerability.
+- Steps to reproduce the issue.
+- Potential impact.
+- Any suggested fixes.
 
-## 📦 Versions supportées
+## Scope
 
-Seule la branche `main` est activement maintenue. Les branches expérimentales (`phase4-observability`, etc.) ne bénéficient d'aucune garantie de sécurité.
+The following components are in scope for security reports:
+- **Scripts**: All scripts in the `scripts/` directory.
+- **Systemd units**: Service and timer files in `services/`.
+- **CI/CD**: GitHub Actions workflows in `.github/workflows/`.
 
-## 🚨 Exceptions
+## Response Expectations
 
-**Vulns acceptées (by design):**
-- Accès SSH non restreint (c'est un lab de recherche)
-- Stockage non-chiffré dans `data/` (documenté dans README)
-- Absence de rate-limiting sur les agents LLM (WIP)
-
-Si tu as un doute → demande avant de signaler !
+This project is maintained on a **best-effort** basis. We will acknowledge receipt of your report as soon as possible and work towards a resolution.
 
 ---
 
-**Merci de contribuer à la sécurité de LinuxIA !** 🙏
+Thank you for helping keep LinuxIA secure!
