@@ -287,7 +287,8 @@ check_network_listeners() {
 
 check_share_mount() {
   local mount_point="$1"
-  local expected_source="$2"
+  # shellcheck disable=SC2034
+  local expected_source="$2"  # Reserved for future source validation
   
   if [[ ! -e "$mount_point" ]]; then
     warn "Share mount point missing: $mount_point"
