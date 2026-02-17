@@ -1,78 +1,42 @@
-# LinuxIA — Agent Ops "preuve-first" (openSUSE / systemd / GitHub)
+# LinuxIA — Proof-First Agent Ops
 
-[![CI](https://github.com/Topbrutus/LinuxIA/actions/workflows/linuxia-ci.yml/badge.svg)](https://github.com/Topbrutus/LinuxIA/actions/workflows/linuxia-ci.yml) [![Release](https://img.shields.io/github/v/release/Topbrutus/LinuxIA?sort=semver)](https://github.com/Topbrutus/LinuxIA/releases)
+[![Phase 6](https://img.shields.io/badge/Phase_6-✅_Merged-success)](https://github.com/Topbrutus/LinuxIA/pulls?q=is%3Apr+is%3Aclosed) [![Verify](https://img.shields.io/badge/verify--platform-OK=24_WARN=0-brightgreen)](docs/runbook.md)
 
+**Proof-first multi-VM orchestration** (Proxmox + openSUSE + systemd + GitHub)
 
-But : automatiser des tâches Ops de manière **auditée**, **reproductible**, et **safe-by-default** (*read-only par défaut*).
+## 🎯 What
 
-## Ce qui marche déjà (preuve)
-- ✅ `scripts/verify-platform.sh` : checks infra + timers + mounts + health reports (summary OK/WARN/FAIL)
-- ✅ Rapports "health" via systemd + copie best-effort sur shareA (chmod-safe)
-- ✅ CI verte sur PRs + merges squash
+Automated infrastructure ops with **mandatory proof generation**:
+- Every change → timestamped evidence
+- Scripts: bash + shellcheck + `set -euo pipefail`
+- Systemd timers (configsnap, healthchecks, reports)
+- GitHub PR workflow + CI
 
-## Démarrage rapide
+## 🏗️ Architecture
+
+- **VM100** (`vm100-factory`): Main repo, storage, Samba, health reports
+- **VM101** (`vm101-layer2`): CIFS client, independent proofs  
+- **VM102** (`vm102-tool`): Sandbox, tests, API orchestrator
+
+## 🚀 Quick Start
+
 ```bash
+git clone git@github.com:Topbrutus/LinuxIA.git /opt/linuxia
 cd /opt/linuxia
-bash scripts/verify-platform.sh
+bash scripts/verify-platform.sh  # Should show: OK=24 WARN=0 FAIL=0
 ```
 
-## Où sont les rapports
+## 📊 Status
 
-* Local : `/opt/linuxia/logs/health/`
-* Copie (si shareA monté) : `/opt/linuxia/data/shareA/reports/health/`
+**Latest:** Phase 6 merged (health reports + systemd timers)  
+**Proof:** See [docs/status.md](docs/status.md)  
+**Runbook:** [docs/runbook.md](docs/runbook.md)  
+**Checklists:** [docs/checklists/](docs/checklists/)
 
-## Comment aider (sans qu'on ait à le demander)
+## 🤝 Contribute
 
-➡️ Start here: [How to help LinuxIA in 15 minutes (#9)](https://github.com/Topbrutus/LinuxIA/issues/9)
+See [CONTRIBUTING.md](CONTRIBUTING.md) | [Good First Issues](https://github.com/Topbrutus/LinuxIA/labels/good%20first%20issue)
 
-On cherche des contributeurs pour :
+## 📜 License
 
-* Docs / runbook : standardiser procédures + troubleshooting
-* CI/tests : renforcer "proof-first" (logs, exit codes, smoke checks)
-* Hardening : permissions, chmod-safe sur partages, patterns `set -e` robustes
-* Packaging : scripts/systemd units, conventions, structure repo
-
-➡️ Prends une issue "good first issue" ou propose une amélioration via PR.
-
----
-
-# LinuxIA
-
-LinuxIA est un projet expérimental centré sur l’exploration, la compréhension
-et la mise en pratique de systèmes techniques sous Linux.
-
-L’objectif n’est pas de livrer un produit fini, mais de construire,
-tester et documenter des idées autour de :
-- l’infrastructure Linux
-- l’automatisation maîtrisée
-- les scripts système
-- l’observation et la vérification des états
-
-Le projet évolue par itérations courtes :
-- on observe
-- on expérimente
-- on vérifie
-- on corrige
-
-LinuxIA privilégie :
-- la clarté plutôt que la complexité
-- les preuves plutôt que les suppositions
-- le contrôle humain plutôt que l’automatisation aveugle
-
-Les outils utilisés incluent principalement :
-- Linux (openSUSE)
-- systemd
-- shell scripting
-- Git / GitHub
-
-Ce dépôt sert à la fois de terrain d’essai et de journal technique.
-Certaines parties peuvent être brutes, incomplètes ou évoluer rapidement.
-
-LinuxIA est avant tout un espace d’apprentissage, d’expérimentation
-et de compréhension approfondie des systèmes.
-
-Curieux bienvenus.
-
-## Comment aider
-
-➡️ Start here: [How to help LinuxIA in 15 minutes (#9)](https://github.com/Topbrutus/LinuxIA/issues/9)
+To be determined
