@@ -1,42 +1,103 @@
 # Contributing to LinuxIA
 
-👋 Merci de ton intérêt ! LinuxIA est un projet de recherche en sécurité système qui accueille les contributions avec joie.
+Thanks for helping! 🚀
 
-## 🚀 Démarrage rapide (15 min)
+## Proof-First Principles
 
-1. **Fork** le repo → clone ta copie
-2. **Lis** `README.md` + `docs/runbook.md`
-3. **Choisis** une [good first issue](https://github.com/Topbrutus/LinuxIA/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
-4. **Teste** tes changements (scripts: `bash -n`, docs: aperçu Markdown)
-5. **PR** avec titre clair + référence à l'issue (`Fixes #X`)
+1. **Every change generates proof** (timestamped logs/outputs)
+2. **Non-destructive** (scripts have guards: `STOP if...`)
+3. **Shellcheck clean** (`bash -n` + `shellcheck -x`)
+4. **Git flow:** branch → PR → CI → squash merge
 
-## 📋 Types de contributions
+## Quick Start
 
-- **Documentation** (runbook, troubleshooting, architecture)
-- **CI/Tests** (smoke tests, ShellCheck, GitHub Actions)
-- **Scripts** (améliorations robustesse, conformité bash)
-- **Tooling** (`make doctor`, helpers de déploiement)
+### 1. Fork & Clone
 
-## ✅ Critères d'acceptation
+```bash
+git clone git@github.com:<you>/LinuxIA.git
+cd LinuxIA
+git remote add upstream git@github.com:Topbrutus/LinuxIA.git
+```
 
-- **Scripts shell** : compatibles bash, sans `echo` superflu, avec gestion d'erreurs
-- **Docs** : courts, concrets, avec commandes reproductibles
-- **Commits** : messages clairs, atomiques (1 idée = 1 commit)
-- **Tests** : manuelss (on automatise progressivement via CI)
+### 2. Create Branch
 
-## 🔐 Règles importantes
+```bash
+git checkout -b feat/my-feature
+# or: fix/bug-name, docs/improve, chore/cleanup
+```
 
-- **Pas de secrets** dans le code (use `.env` ou vault)
-- **Pas de `sudo` en vrac** (seulement `sudo -i` quand documenté)
-- **Pas de modifications** de `data/`, `logs/`, `workspace/` (hors Git)
+### 3. Test Locally
 
-## 🤝 Code de conduite
+```bash
+# Syntax check
+bash -n scripts/my-script.sh
 
-Respect, bienveillance, collaboration. On est là pour apprendre et construire ensemble.
+# Platform verification
+bash scripts/verify-platform.sh
+```
 
-## 💬 Questions ?
+### 4. Commit
 
-- Commente directement dans l'issue
-- Ou ouvre une [discussion](https://github.com/Topbrutus/LinuxIA/discussions)
+Format: `type: short description`
 
-**Bon code !** 🚀
+Types: `feat`, `fix`, `docs`, `chore`, `ci`, `test`
+
+```bash
+git add .
+git commit -m "feat: add awesome feature
+
+- detail 1
+- detail 2
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
+```
+
+### 5. Push + PR
+
+```bash
+git push -u origin feat/my-feature
+gh pr create --base main --title "feat: add awesome feature"
+```
+
+### 6. After Merge
+
+```bash
+git checkout main
+git pull upstream main
+git branch -d feat/my-feature
+```
+
+## Standards
+
+### Bash Scripts
+
+- Shebang: `#!/usr/bin/env bash`
+- Options: `set -euo pipefail`
+- No `echo` in automated scripts (use logs/journald)
+- Shellcheck warnings OK if justified with `# shellcheck disable=...`
+
+### Proofs
+
+Stored in `docs/verifications/<name>_<timestamp>.txt`
+
+### Tests
+
+- Add tests if possible (`tests/`)
+- Minimum: smoke test (`bash -n`, `--version`)
+
+## Good First Issues
+
+Look for label [`good first issue`](https://github.com/Topbrutus/LinuxIA/labels/good%20first%20issue)
+
+Typical tasks:
+- Documentation improvements
+- Shellcheck warning fixes
+- Add test coverage
+- Improve runbook examples
+
+## Questions?
+
+- Open an [issue](https://github.com/Topbrutus/LinuxIA/issues)
+- Check [docs/runbook.md](docs/runbook.md)
+
+Thanks! 🎉
