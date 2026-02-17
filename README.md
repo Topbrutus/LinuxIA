@@ -1,5 +1,8 @@
 # LinuxIA — Agent Ops "preuve-first" (openSUSE / systemd / GitHub)
 
+👉 **Tableau de bord**: [TABLEAU.md](TABLEAU.md)
+
+
 [![CI](https://github.com/Topbrutus/LinuxIA/actions/workflows/linuxia-ci.yml/badge.svg)](https://github.com/Topbrutus/LinuxIA/actions/workflows/linuxia-ci.yml) [![Release](https://img.shields.io/github/v/release/Topbrutus/LinuxIA?sort=semver)](https://github.com/Topbrutus/LinuxIA/releases)
 
 
