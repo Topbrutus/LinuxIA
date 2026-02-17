@@ -285,6 +285,46 @@ check_network_listeners() {
   fi
 }
 
+check_share_mount() {
+  local mount_point="$1"
+  local expected_source="$2"
+  
+  if [[ ! -e "$mount_point" ]]; then
+    warn "Share mount point missing: $mount_point"
+    return 0
+  fi
+  
+  if ! is_mounted "$mount_point"; then
+    warn "Share not mounted: $mount_point"
+    return 0
+  fi
+  
+  ok "Share mounted: $mount_point"
+  
+  # Check writable
+  local test_file="${mount_point}/.linuxia-verify-test"
+  if touch "$test_file" 2>/dev/null; then
+    rm -f "$test_file" 2>/dev/null || true
+    ok "Share writable: $mount_point"
+  else
+    warn "Share not writable: $mount_point"
+  fi
+  
+  # Check owner/group
+  local owner group
+  owner="$(stat -c %U "$mount_point" 2>/dev/null || echo unknown)"
+  group="$(stat -c %G "$mount_point" 2>/dev/null || echo unknown)"
+  
+  if [[ "$owner" == "gaby" || "$owner" == "root" ]]; then
+    ok "Share owner OK: $mount_point ($owner:$group)"
+  else
+    warn "Share owner unexpected: $mount_point ($owner:$group)"
+  fi
+  
+  # Check disk usage
+  check_disk_path "$mount_point" "no"
+}
+
 # ----------------------------
 # Main
 # ----------------------------
@@ -338,6 +378,11 @@ main() {
   done
 
   check_network_listeners
+
+  hr
+  echo "Share mounts (shareA, shareB)"
+  check_share_mount "/opt/linuxia/data/shareA" "/mnt/linuxia/DATA_1TB_A/LinuxIA_SMB"
+  check_share_mount "/opt/linuxia/data/shareB" "/mnt/linuxia/DATA_1TB_B/LinuxIA_SMB"
 
   hr
     health_checks

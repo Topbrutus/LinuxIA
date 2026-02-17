@@ -40,6 +40,11 @@ run "Failed systemd units" systemctl list-units --state=failed --no-legend
 run "LinuxIA timers (all)" bash -lc 'systemctl list-timers --all | grep -E "linuxia-|NEXT|LEFT|LAST|PASSED|UNIT|ACTIVATES" || true'
 run "LinuxIA logs last 200 lines" journalctl -u 'linuxia-*' -n 200 --no-pager
 
+# Share status
+run "Share mounts (findmnt)" bash -lc 'findmnt /opt/linuxia/data/shareA /opt/linuxia/data/shareB 2>/dev/null || echo "WARN: shares not mounted"'
+run "Share permissions" bash -lc 'stat -c "%n: %U:%G %a" /opt/linuxia/data/shareA /opt/linuxia/data/shareB 2>/dev/null || true'
+run "Share disk usage" bash -lc 'df -h /opt/linuxia/data/shareA /opt/linuxia/data/shareB 2>/dev/null || true'
+
 # Configsnap quick proof (count + newest 3)
 cfgdir="/opt/linuxia/data/shareA/archives/configsnap"
 if [[ -d "$cfgdir" ]]; then
@@ -55,9 +60,11 @@ else
   run "Network listeners" bash -lc "echo 'WARN: ss not available'"
 fi
 
-# Copy report to shareA if possible
+# Copy report to shareA if possible (with explicit permissions)
 if [[ -d "$SHAREA_DIR" ]]; then
-  cp -f "$report" "$SHAREA_DIR/" 2>/dev/null || true
+  if cp -f "$report" "$SHAREA_DIR/" 2>/dev/null; then
+    chmod 644 "$SHAREA_DIR/$(basename "$report")" 2>/dev/null || true
+  fi
 fi
 
 echo "OK: report written -> $report"
