@@ -67,3 +67,7 @@ LinuxIA est avant tout un espace d’apprentissage, d’expérimentation
 et de compréhension approfondie des systèmes.
 
 Curieux bienvenus.
+
+## Tableau de bord (Ops)
+
+👉 Voir: **[docs/tableau.md](docs/tableau.md)** (checks rapides, health reports, CI, release, issues)
