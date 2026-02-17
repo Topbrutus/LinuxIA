@@ -1,5 +1,8 @@
 # LinuxIA — Agent Ops "preuve-first" (openSUSE / systemd / GitHub)
 
+[![CI](https://github.com/Topbrutus/LinuxIA/actions/workflows/linuxia-ci.yml/badge.svg)](https://github.com/Topbrutus/LinuxIA/actions/workflows/linuxia-ci.yml) [![Release](https://img.shields.io/github/v/release/Topbrutus/LinuxIA?sort=semver)](https://github.com/Topbrutus/LinuxIA/releases)
+
+
 But : automatiser des tâches Ops de manière **auditée**, **reproductible**, et **safe-by-default** (*read-only par défaut*).
 
 ## Ce qui marche déjà (preuve)
@@ -19,6 +22,8 @@ bash scripts/verify-platform.sh
 * Copie (si shareA monté) : `/opt/linuxia/data/shareA/reports/health/`
 
 ## Comment aider (sans qu'on ait à le demander)
+
+➡️ Start here: [How to help LinuxIA in 15 minutes (#9)](https://github.com/Topbrutus/LinuxIA/issues/9)
 
 On cherche des contributeurs pour :
 
@@ -67,3 +72,7 @@ LinuxIA est avant tout un espace d’apprentissage, d’expérimentation
 et de compréhension approfondie des systèmes.
 
 Curieux bienvenus.
+
+## Comment aider
+
+➡️ Start here: [How to help LinuxIA in 15 minutes (#9)](https://github.com/Topbrutus/LinuxIA/issues/9)
