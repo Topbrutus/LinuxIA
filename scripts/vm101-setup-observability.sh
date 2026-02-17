@@ -100,7 +100,7 @@ NGX_CONF="${NGX_CONF_DIR}/linuxia_orchestrator.conf"
 ${SUDO} mkdir -p "${NGX_CONF_DIR}"
 
 if [ ! -f "${NGX_CONF}" ]; then
-  ${SUDO} bash -lc "cat > '${NGX_CONF}' <<'NGINX'
+  ${SUDO} tee "${NGX_CONF}" >/dev/null <<'NGINX'
 # LinuxIA Orchestrator reverse proxy (local only)
 # NOTE: écoute sur 127.0.0.1:8110. Pour LAN, change "listen 127.0.0.1:8110" -> "listen 0.0.0.0:8110" (à faire consciemment).
 upstream linuxia_orchestrator_upstream {
@@ -124,15 +124,15 @@ server {
 
   location / {
     proxy_http_version 1.1;
-    proxy_set_header Host \$host;
-    proxy_set_header X-Real-IP \$remote_addr;
-    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto \$scheme;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
 
     proxy_pass http://linuxia_orchestrator_upstream;
   }
 }
-NGINX"
+NGINX
   echo "  -> créé: ${NGX_CONF}"
 else
   echo "  -> déjà présent: ${NGX_CONF} (inchangé)"
