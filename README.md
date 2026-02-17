@@ -1,5 +1,24 @@
 # LinuxIA — Agent Ops "preuve-first" (openSUSE / systemd / GitHub)
 
+<!-- VITRINE_BEGIN -->
+
+## ⚡ Vitrine (avancement rapide)
+
+LinuxIA est un projet open-source orienté Ops / automatisation / preuve-first (scripts + systemd + runbook).
+Objectif: une base robuste, reproductible, auditable.
+
+### Ce que tu peux faire maintenant (facile)
+- Lire le runbook: [docs/runbook.md](docs/runbook.md)
+- Vérifier la plateforme: `bash scripts/verify-platform.sh`
+- Prendre une issue [help wanted](https://github.com/Topbrutus/LinuxIA/labels/help%20wanted) / [good first issue](https://github.com/Topbrutus/LinuxIA/labels/good%20first%20issue)
+
+### Principes
+- **Proof-first**: logs et commandes reproductibles
+- **Incremental only**: on n'enlève pas, on améliore proprement
+- **CI + docs**: chaque changement laisse une trace claire
+<!-- VITRINE_END -->
+
+
 [![CI](https://github.com/Topbrutus/LinuxIA/actions/workflows/linuxia-ci.yml/badge.svg)](https://github.com/Topbrutus/LinuxIA/actions/workflows/linuxia-ci.yml) [![Release](https://img.shields.io/github/v/release/Topbrutus/LinuxIA?sort=semver)](https://github.com/Topbrutus/LinuxIA/releases)
 
 
