@@ -101,6 +101,57 @@ cd /opt/linuxia
 # Expected: All [OK], exit code 0
 ```
 
+### Step 5: Configure Storage Mounts (Optional)
+```bash
+# On VM100, as root:
+sudo -i
+
+# Activate bind mounts for shareA/shareB
+systemctl start opt-linuxia-data-shareA.mount
+systemctl start opt-linuxia-data-shareB.mount
+
+# Make persistent (survive reboots)
+systemctl enable opt-linuxia-data-shareA.mount
+systemctl enable opt-linuxia-data-shareB.mount
+
+# Verify
+mount | grep -E "shareA|shareB"
+```
+
+### Step 6: Set Permissions for Shared Storage
+```bash
+# On VM100, as root:
+sudo -i
+
+# Ensure reports directory exists with proper permissions
+mkdir -p /opt/linuxia/data/shareA/reports
+mkdir -p /opt/linuxia/data/shareB/reports
+
+# Option A: Simple group ownership (recommended for single-user systems)
+chown -R gaby:users /opt/linuxia/data/shareA/reports
+chown -R gaby:users /opt/linuxia/data/shareB/reports
+chmod -R 775 /opt/linuxia/data/shareA/reports
+chmod -R 775 /opt/linuxia/data/shareB/reports
+
+# Option B: ACLs (if multiple users/services need write access)
+# Install acl package if not present:
+# zypper install acl
+#
+# setfacl -R -m u:gaby:rwx /opt/linuxia/data/shareA/reports
+# setfacl -R -m g:users:rwx /opt/linuxia/data/shareA/reports
+# setfacl -R -d -m u:gaby:rwx /opt/linuxia/data/shareA/reports  # default for new files
+# setfacl -R -d -m g:users:rwx /opt/linuxia/data/shareA/reports
+
+# Verify permissions
+ls -ld /opt/linuxia/data/shareA/reports
+getfacl /opt/linuxia/data/shareA/reports  # if using ACLs
+```
+
+**Notes**:
+- Use Option A (simple permissions) unless you need fine-grained multi-user access
+- If systemd services write to reports/, ensure their User= directive matches permissions
+- The `nofail` mount option ensures system boots even if mounts fail
+
 ---
 
 ## ✅ Verification Procedures
@@ -272,6 +323,101 @@ sudo ausearch -m avc -ts recent | grep linuxia
 # Reset service failure state
 sudo systemctl reset-failed linuxia-configsnap.service
 ```
+
+---
+
+### Permission Denied Writing to shareA/shareB
+**Symptom**: Services fail with "Permission denied" when writing to `/opt/linuxia/data/shareA/reports`
+
+**Diagnosis**:
+```bash
+# Check current permissions
+ls -ld /opt/linuxia/data/shareA/reports
+getfacl /opt/linuxia/data/shareA/reports  # if using ACLs
+
+# Check mount status
+mount | grep shareA
+systemctl status opt-linuxia-data-shareA.mount
+
+# Check which user is running the service
+systemctl show -p User linuxia-health-report.service
+
+# Test write access
+sudo -u gaby touch /opt/linuxia/data/shareA/reports/test.txt
+```
+
+**Common Causes**:
+1. **Wrong ownership**: Directory owned by root or wrong user
+2. **Restrictive permissions**: 755 instead of 775, missing group write
+3. **Mount not active**: shareA not mounted, writing to empty local directory
+4. **SELinux context**: Wrong security context on NTFS mounts
+
+**Resolution**:
+```bash
+# On VM100, as root:
+sudo -i
+
+# Ensure shareA is mounted
+systemctl start opt-linuxia-data-shareA.mount
+mount | grep shareA  # verify
+
+# Fix ownership and permissions
+chown -R gaby:users /opt/linuxia/data/shareA/reports
+chmod -R 775 /opt/linuxia/data/shareA/reports
+
+# If using ACLs:
+setfacl -R -m u:gaby:rwx /opt/linuxia/data/shareA/reports
+setfacl -R -m g:users:rwx /opt/linuxia/data/shareA/reports
+setfacl -R -d -m u:gaby:rwx /opt/linuxia/data/shareA/reports
+setfacl -R -d -m g:users:rwx /opt/linuxia/data/shareA/reports
+
+# Verify write access
+sudo -u gaby touch /opt/linuxia/data/shareA/reports/test-$(date +%s).txt
+ls -la /opt/linuxia/data/shareA/reports/
+```
+
+---
+
+### Mounts Inactive After Reboot
+**Symptom**: `systemctl status opt-linuxia-data-shareA.mount` shows "inactive (dead)"
+
+**Diagnosis**:
+```bash
+# Check if mount is enabled
+systemctl is-enabled opt-linuxia-data-shareA.mount
+
+# Check source directories exist
+ls -ld /srv/linuxia-share/DATA_1TB_A/LinuxIA_SMB
+
+# Check fstab entries
+grep shareA /etc/fstab
+
+# Check systemd mount unit
+systemctl cat opt-linuxia-data-shareA.mount
+```
+
+**Resolution**:
+```bash
+# On VM100, as root:
+sudo -i
+
+# Enable mount to auto-activate
+systemctl enable opt-linuxia-data-shareA.mount
+systemctl enable opt-linuxia-data-shareB.mount
+
+# Start now
+systemctl start opt-linuxia-data-shareA.mount
+systemctl start opt-linuxia-data-shareB.mount
+
+# Verify
+systemctl status opt-linuxia-data-shareA.mount
+mount | grep shareA
+```
+
+**Notes**:
+- Mounts use `nofail` option to prevent boot failures
+- If physical disk (`/mnt/linuxia/DATA_1TB_A`) is unmounted, shareA bind mount will fail
+- Check `/srv/linuxia-share/` intermediate bind mounts are active
 
 ---
 
