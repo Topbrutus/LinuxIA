@@ -5,6 +5,61 @@ This runbook provides step-by-step procedures for installing, verifying, restori
 
 ---
 
+## 📦 Storage Mounts (shareA / shareB)
+
+### Overview
+LinuxIA uses two bind mounts for shared storage:
+- `/opt/linuxia/data/shareA` ← `/srv/linuxia-share/DATA_1TB_A/LinuxIA_SMB`
+- `/opt/linuxia/data/shareB` ← `/srv/linuxia-share/DATA_1TB_B/LinuxIA_SMB`
+
+These are managed via systemd mount units (auto-generated from `/etc/fstab`).
+
+### Activate Mounts (One-Time Setup)
+```bash
+# On VM100, as root:
+sudo -i
+
+systemctl start opt-linuxia-data-shareA.mount
+systemctl start opt-linuxia-data-shareB.mount
+
+# Make persistent (survive reboots):
+systemctl enable opt-linuxia-data-shareA.mount
+systemctl enable opt-linuxia-data-shareB.mount
+```
+
+### Verify Mounts
+```bash
+# Check systemd status:
+systemctl status opt-linuxia-data-shareA.mount
+systemctl status opt-linuxia-data-shareB.mount
+
+# Check actual mounts:
+mount | grep -E "shareA|shareB"
+
+# Expected output:
+# /srv/linuxia-share/DATA_1TB_A/LinuxIA_SMB on /opt/linuxia/data/shareA type none (bind,nofail)
+# /srv/linuxia-share/DATA_1TB_B/LinuxIA_SMB on /opt/linuxia/data/shareB type none (bind,nofail)
+```
+
+### Troubleshooting
+**Symptom**: Mounts are inactive after boot
+```bash
+# Check if source directories exist:
+ls -ld /srv/linuxia-share/DATA_1TB_A/LinuxIA_SMB
+ls -ld /srv/linuxia-share/DATA_1TB_B/LinuxIA_SMB
+
+# Check fstab entries:
+grep shareA /etc/fstab
+
+# Manually mount (if enabled):
+systemctl start opt-linuxia-data-shareA.mount
+```
+
+**Symptom**: Permission denied when writing
+See "Permissions & ACLs" section below (Phase 8 PR2).
+
+---
+
 ## 🔧 Initial Installation
 
 ### Prerequisites
