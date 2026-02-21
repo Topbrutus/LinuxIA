@@ -29,3 +29,8 @@ dialog{border:1px solid var(--line);border-radius:16px;background:#0f1420;color:
 .dlgRow{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
 select{background:#0b0d12;color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:10px}
 .btns{flex-direction:row;justify-content:flex-end;gap:10px}
+.relay-local{color:#8b93a7}
+.relay-waiting{color:#f0a500;border-color:#f0a500}
+.relay-ready{color:#4caf50;border-color:#4caf50}
+.relay-checking{color:#64b5f6;border-color:#64b5f6}
+input[type=text]{width:100%;background:#0b0d12;color:var(--txt);border:1px solid var(--line);border-radius:10px;padding:8px}

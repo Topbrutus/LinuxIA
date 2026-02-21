@@ -5,9 +5,15 @@ const $prompt = document.getElementById("prompt");
 const $sessionTag = document.getElementById("sessionTag");
 const $dlg = document.getElementById("dlg");
 const $sessionList = document.getElementById("sessionList");
+const $relayDlg = document.getElementById("relayDlg");
+const $relayIndicator = document.getElementById("relayIndicator");
 
 let sessionId = null;
 let lastSessions = [];
+let relayEnabled = false;
+let relayProfile = "ami1";
+let relayPollMode = "AUTO";
+let relayState = "LOCAL_RUNNING"; // LOCAL_RUNNING | WAITING_REMOTE | RETURN_READY | RESUMED
 
 const agents = [];
 let autosaveTimer = null;
@@ -203,6 +209,12 @@ ws.onmessage = async (ev)=>{
     setSession(msg.sessionId);
     applyState(msg.state || {});
     if (!agents.length){ newAgent(); newAgent(); saveSession(); }
+    // Restore relay state if session was paused
+    if (msg.state?.relayState && msg.state.relayState !== "LOCAL_RUNNING") {
+      setRelayState(msg.state.relayState);
+    }
+    // Show relay prompt on new/load
+    showRelayModal();
     return;
   }
 
@@ -233,6 +245,28 @@ ws.onmessage = async (ev)=>{
       label: msg.label || "cap",
       dataUrl
     }));
+    return;
+  }
+
+  // ── Relay messages ──
+  if (msg.type === "relay_status") {
+    setRelayState(msg.state);
+    return;
+  }
+
+  if (msg.type === "relay_return_ready") {
+    setRelayState("RETURN_READY");
+    // Show resume prompt
+    if (confirm(`🔄 Retour remote reçu (seq ${msg.seq}). Reprendre la session ?`)) {
+      ws.send(JSON.stringify({ type: "relay_resume", sessionId }));
+      setRelayState("LOCAL_RUNNING");
+    }
+    return;
+  }
+
+  if (msg.type === "relay_error") {
+    setRelayState(relayState === "SENDING" ? "LOCAL_RUNNING" : relayState);
+    alert(`⚠️ Relay erreur: ${msg.error}`);
     return;
   }
 };
@@ -268,5 +302,63 @@ async function captureElementROI(el, roi){
 
   return canvas.toDataURL("image/png");
 }
+
+// ─────────────────────────────────────────────
+// REMOTE RELAY V1.2
+// ─────────────────────────────────────────────
+
+function setRelayState(s) {
+  relayState = s;
+  const labels = {
+    LOCAL_RUNNING:  { text: "LOCAL",          cls: "relay-local"    },
+    WAITING_REMOTE: { text: "WAITING_REMOTE", cls: "relay-waiting"  },
+    RETURN_READY:   { text: "RETURN_READY ✅", cls: "relay-ready"   },
+    SENDING:        { text: "SENDING…",        cls: "relay-checking" },
+    CHECKING:       { text: "CHECKING…",       cls: "relay-checking" },
+    RESUMED:        { text: "RESUMED",          cls: "relay-local"   },
+  };
+  const info = labels[s] || { text: s, cls: "relay-local" };
+  $relayIndicator.textContent = info.text;
+  $relayIndicator.className = `tag ${info.cls}`;
+
+  // Disable prompt when waiting for remote
+  document.getElementById("send").disabled = (s === "WAITING_REMOTE");
+  $prompt.disabled = (s === "WAITING_REMOTE");
+}
+
+function showRelayModal() {
+  $relayDlg.showModal();
+}
+
+// Relay modal buttons
+document.getElementById("relayYes").onclick = () => {
+  document.getElementById("relayOptions").style.display = "block";
+};
+document.getElementById("relayNo").onclick = () => {
+  relayEnabled = false;
+  $relayDlg.close();
+};
+document.getElementById("relayConfirm").onclick = () => {
+  relayEnabled = true;
+  relayProfile = document.getElementById("relayProfile").value.trim() || "ami1";
+  relayPollMode = document.getElementById("relayPollMode").value;
+  $relayDlg.close();
+};
+
+// Top bar relay buttons
+document.getElementById("relaySend").onclick = () => {
+  if (!sessionId) return;
+  ws.send(JSON.stringify({
+    type: "relay_send",
+    sessionId,
+    profile: relayProfile,
+    pollMode: relayPollMode
+  }));
+};
+
+document.getElementById("relayCheck").onclick = () => {
+  if (!sessionId) return;
+  ws.send(JSON.stringify({ type: "relay_check", sessionId }));
+};
 
 ws.onopen = ()=> ws.send(JSON.stringify({ type:"session_new" }));
