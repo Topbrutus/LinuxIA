@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>ChromIAlux</title>
+  <link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <div class="logo">ChromIAlux</div>
+      <div class="sub">Matrix 1→9 • Tokens • Macro par tuile • SSH défaut</div>
+    </div>
+    <div class="bar">
+      <button id="newSession">Nouvelle</button>
+      <button id="resumeSession">Reprendre</button>
+      <button id="saveSession">💾 Save</button>
+      <button id="exportNow">📦 Export+SSH</button>
+      <span id="sessionTag" class="tag"></span>
+    </div>
+  </header>
+
+  <section class="bus">
+    <textarea id="prompt" placeholder="Écris/colle ici… (Enter = lancer)"></textarea>
+    <div class="busBtns">
+      <button id="send">Envoyer ↩</button>
+    </div>
+  </section>
+
+  <main>
+    <div class="controls">
+      <button id="addAgent">+ Tuile</button>
+    </div>
+    <div id="grid" class="grid"></div>
+  </main>
+
+  <dialog id="dlg">
+    <div class="dlgTitle">Session</div>
+    <div class="dlgBody">
+      <div class="dlgRow">
+        <label>Dernières sessions :</label>
+        <select id="sessionList"></select>
+      </div>
+      <div class="dlgRow btns">
+        <button id="loadSel">Charger</button>
+        <button id="closeDlg">Fermer</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="/app.js"></script>
+</body>
+</html>
