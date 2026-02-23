@@ -1,0 +1,53 @@
+{
+  "manifest_version": 3,
+  "name": "LinuxIA Split Terminal Dock",
+  "version": "1.4.0",
+  "description": "Dock terminal ttyd en bas de la page (même page), + scan/selection vers terminal.",
+  "action": {
+    "default_title": "LinuxIA Dock"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:7681/*",
+    "ws://127.0.0.1:7681/*",
+    "https://chatgpt.com/*",
+    "https://*.google.com/*",
+    "https://*/*",
+    "http://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["http://127.0.0.1:7681/*"],
+      "js": ["bridge.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "toggle-dock": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y"
+      },
+      "description": "Toggle terminal dock"
+    },
+    "toggle-scan": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L"
+      },
+      "description": "Toggle scan mode (send selection/copy to terminal)"
+    }
+  }
+}
