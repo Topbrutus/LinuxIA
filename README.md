@@ -5,6 +5,46 @@
 
 # LinuxIA — Proof-First Agent Ops
 
+<!-- LINUXIA:SHOWCASE_CINEMATIC:START -->
+## Showcase Cinematic
+
+<p align="center">
+  <img src="assets/readme/sections/section_01_vision.svg" width="1000" alt="LinuxIA Vision" />
+</p>
+
+<p align="center">
+  <img src="assets/readme/sections/section_02_architecture.svg" width="1000" alt="LinuxIA Architecture" />
+</p>
+
+<p align="center">
+  <img src="assets/readme/sections/section_03_agents.svg" width="1000" alt="LinuxIA Agents" />
+</p>
+
+<p align="center">
+  <img src="assets/readme/sections/section_04_proof.svg" width="1000" alt="LinuxIA Proof" />
+</p>
+
+<p align="center">
+  <img src="assets/readme/sections/section_05_infra.svg" width="1000" alt="LinuxIA Infra" />
+</p>
+
+<p align="center">
+  <img src="assets/readme/sections/section_06_security.svg" width="1000" alt="LinuxIA Security" />
+</p>
+
+<p align="center">
+  <img src="assets/readme/sections/section_07_storage.svg" width="1000" alt="LinuxIA Storage" />
+</p>
+
+<p align="center">
+  <img src="assets/readme/sections/section_08_roadmap.svg" width="1000" alt="LinuxIA Roadmap" />
+</p>
+
+> Echange `assets/readme/gallery/p01.jpg` ... `p08.jpg` pour changer les photos sans toucher au README.
+
+<!-- LINUXIA:SHOWCASE_CINEMATIC:END -->
+
+
 [![Phase 6](https://img.shields.io/badge/Phase_6-✅_Merged-success)](https://github.com/Topbrutus/LinuxIA/pulls?q=is%3Apr+is%3Aclosed)
 [![Verify](https://img.shields.io/badge/verify--platform-OK=24_WARN=0-brightgreen)](docs/runbook.md)
 
