@@ -123,6 +123,7 @@ bash scripts/linuxia-healthcheck.sh
 
 ## 📚 Documentation
 
+- [Inventory](docs/INVENTORY.md) — Complete reference: all scripts, animations, services, and error-free install procedure
 - [Runbook](docs/runbook.md) — Operational procedures for VM100
 - [Project Overview](docs/PROJECT_OVERVIEW.md) — Architecture and design decisions
 - [Security](docs/security.md) — Security principles and configurations
