@@ -495,8 +495,3 @@ To be defined / À définir.
 
 <!-- LINUXIA_CINEMATIC_CARDS_END -->
 
-Curieux bienvenus.
-
-## Tableau de bord (Ops)
-
-👉 Voir: **[docs/tableau.md](docs/tableau.md)** (checks rapides, health reports, CI, release, issues)
