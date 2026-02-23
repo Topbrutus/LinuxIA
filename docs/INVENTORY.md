@@ -71,6 +71,7 @@ Tous les scripts se trouvent dans `scripts/`. Extension : **`.sh`**. Shebang : `
 | Fichier | Rôle |
 |---------|------|
 | `linuxia-phase6.sh` | Script de déploiement phase 6 (healthchecks) |
+| `linuxia-release.sh` | Phase 12 — Génère un tarball de release + un fichier de SHA256 checksums dans `/tmp/linuxia-release-<VERSION>/` ; écrit une preuve dans `docs/verifications/` |
 | `make_pack.sh` | Crée `linuxia_readme_showcase_pack.zip` des assets README |
 
 ---
