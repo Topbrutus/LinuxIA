@@ -132,6 +132,7 @@ bash scripts/linuxia-healthcheck.sh
 - [Verification Scripts](docs/verify.md) — SystemD verification usage
 - [Contributing](CONTRIBUTING.md) — Contribution guidelines and PR checklist
 - [Security Policy](SECURITY.md) — Vulnerability reporting
+- [Risks & Mitigations](RISKS.md) — Risk posture: LLM, infra, CI, governance (Palier 1–2)
 
 ---
 
