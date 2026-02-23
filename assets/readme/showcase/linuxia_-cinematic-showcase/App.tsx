@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { 
   Shield, 
   Cpu, 
@@ -15,8 +15,16 @@ import {
   ChevronRight,
   Monitor,
   Lock,
-  Layers
+  Layers,
+  FileText,
+  BookOpen,
+  Copy,
+  CheckCircle,
+  Brain,
+  Box
 } from 'lucide-react';
+
+import { CoreFeatures } from './components/CoreFeatures';
 
 // --- Constants & Theme ---
 const COLORS = {
@@ -59,6 +67,45 @@ const SectionFrame = ({ children, title, accent = COLORS.cyber }: { children: Re
     {children}
   </div>
 );
+
+const ParallaxImage = ({ src, accent, id }: { src: string, accent: string, id: string }) => {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  // Map scroll progress to vertical movement (-100 to -50 range to keep it centered in the 450px view)
+  const y = useTransform(scrollYProgress, [0, 1], [-100, -20]);
+
+  return (
+    <div ref={containerRef} className="relative aspect-video rounded-xl overflow-hidden border border-white/5">
+      <svg viewBox="0 0 800 450" className="w-full h-full">
+        <defs>
+          <clipPath id={`clip-${id}`}>
+            <rect x="10" y="10" width="780" height="430" rx="20" />
+          </clipPath>
+        </defs>
+        <motion.image 
+          href={src} 
+          width="800" 
+          height="550" // Taller to allow for parallax movement
+          y={y}
+          preserveAspectRatio="xMidYMid slice"
+          clipPath={`url(#clip-${id})`}
+        />
+        {/* Technical Overlays */}
+        <rect x="0" y="0" width="800" height="450" fill="none" stroke={accent} strokeWidth="2" opacity="0.2" />
+        <g opacity="0.5" style={{ color: accent }}>
+          <text x="30" y="40" fill="currentColor" fontSize="12" fontFamily="monospace">REF_ID: {id.toUpperCase()}_001</text>
+          <text x="30" y="60" fill="currentColor" fontSize="10" fontFamily="monospace">LATENCY: 12ms</text>
+          <rect x="740" y="20" width="40" height="40" fill="none" stroke="currentColor" strokeWidth="1" />
+          <path d="M 750 30 L 770 50 M 770 30 L 750 50" stroke="currentColor" strokeWidth="1" />
+        </g>
+      </svg>
+    </div>
+  );
+};
 
 const App: React.FC = () => {
   const [activeSection, setActiveSection] = useState(0);
@@ -203,36 +250,19 @@ const App: React.FC = () => {
                       {section.icon}
                     </div>
                     <div>
-                      <h4 className="text-2xl font-bold mb-2">{section.subtitle}</h4>
+                      <motion.h4 
+                        whileHover={{ x: 5, color: section.accent }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                        className="text-2xl font-bold mb-2 cursor-default"
+                      >
+                        {section.subtitle}
+                      </motion.h4>
                       <p className="text-white/60 leading-relaxed">{section.description}</p>
                     </div>
                   </div>
                   
-                  {/* Image inside SVG Frame */}
-                  <div className="relative aspect-video rounded-xl overflow-hidden border border-white/5">
-                    <svg viewBox="0 0 800 450" className="w-full h-full">
-                      <defs>
-                        <clipPath id={`clip-${section.id}`}>
-                          <rect x="10" y="10" width="780" height="430" rx="20" />
-                        </clipPath>
-                      </defs>
-                      <image 
-                        href={section.image} 
-                        width="800" 
-                        height="450" 
-                        preserveAspectRatio="xMidYMid slice"
-                        clipPath={`url(#clip-${section.id})`}
-                      />
-                      {/* Technical Overlays */}
-                      <rect x="0" y="0" width="800" height="450" fill="none" stroke={section.accent} strokeWidth="2" opacity="0.2" />
-                      <g opacity="0.5" style={{ color: section.accent }}>
-                        <text x="30" y="40" fill="currentColor" fontSize="12" fontFamily="monospace">REF_ID: {section.id.toUpperCase()}_001</text>
-                        <text x="30" y="60" fill="currentColor" fontSize="10" fontFamily="monospace">LATENCY: 12ms</text>
-                        <rect x="740" y="20" width="40" height="40" fill="none" stroke="currentColor" strokeWidth="1" />
-                        <path d="M 750 30 L 770 50 M 770 30 L 750 50" stroke="currentColor" strokeWidth="1" />
-                      </g>
-                    </svg>
-                  </div>
+                  {/* Image inside SVG Frame with Parallax */}
+                  <ParallaxImage src={section.image} accent={section.accent} id={section.id} />
 
                   <button className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest group" style={{ color: section.accent }}>
                     Explore Module <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -242,6 +272,9 @@ const App: React.FC = () => {
             </motion.div>
           ))}
         </div>
+
+        {/* --- Core Features Section --- */}
+        <CoreFeatures />
 
         {/* --- Gallery Section --- */}
         <section className="mt-40">
