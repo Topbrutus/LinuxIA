@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LinuxIA — Showcase</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header class="hero">
+    <img class="hero__banner" src="../assets/readme/banner-linuxia.svg" alt="LinuxIA banner" />
+    <div class="hero__meta">
+      <h1>LinuxIA — Showcase</h1>
+      <p>Photos empilées (draggable) • Vidéos loop • Audio loop • Particules interactives</p>
+      <div class="hero__badges">
+        <span class="badge gold">Proof-first</span>
+        <span class="badge cyan">Multi-VM</span>
+        <span class="badge green">CI</span>
+        <span class="badge purple">Fractal vibe</span>
+      </div>
+    </div>
+    <canvas id="fx"></canvas>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <h2>📸 Photos (stack draggable)</h2>
+      <p class="hint">Drop tes images dans <code>assets/media/photos/</code> et garde les noms <code>LinuxIA_01.jpg ...</code>.</p>
+      <div class="stack" id="photoStack">
+        <img src="../assets/media/photos/LinuxIA_01.jpg" alt="LinuxIA 01" />
+        <img src="../assets/media/photos/LinuxIA_02.jpg" alt="LinuxIA 02" />
+        <img src="../assets/media/photos/LinuxIA_03.jpg" alt="LinuxIA 03" />
+        <img src="../assets/media/photos/LinuxIA_04.jpg" alt="LinuxIA 04" />
+        <img src="../assets/media/photos/LinuxIA_05.jpg" alt="LinuxIA 05" />
+      </div>
+      <p class="hint">Astuce: clique-glisse une photo, elle passe au-dessus. Double-clic = "reset".</p>
+    </section>
+
+    <section class="card">
+      <h2>🎞️ Vidéos</h2>
+      <p class="hint">Drop tes MP4 dans <code>assets/media/videos/</code>.</p>
+      <div class="grid">
+        <div class="panel">
+          <h3>Trailer 01</h3>
+          <video src="../assets/media/videos/Trailer_01.mp4" controls loop playsinline></video>
+        </div>
+        <div class="panel">
+          <h3>Trailer 02</h3>
+          <video src="../assets/media/videos/Trailer_02.mp4" controls loop playsinline></video>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🎧 Audio</h2>
+      <p class="hint">Drop tes MP3 dans <code>assets/media/audio/</code>.</p>
+      <audio src="../assets/media/audio/Theme_01.mp3" controls loop></audio>
+    </section>
+
+    <section class="card">
+      <h2>🧩 Notes</h2>
+      <ul>
+        <li>Le README GitHub reste la porte d'entrée; cette page gère le "lourd" (vidéo/audio/interaction).</li>
+        <li>Si ça chauffe trop: touche <kbd>M</kbd> pour réduire les particules.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>

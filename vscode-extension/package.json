@@ -1,0 +1,73 @@
+{
+  "name": "linuxia-chatgpt",
+  "displayName": "LinuxIA — ChatGPT Bridge",
+  "description": "Pont entre VS Code, ChatGPT et l'orchestrateur LinuxIA",
+  "version": "0.1.0",
+  "publisher": "linuxia",
+  "license": "MIT",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "linuxia.openChatGPT",
+        "title": "Ouvrir ChatGPT",
+        "category": "LinuxIA",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "linuxia.sendFileContext",
+        "title": "Envoyer le contexte du fichier",
+        "category": "LinuxIA",
+        "icon": "$(file-code)"
+      },
+      {
+        "command": "linuxia.sendGitDiff",
+        "title": "Envoyer le Git Diff",
+        "category": "LinuxIA",
+        "icon": "$(git-pull-request)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        { "command": "linuxia.openChatGPT", "group": "navigation@1" },
+        { "command": "linuxia.sendFileContext", "group": "navigation@2" },
+        { "command": "linuxia.sendGitDiff", "group": "navigation@3" }
+      ],
+      "commandPalette": [
+        { "command": "linuxia.openChatGPT" },
+        { "command": "linuxia.sendFileContext" },
+        { "command": "linuxia.sendGitDiff" }
+      ]
+    },
+    "configuration": {
+      "title": "LinuxIA — ChatGPT Bridge",
+      "properties": {
+        "linuxia.chatgptUrl": {
+          "type": "string",
+          "default": "https://chat.openai.com",
+          "description": "URL de l'assistant IA (ChatGPT, Claude, Gemini…)"
+        },
+        "linuxia.sessionsDir": {
+          "type": "string",
+          "default": "/opt/linuxia/sessions",
+          "description": "Dossier où archiver les contextes envoyés"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --minify",
+    "watch": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --sourcemap --watch",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.0.0",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.7.0"
+  }
+}

@@ -29,3 +29,18 @@ cd/
 ssh/
 sudo
 sudo/
+
+# Runtime mailbox (données dynamiques, non versionées)
+mailbox/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Node / vscode-extension
+vscode-extension/node_modules/
+vscode-extension/dist/
+
+# Python venv
+wow/.venv/

@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>LinuxIA Dock Terminal - Options</title>
+  <style>
+    body{font:14px system-ui, sans-serif; margin:24px; max-width:900px;}
+    label{display:block; margin:14px 0 6px; font-weight:700;}
+    input{width:100%; padding:10px; border-radius:10px; border:1px solid #ccc;}
+    .row{display:flex; gap:14px;}
+    .row>div{flex:1;}
+    button{margin-top:16px; padding:10px 12px; border-radius:10px; border:1px solid #333; background:#111; color:#fff; cursor:pointer;}
+    code{background:#f4f4f4; padding:2px 6px; border-radius:6px;}
+  </style>
+</head>
+<body>
+  <h2>LinuxIA Dock Terminal — Options</h2>
+  <label>URL du terminal (ttyd)</label>
+  <input id="termUrl" placeholder="http://127.0.0.1:7681/"/>
+  <div class="row">
+    <div>
+      <label>Ratio hauteur ChatGPT (0.50 à 0.80)</label>
+      <input id="ratio" placeholder="0.62"/>
+    </div>
+    <div>
+      <label>Gap pixels entre fenêtres</label>
+      <input id="gap" placeholder="6"/>
+    </div>
+  </div>
+  <button id="save">Sauver</button>
+  <p>Raccourci clavier: <code>chrome://extensions/shortcuts</code> → "LinuxIA Dock Terminal".</p>
+  <script src="options.js"></script>
+</body>
+</html>
