@@ -1,42 +1,92 @@
 # LinuxIA — Proof-First Agent Ops
 
-[![Phase 6](https://img.shields.io/badge/Phase_6-✅_Merged-success)](https://github.com/Topbrutus/LinuxIA/pulls?q=is%3Apr+is%3Aclosed) [![Verify](https://img.shields.io/badge/verify--platform-OK=24_WARN=0-brightgreen)](docs/runbook.md)
+[![Phase 6](https://img.shields.io/badge/Phase_6-✅_Merged-success)](https://github.com/Topbrutus/LinuxIA/pulls?q=is%3Apr+is%3Aclosed)
+[![Verify](https://img.shields.io/badge/verify--platform-OK=24_WARN=0-brightgreen)](docs/runbook.md)
 
 **Proof-first multi-VM orchestration** (Proxmox + openSUSE + systemd + GitHub)
 
-## 🎯 What
+---
+
+## What
 
 Automated infrastructure ops with **mandatory proof generation**:
+
 - Every change → timestamped evidence
 - Scripts: bash + shellcheck + `set -euo pipefail`
 - Systemd timers (configsnap, healthchecks, reports)
 - GitHub PR workflow + CI
 
-## 🏗️ Architecture
+---
+
+## Architecture
 
 - **VM100** (`vm100-factory`): Main repo, storage, Samba, health reports
-- **VM101** (`vm101-layer2`): CIFS client, independent proofs  
+- **VM101** (`vm101-layer2`): CIFS client, independent proofs
 - **VM102** (`vm102-tool`): Sandbox, tests, API orchestrator
 
-## 🚀 Quick Start
+---
+
+## Quick Start
 
 ```bash
 git clone git@github.com:Topbrutus/LinuxIA.git /opt/linuxia
 cd /opt/linuxia
-bash scripts/verify-platform.sh  # Should show: OK=24 WARN=0 FAIL=0
+bash scripts/verify-platform.sh
+# Should show: OK=24 WARN=0 FAIL=0
 ```
 
-## 📊 Status
+---
 
-**Latest:** Phase 6 merged (health reports + systemd timers)  
-**Proof:** See [docs/status.md](docs/status.md)  
-**Runbook:** [docs/runbook.md](docs/runbook.md)  
-**Checklists:** [docs/checklists/](docs/checklists/)
+## Status
 
-## 🤝 Contribute
+* **Latest:** Phase 6 merged (health reports + systemd timers)
+* **Proof:** See [docs/status.md](docs/status.md)
+* **Runbook:** [docs/runbook.md](docs/runbook.md)
+* **Checklists:** [docs/checklists/](docs/checklists/)
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) | [Good First Issues](https://github.com/Topbrutus/LinuxIA/labels/good%20first%20issue)
+---
 
-## 📜 License
+## Gallery
+
+<p align="center">
+  <img src="pour_copilot/photos/LinuxIA_02.jpg" width="220" alt="LinuxIA_02" />
+  <img src="pour_copilot/photos/LinuxIA_03.jpg" width="220" alt="LinuxIA_03" />
+  <img src="pour_copilot/photos/LinuxIA_04.jpg" width="220" alt="LinuxIA_04" />
+  <img src="pour_copilot/photos/LinuxIA_05.jpg" width="220" alt="LinuxIA_05" />
+</p>
+
+<p align="center">
+  <img src="pour_copilot/photos/LinuxIA_06.jpg" width="220" alt="LinuxIA_06" />
+  <img src="pour_copilot/photos/LinuxIA_07.jpg" width="220" alt="LinuxIA_07" />
+  <img src="pour_copilot/photos/LinuxIA_08.jpg" width="220" alt="LinuxIA_08" />
+  <img src="pour_copilot/photos/LinuxIA_09.jpg" width="220" alt="LinuxIA_09" />
+</p>
+
+<p align="center">
+  <img src="pour_copilot/photos/LinuxIA_10.jpg" width="220" alt="LinuxIA_10" />
+  <img src="pour_copilot/photos/LinuxIA_11.jpg" width="220" alt="LinuxIA_11" />
+  <img src="pour_copilot/photos/LinuxIA_12.jpg" width="220" alt="LinuxIA_12" />
+</p>
+
+---
+
+## Media
+
+- 🎵 Theme: [Theme_01.mp3](pour_copilot/audio/Theme_01.mp3)
+- 🎬 Trailer 01: [Trailer_01.mp4](pour_copilot/videos/Trailer_01.mp4)
+- 🎬 Trailer 02: [Trailer_02.mp4](pour_copilot/videos/Trailer_02.mp4)
+
+[![Trailer 01](pour_copilot/photos/LinuxIA_02.jpg)](pour_copilot/videos/Trailer_01.mp4)
+
+---
+
+## Contribute
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) |
+[Good First Issues](https://github.com/Topbrutus/LinuxIA/labels/good%20first%20issue)
+
+---
+
+## License
 
 To be determined
