@@ -9,6 +9,8 @@
 
 **LinuxIA** is a self-hosted, proof-first multi-agent AI platform running on Proxmox VE. Every infrastructure change generates timestamped evidence stored in append-only logs and shared storage. AI proposes — humans validate.
 
+> 🆕 **New here?** → [**docs/start-here.md**](docs/start-here.md) — platform overview, prerequisites, and 3-command quickstart.
+
 ---
 
 ## 🚀 Quick Start
