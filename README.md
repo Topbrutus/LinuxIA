@@ -80,6 +80,12 @@ bash scripts/verify-platform.sh
 
 ---
 
+## Guides
+
+- [Mode d'emploi — Linux Mint 22.2 → Agent maison](docs/Mode_emploi_LinuxMint22_2_Agent_Maison.md)
+
+---
+
 ## Contribute
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) |
