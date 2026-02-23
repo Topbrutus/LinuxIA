@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+<style>
+/* LinuxIA label contrast patch */
+text{
+  paint-order: stroke fill;
+  stroke: rgba(0,0,0,0.95);
+  stroke-width: 10;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+</style>
+
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9FE7FF" stop-opacity="0.95"/>
+      <stop offset="0.5" stop-color="#FFD166" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#20E3B2" stop-opacity="0.95"/>
+      <animate attributeName="x1" values="0;1;0" dur="3.7s" repeatCount="indefinite"/>
+    </linearGradient>
+  </defs>
+
+  <!-- puce -->
+  <rect x="6" y="6" width="12" height="12" rx="2.6" fill="rgba(11,15,26,.35)" stroke="url(#g)" stroke-width="1.4"/>
+  <!-- pins -->
+  <g opacity="0.9" stroke="url(#g)" stroke-width="1.2" stroke-linecap="round">
+    <path d="M8 3v3M12 3v3M16 3v3"/>
+    <path d="M8 18v3M12 18v3M16 18v3"/>
+    <path d="M3 8h3M3 12h3M3 16h3"/>
+    <path d="M18 8h3M18 12h3M18 16h3"/>
+  </g>
+
+  <!-- circuits animés -->
+  <g opacity="0.85" stroke="#9FE7FF" stroke-width="1" fill="none">
+    <path d="M8 12h8" stroke-dasharray="2 6">
+      <animate attributeName="stroke-dashoffset" values="0;16" dur="1.6s" repeatCount="indefinite"/>
+    </path>
+    <path d="M12 8v8" stroke="#FFD166" stroke-dasharray="2 6">
+      <animate attributeName="stroke-dashoffset" values="0;16" dur="2.1s" repeatCount="indefinite"/>
+    </path>
+  </g>
+</svg>

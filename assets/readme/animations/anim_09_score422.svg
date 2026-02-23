@@ -1,0 +1,286 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="520" viewBox="0 0 1440 520" preserveAspectRatio="none">
+<style>
+/* LinuxIA label contrast patch */
+text{
+  paint-order: stroke fill;
+  stroke: rgba(0,0,0,0.95);
+  stroke-width: 10;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.label text{fill:#fff; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;}
+</style>
+
+  <defs>
+    <!-- Nebula -->
+    <linearGradient id="spaceG" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#050710"/>
+      <stop offset="18%" stop-color="#0A0F22"/>
+      <stop offset="36%" stop-color="#120B2A"/>
+      <stop offset="58%" stop-color="#071A2A"/>
+      <stop offset="100%" stop-color="#050710"/>
+      <animate attributeName="x1" values="0;1;0" dur="60s" repeatCount="indefinite"/>
+    </linearGradient>
+
+    <radialGradient id="nebulaG1" cx="35%" cy="50%" r="70%">
+      <stop offset="0" stop-color="#FF3A1A" stop-opacity="0.25"/>
+      <stop offset="35%" stop-color="#FF8A00" stop-opacity="0.22"/>
+      <stop offset="55%" stop-color="#00C8FF" stop-opacity="0.18"/>
+      <stop offset="80%" stop-color="#6A2CFF" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#050710" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="nebulaG2" cx="70%" cy="40%" r="75%">
+      <stop offset="0" stop-color="#00C8FF" stop-opacity="0.22"/>
+      <stop offset="30%" stop-color="#6A2CFF" stop-opacity="0.18"/>
+      <stop offset="55%" stop-color="#FF8A00" stop-opacity="0.16"/>
+      <stop offset="85%" stop-color="#FF3A1A" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#050710" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="nebulaA" x="-30%" y="-40%" width="160%" height="180%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.0032" numOctaves="4" seed="8" result="t">
+        <animate attributeName="seed" values="8;12;5;8" dur="180s" repeatCount="indefinite"/>
+      </feTurbulence>
+      <feColorMatrix in="t" type="matrix"
+        values="1.2 0 0 0 -0.05  0 1.1 0 0 -0.08  0 0 1.3 0 -0.06  0 0 0 1 0" result="c"/>
+      <feGaussianBlur in="c" stdDeviation="0.9" result="b"/>
+      <feComposite in="b" in2="SourceGraphic" operator="in"/>
+    </filter>
+
+    <filter id="nebulaB" x="-30%" y="-40%" width="160%" height="180%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.0021" numOctaves="5" seed="3" result="t">
+        <animate attributeName="seed" values="3;9;15;3" dur="220s" repeatCount="indefinite"/>
+      </feTurbulence>
+      <feColorMatrix in="t" type="matrix"
+        values="1.25 0 0 0 -0.06  0 1.05 0 0 -0.10  0 0 1.35 0 -0.08  0 0 0 1 0" result="c"/>
+      <feGaussianBlur in="c" stdDeviation="1.1" result="b"/>
+      <feComposite in="b" in2="SourceGraphic" operator="in"/>
+    </filter>
+
+    <!-- Sun -->
+    <radialGradient id="sunG" cx="45%" cy="35%" r="65%">
+      <stop offset="0" stop-color="#FFF2A6" stop-opacity="1"/>
+      <stop offset="20%" stop-color="#FFD700" stop-opacity="0.98"/>
+      <stop offset="42%" stop-color="#FF8A00" stop-opacity="0.92"/>
+      <stop offset="66%" stop-color="#FF3A1A" stop-opacity="0.70"/>
+      <stop offset="100%" stop-color="#050710" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="sunGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feColorMatrix in="b" type="matrix"
+        values="1 0 0 0 0.25  0 1 0 0 0.18  0 0 1 0 0.05  0 0 0 0.9 0" result="c"/>
+      <feMerge>
+        <feMergeNode in="c"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Text glow -->
+    <filter id="txtGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="3.5" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Covalent balcony patterns -->
+    <pattern id="covalentHex" width="44" height="38" patternUnits="userSpaceOnUse">
+      <path d="M11 0 L33 0 L44 19 L33 38 L11 38 L0 19 Z" fill="none" stroke="rgba(0,200,255,0.10)" stroke-width="1"/>
+      <path d="M11 0 L0 19 M33 0 L44 19 M11 38 L0 19 M33 38 L44 19" fill="none" stroke="rgba(255,215,0,0.06)" stroke-width="1" opacity="0.8"/>
+    </pattern>
+
+    <pattern id="solarCells" width="36" height="22" patternUnits="userSpaceOnUse">
+      <rect width="36" height="22" fill="rgba(7,10,18,0.30)"/>
+      <path d="M0 0 H36 M0 11 H36 M0 22 H36" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+      <path d="M0 0 V22 M18 0 V22 M36 0 V22" stroke="rgba(0,200,255,0.10)" stroke-width="1"/>
+    </pattern>
+
+    <linearGradient id="balconyTint" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="rgba(0,200,255,0.12)"/>
+      <stop offset="40%" stop-color="rgba(255,215,0,0.10)"/>
+      <stop offset="70%" stop-color="rgba(115,186,37,0.09)"/>
+      <stop offset="100%" stop-color="rgba(255,138,0,0.09)"/>
+    </linearGradient>
+
+    <linearGradient id="balconyEdge" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="rgba(0,200,255,0.26)"/>
+      <stop offset="50%" stop-color="rgba(255,215,0,0.22)"/>
+      <stop offset="100%" stop-color="rgba(115,186,37,0.18)"/>
+    </linearGradient>
+
+    <!-- Paths -->
+    <path id="slingshot" d="M220 300 C 420 120, 610 410, 720 260
+                            C 820 130, 980 160, 1120 240
+                            S 1320 360, 1440 210" fill="none"/>
+    <path id="orbA" d="M720 260 m -90 0 a 90 58 0 1 0 180 0 a 90 58 0 1 0 -180 0" fill="none"/>
+    <path id="orbB" d="M720 260 m -130 0 a 130 84 0 1 1 260 0 a 130 84 0 1 1 -260 0" fill="none"/>
+    <path id="orbC" d="M720 260 m -170 0 a 170 112 0 1 0 340 0 a 170 112 0 1 0 -340 0" fill="none"/>
+
+    <!-- Ship -->
+    <g id="ship">
+      <ellipse cx="0" cy="0" rx="10" ry="3.6" fill="rgba(255,255,255,.10)"/>
+      <ellipse cx="0" cy="-2.6" rx="5.5" ry="2.2" fill="rgba(0,200,255,.22)"/>
+      <ellipse cx="0" cy="0" rx="10" ry="3.6" fill="none" stroke="rgba(255,215,0,.45)" stroke-width="0.9"/>
+      <circle cx="-4.5" cy="0.6" r="0.9" fill="#FFD700" opacity="0.9"/>
+      <circle cx="0" cy="0.9" r="0.9" fill="#00C8FF" opacity="0.9"/>
+      <circle cx="4.5" cy="0.6" r="0.9" fill="#FF8A00" opacity="0.9"/>
+      <animate attributeName="opacity" values="0.75;1;0.8;1;0.75" dur="6.7s" repeatCount="indefinite"/>
+    </g>
+
+    <!-- Ant particle -->
+    <g id="ant">
+      <circle r="1.7" fill="#FF8A00" opacity="0.95"/>
+      <circle r="0.9" fill="#00C8FF" opacity="0.50"/>
+    </g>
+  </defs>
+
+  <!-- Base -->
+  <rect x="-80" y="-80" width="1600" height="680" fill="url(#spaceG)"/>
+  <rect x="-80" y="-80" width="1600" height="680" fill="url(#nebulaG1)" filter="url(#nebulaA)" opacity="0.75">
+    <animate attributeName="opacity" values="0.62;0.82;0.66;0.78;0.62" dur="90s" repeatCount="indefinite"/>
+  </rect>
+  <rect x="-80" y="-80" width="1600" height="680" fill="url(#nebulaG2)" filter="url(#nebulaB)" opacity="0.70">
+    <animate attributeName="opacity" values="0.55;0.80;0.60;0.76;0.55" dur="110s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- Stars -->
+  <g opacity="0.85">
+    <circle cx="120" cy="90" r="1.3" fill="#EAF7FF"><animate attributeName="opacity" values="0.2;1;0.3" dur="5.9s" repeatCount="indefinite"/></circle>
+    <circle cx="520" cy="80" r="1.2" fill="#FFD700"><animate attributeName="opacity" values="0.2;1;0.25" dur="6.3s" repeatCount="indefinite"/></circle>
+    <circle cx="980" cy="120" r="1.1" fill="#00C8FF"><animate attributeName="opacity" values="0.2;1;0.25" dur="8.1s" repeatCount="indefinite"/></circle>
+    <circle cx="1180" cy="210" r="1.0" fill="#FF8A00"><animate attributeName="opacity" values="0.2;1;0.25" dur="6.9s" repeatCount="indefinite"/></circle>
+    <circle cx="1320" cy="90" r="1.2" fill="#EAF7FF"><animate attributeName="opacity" values="0.2;1;0.25" dur="9.7s" repeatCount="indefinite"/></circle>
+  </g>
+
+  <!-- Frame -->
+  <rect x="10" y="10" width="1420" height="500" rx="28" fill="none" stroke="#00C8FF" stroke-width="10" opacity="0.18"/>
+  <rect x="16" y="16" width="1408" height="488" rx="26" fill="none" stroke="#FFD700" stroke-width="4" opacity="0.16" stroke-dasharray="20 12">
+    <animate attributeName="stroke-dashoffset" values="0;420" dur="9.7s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.10;0.22;0.12;0.26;0.16" dur="13s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- Sun -->
+  <g filter="url(#sunGlow)">
+    <circle cx="720" cy="260" r="66" fill="url(#sunG)" opacity="0.95">
+      <animate attributeName="r" values="62;74;66;72;62" dur="12s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.86;1;0.90;1;0.86" dur="10s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="720" cy="260" r="96" fill="none" stroke="#FF8A00" stroke-width="2.2" opacity="0.28" stroke-dasharray="14 18">
+      <animate attributeName="stroke-dashoffset" values="0;420" dur="24s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="720" cy="260" r="126" fill="none" stroke="#00C8FF" stroke-width="1.6" opacity="0.16" stroke-dasharray="6 20">
+      <animate attributeName="stroke-dashoffset" values="420;0" dur="30s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Orbs + names -->
+  <g font-family="ui-sans-serif, system-ui, Segoe UI, Roboto" font-size="12" fill="#EAF7FF" opacity="0.95">
+    <g>
+      <circle r="6" fill="#00C8FF" opacity="0.92"/>
+      <g class="label">
+  <rect x="4.00" y="-12.00" width="111.20" height="20.00" rx="4" fill="#000" opacity="0.55" />
+  <text x="10" y="4" fill="#B9FFEE" opacity="0.95">FourmIAlux</text>
+</g>
+      <animateMotion dur="26s" repeatCount="indefinite" rotate="0"><mpath href="#orbA"/></animateMotion>
+    </g>
+    <g>
+      <circle r="6" fill="#FFD700" opacity="0.90"/>
+      <g class="label">
+  <rect x="4.00" y="-12.00" width="111.20" height="20.00" rx="4" fill="#000" opacity="0.55" />
+  <text x="10" y="4" fill="#FFD700" opacity="0.95">ChromIAlux</text>
+</g>
+      <animateMotion dur="34s" repeatCount="indefinite" rotate="0"><mpath href="#orbB"/></animateMotion>
+    </g>
+    <g>
+      <circle r="6" fill="#73BA25" opacity="0.90"/>
+      <g class="label">
+  <rect x="4.00" y="-12.00" width="111.20" height="20.00" rx="4" fill="#000" opacity="0.55" />
+  <text x="10" y="4" fill="#73BA25" opacity="0.95">Trio LuxIA</text>
+</g>
+      <animateMotion dur="42s" repeatCount="indefinite" rotate="0"><mpath href="#orbC"/></animateMotion>
+    </g>
+  </g>
+
+  <!-- Ants slingshot -->
+  <g opacity="0.95">
+    <use href="#ant"><animateMotion dur="7.7s" repeatCount="indefinite" rotate="auto"><mpath href="#slingshot"/></animateMotion></use>
+    <use href="#ant"><animateMotion dur="8.3s" begin="-1.2s" repeatCount="indefinite" rotate="auto"><mpath href="#slingshot"/></animateMotion></use>
+    <use href="#ant"><animateMotion dur="9.1s" begin="-2.4s" repeatCount="indefinite" rotate="auto"><mpath href="#slingshot"/></animateMotion></use>
+    <use href="#ant"><animateMotion dur="7.1s" begin="-3.3s" repeatCount="indefinite" rotate="auto"><mpath href="#slingshot"/></animateMotion></use>
+  </g>
+
+  <!-- 10 ships (park/fade cycle) -->
+  <g opacity="0.95">
+    <g opacity="0"><use href="#ship"/>
+      <animate attributeName="opacity" values="0;1;1;0" dur="70s" begin="0s" keyTimes="0;0.10;0.60;0.78" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="translate" values="720 260;720 260" dur="70s" begin="0s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" additive="sum" type="rotate" values="-30 0 0;-30 0 0" dur="70s" begin="0s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" additive="sum" type="translate" values="190 0;190 0" dur="70s" begin="0s" repeatCount="indefinite"/>
+    </g>
+    <g opacity="0"><use href="#ship"/>
+      <animate attributeName="opacity" values="0;1;1;0" dur="70s" begin="6s" keyTimes="0;0.10;0.60;0.78" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="translate" values="720 260;720 260" dur="70s" begin="6s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" additive="sum" type="rotate" values="10 0 0;10 0 0" dur="70s" begin="6s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" additive="sum" type="translate" values="210 0;210 0" dur="70s" begin="6s" repeatCount="indefinite"/>
+    </g>
+    <g opacity="0"><use href="#ship"/>
+      <animate attributeName="opacity" values="0;1;1;0" dur="70s" begin="12s" keyTimes="0;0.10;0.60;0.78" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="translate" values="720 260;720 260" dur="70s" begin="12s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" additive="sum" type="rotate" values="80 0 0;80 0 0" dur="70s" begin="12s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" additive="sum" type="translate" values="215 0;215 0" dur="70s" begin="12s" repeatCount="indefinite"/>
+    </g>
+    <g opacity="0"><use href="#ship"/>
+      <animate attributeName="opacity" values="0;1;1;0" dur="70s" begin="18s" keyTimes="0;0.10;0.60;0.78" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="translate" values="720 260;720 260" dur="70s" begin="18s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" additive="sum" type="rotate" values="155 0 0;155 0 0" dur="70s" begin="18s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" additive="sum" type="translate" values="220 0;220 0" dur="70s" begin="18s" repeatCount="indefinite"/>
+    </g>
+  </g>
+
+  <!-- Balcony (lisibilité + vibe “édifice”) -->
+  <g>
+    <path d="M250 108 H1190 Q1210 108 1210 128 V276 Q1210 296 1190 296 H250 Q230 296 230 276 V128 Q230 108 250 108 Z"
+          fill="rgba(7,10,18,0.36)" opacity="0.96"/>
+    <path d="M250 108 H1190 Q1210 108 1210 128 V276 Q1210 296 1190 296 H250 Q230 296 230 276 V128 Q230 108 250 108 Z"
+          fill="url(#solarCells)" opacity="0.42"/>
+    <path d="M250 108 H1190 Q1210 108 1210 128 V276 Q1210 296 1190 296 H250 Q230 296 230 276 V128 Q230 108 250 108 Z"
+          fill="url(#covalentHex)" opacity="0.33"/>
+    <path d="M250 108 H1190 Q1210 108 1210 128 V276 Q1210 296 1190 296 H250 Q230 296 230 276 V128 Q230 108 250 108 Z"
+          fill="url(#balconyTint)" opacity="0.85"/>
+
+    <path d="M250 112 H1190 Q1206 112 1206 128 V276 Q1206 292 1190 292 H250 Q234 292 234 276 V128 Q234 112 250 112 Z"
+          fill="none" stroke="rgba(255,215,0,0.26)" stroke-width="1.8"
+          stroke-dasharray="16 14" opacity="0.55">
+      <animate attributeName="stroke-dashoffset" values="0;520" dur="22s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.35;0.65;0.42;0.70;0.55" dur="28s" repeatCount="indefinite"/>
+    </path>
+
+    <animateTransform attributeName="transform" type="translate"
+      values="0 0; 0 -1.2; 0 0; 0 1.2; 0 0" dur="24s" repeatCount="indefinite"/>
+  </g>
+
+  <!-- Text -->
+  <g filter="url(#txtGlow)" font-family="ui-sans-serif, system-ui, Segoe UI, Roboto">
+    <g class="label">
+  <rect x="714.00" y="92.00" width="350.52" height="97.50" rx="4" fill="#000" opacity="0.55" />
+  <text x="720" y="170" text-anchor="middle" font-size="78" fill="#EAF7FF" opacity="0.98" letter-spacing="1.5">LinuxIA</text>
+</g>
+    <g class="label">
+  <rect x="714.00" y="196.00" width="715.08" height="22.50" rx="4" fill="#000" opacity="0.55" />
+  <text x="720" y="214" text-anchor="middle" font-size="18" fill="#B9FFEE" opacity="0.94">
+      Proof-first • Multi-VM • CI • Audit • Orchestration
+    </text>
+</g>
+    <g class="label">
+  <rect x="714.00" y="230.00" width="610.92" height="17.50" rx="4" fill="#000" opacity="0.55" />
+  <text x="720" y="244" text-anchor="middle" font-size="14" fill="#FFD700" opacity="0.90">
+      Aucun changement sans preuve — seulement ce qui est fait.
+    </text>
+</g>
+  </g>
+</svg>

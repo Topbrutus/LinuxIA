@@ -1,0 +1,25 @@
+<svg width="100%" height="72" viewBox="0 0 1440 72" preserveAspectRatio="none">
+<style>
+/* LinuxIA label contrast patch */
+text{
+  paint-order: stroke fill;
+  stroke: rgba(0,0,0,0.95);
+  stroke-width: 10;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+</style>
+
+  <defs>
+    <linearGradient id="scanG" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.26"/>
+      <stop offset="50%" stop-color="#00C8FF" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#73BA25" stop-opacity="0.10"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="52" height="72" fill="url(#scanG)" opacity="0.7">
+    <animate attributeName="x" from="-60" to="1440" dur="18s" repeatCount="indefinite"/>
+  </rect>
+</svg>

@@ -85,6 +85,15 @@ bash scripts/verify-platform.sh
 </p>
 
 
+## Animations SVG
+
+> Sélection des meilleures animations (SVG). Clique pour ouvrir en grand.
+
+[![anim_01_score90.svg](assets/readme/animations/anim_01_score90.svg)](assets/readme/animations/anim_01_score90.svg) | [![anim_02_score11.svg](assets/readme/animations/anim_02_score11.svg)](assets/readme/animations/anim_02_score11.svg) | [![anim_03_score9.svg](assets/readme/animations/anim_03_score9.svg)](assets/readme/animations/anim_03_score9.svg)
+[![anim_04_score15.svg](assets/readme/animations/anim_04_score15.svg)](assets/readme/animations/anim_04_score15.svg) | [![anim_05_score25.svg](assets/readme/animations/anim_05_score25.svg)](assets/readme/animations/anim_05_score25.svg) | [![anim_06_score175.svg](assets/readme/animations/anim_06_score175.svg)](assets/readme/animations/anim_06_score175.svg)
+[![anim_07_score11.svg](assets/readme/animations/anim_07_score11.svg)](assets/readme/animations/anim_07_score11.svg) | [![anim_08_score9.svg](assets/readme/animations/anim_08_score9.svg)](assets/readme/animations/anim_08_score9.svg) | [![anim_09_score422.svg](assets/readme/animations/anim_09_score422.svg)](assets/readme/animations/anim_09_score422.svg)
+
+
 ## Contribute
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) |
