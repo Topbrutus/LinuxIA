@@ -159,7 +159,7 @@ bash scripts/linuxia-healthcheck.sh
 ## ✨ Animations
 
 <p align="center">
-  <img src="assets/readme/animations/banner-linuxia.svg" width="860" alt="LinuxIA banner" />
+  <img src="assets/readme/animations/cine-mission-control.svg" width="860" alt="LinuxIA mission control" />
 </p>
 
 <p align="center">
