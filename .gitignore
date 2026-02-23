@@ -29,3 +29,9 @@ cd/
 ssh/
 sudo
 sudo/
+
+# Local / generated / not tracked
+apps/
+mailbox/
+vscode-extension/
+wow/
