@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/readme/banner-linuxia.svg" width="1000" alt="LinuxIA animated banner" />
+</p>
+
 # LinuxIA — Proof-First Agent Ops
 
 [![Phase 6](https://img.shields.io/badge/Phase_6-✅_Merged-success)](https://github.com/Topbrutus/LinuxIA/pulls?q=is%3Apr+is%3Aclosed)
@@ -76,15 +80,34 @@ bash scripts/verify-platform.sh
 - 🎬 Trailer 01: [Trailer_01.mp4](pour_copilot/videos/Trailer_01.mp4)
 - 🎬 Trailer 02: [Trailer_02.mp4](pour_copilot/videos/Trailer_02.mp4)
 
-[![Trailer 01](pour_copilot/photos/LinuxIA_02.jpg)](pour_copilot/videos/Trailer_01.mp4)
-
----
-
 ## Guides
 
 - [Mode d'emploi — Linux Mint 22.2 → Agent maison](docs/Mode_emploi_LinuxMint22_2_Agent_Maison.md)
 
 ---
+
+## Gallery (temporary small thumbnails)
+
+<p align="center">
+  <img src="pour_copilot/photos/LinuxIA_02.jpg" width="220" alt="LinuxIA_02" />
+  <img src="pour_copilot/photos/LinuxIA_03.jpg" width="220" alt="LinuxIA_03" />
+  <img src="pour_copilot/photos/LinuxIA_04.jpg" width="220" alt="LinuxIA_04" />
+  <img src="pour_copilot/photos/LinuxIA_05.jpg" width="220" alt="LinuxIA_05" />
+</p>
+
+<p align="center">
+  <img src="pour_copilot/photos/LinuxIA_06.jpg" width="220" alt="LinuxIA_06" />
+  <img src="pour_copilot/photos/LinuxIA_07.jpg" width="220" alt="LinuxIA_07" />
+  <img src="pour_copilot/photos/LinuxIA_08.jpg" width="220" alt="LinuxIA_08" />
+  <img src="pour_copilot/photos/LinuxIA_09.jpg" width="220" alt="LinuxIA_09" />
+</p>
+
+<p align="center">
+  <img src="pour_copilot/photos/LinuxIA_10.jpg" width="220" alt="LinuxIA_10" />
+  <img src="pour_copilot/photos/LinuxIA_11.jpg" width="220" alt="LinuxIA_11" />
+  <img src="pour_copilot/photos/LinuxIA_12.jpg" width="220" alt="LinuxIA_12" />
+</p>
+
 
 ## Contribute
 
