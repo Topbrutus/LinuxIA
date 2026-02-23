@@ -1,0 +1,12 @@
+[Unit]
+Description=LinuxIA shareA automount
+Documentation=https://github.com/Topbrutus/LinuxIA
+After=mnt-linuxia-DATA_1TB_A.mount
+Requires=opt-linuxia-data-shareA.mount
+
+[Automount]
+Where=/opt/linuxia/data/shareA
+TimeoutIdleSec=300
+
+[Install]
+WantedBy=multi-user.target

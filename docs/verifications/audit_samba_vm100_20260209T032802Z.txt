@@ -1,0 +1,182 @@
+
+=== Preflight (PTY) ===
+pty.nr=3058 pty.max=4096 (74%)
+
+=== Header ===
+Timestamp(local): 2026-02-08T22:28:02-05:00
+Timestamp(UTC):   2026-02-09T03:28:02+00:00
+Host short:       vm100-factory
+Host fqdn:        vm100
+smb.conf:         /etc/samba/smb.conf
+force:            false
+
+=== OS / kernel ===
+ Static hostname: vm100-factory
+       Icon name: computer-vm
+         Chassis: vm 🖴
+      Machine ID: 4ad1faaf6d0e447c9cd18801cce5ead4
+         Boot ID: cbb9f18cd86248429d83dca55ea49014
+    Product UUID: 4ad1faaf-6d0e-447c-9cd1-8801cce5ead4
+  Virtualization: kvm
+Operating System: openSUSE Leap 16.0
+     CPE OS Name: cpe:/o:opensuse:leap:16.0
+          Kernel: Linux 6.12.0-160000.9-default
+    Architecture: x86-64
+ Hardware Vendor: QEMU
+  Hardware Model: Standard PC _Q35 + ICH9, 2009_
+Firmware Version: 3.20230228-4
+   Firmware Date: Tue 2023-06-06
+    Firmware Age: 2y 8month 5d
+
+NAME="openSUSE Leap"
+VERSION="16.0"
+ID="opensuse-leap"
+ID_LIKE="suse opensuse"
+VERSION_ID="16.0"
+PRETTY_NAME="openSUSE Leap 16.0"
+ANSI_COLOR="0;32"
+CPE_NAME="cpe:/o:opensuse:leap:16.0"
+BUG_REPORT_URL="https://bugs.opensuse.org"
+HOME_URL="https://www.opensuse.org/"
+DOCUMENTATION_URL="https://en.opensuse.org/Portal:Leap"
+LOGO="distributor-logo-Leap"
+
+Linux vm100-factory 6.12.0-160000.9-default #1 SMP PREEMPT_DYNAMIC Fri Jan 16 09:29:05 UTC 2026 (9badd3c) x86_64 x86_64 x86_64 GNU/Linux
+
+=== Listening ports (139/445) ===
+tcp   LISTEN 0      50           0.0.0.0:445       0.0.0.0:*    users:(("smbd",pid=491499,fd=29))     
+tcp   LISTEN 0      50           0.0.0.0:139       0.0.0.0:*    users:(("smbd",pid=491499,fd=30))     
+tcp   LISTEN 0      50              [::]:445          [::]:*    users:(("smbd",pid=491499,fd=27))     
+tcp   LISTEN 0      50              [::]:139          [::]:*    users:(("smbd",pid=491499,fd=28))     
+
+=== Samba services (systemd) ===
+* smb.service - Samba SMB Daemon
+     Loaded: loaded (/usr/lib/systemd/system/smb.service; enabled; preset: disabled)
+     Active: active (running) since Sun 2026-02-08 02:40:25 EST; 19h ago
+ Invocation: c2f9110a745440a7b2360111e4b5efdf
+       Docs: man:smbd(8)
+             man:samba(7)
+             man:smb.conf(5)
+   Main PID: 491499 (smbd)
+     Status: "smbd: ready to serve connections..."
+      Tasks: 3 (limit: 9390)
+        CPU: 7.692s
+     CGroup: /system.slice/smb.service
+             |-491499 /usr/sbin/smbd --foreground --no-process-group
+             |-491502 /usr/sbin/smbd --foreground --no-process-group
+             `-491503 /usr/sbin/smbd --foreground --no-process-group
+
+Feb 08 02:40:24 vm100-factory systemd[1]: Starting Samba SMB Daemon...
+Feb 08 02:40:25 vm100-factory systemd[1]: Started Samba SMB Daemon.
+
+* nmb.service - Samba NMB Daemon
+     Loaded: loaded (/usr/lib/systemd/system/nmb.service; enabled; preset: disabled)
+     Active: active (running) since Sun 2026-02-08 02:40:24 EST; 19h ago
+ Invocation: 0dd372745f2a49a1983894ca19764881
+       Docs: man:nmbd(8)
+             man:samba(7)
+             man:smb.conf(5)
+   Main PID: 491481 (nmbd)
+     Status: "nmbd: ready to serve connections..."
+      Tasks: 1 (limit: 9390)
+        CPU: 1.568s
+     CGroup: /system.slice/nmb.service
+             `-491481 /usr/sbin/nmbd --foreground --no-process-group
+
+Feb 08 22:08:31 vm100-factory nmbd[491481]:   This response was from IP 192.168.1.200, reporting an IP address of 192.168.1.200.
+Feb 08 22:13:36 vm100-factory nmbd[491481]: [2026/02/08 22:13:36.420345,  0] ../../source3/nmbd/nmbd_namequery.c:109(query_name_response)
+Feb 08 22:13:36 vm100-factory nmbd[491481]:   query_name_response: Multiple (2) responses received for a query on subnet 192.168.1.135 for name WORKGROUP<1d>.
+Feb 08 22:13:36 vm100-factory nmbd[491481]:   This response was from IP 192.168.1.200, reporting an IP address of 192.168.1.200.
+Feb 08 22:18:36 vm100-factory nmbd[491481]: [2026/02/08 22:18:36.732371,  0] ../../source3/nmbd/nmbd_namequery.c:109(query_name_response)
+Feb 08 22:18:36 vm100-factory nmbd[491481]:   query_name_response: Multiple (2) responses received for a query on subnet 192.168.1.135 for name WORKGROUP<1d>.
+Feb 08 22:18:36 vm100-factory nmbd[491481]:   This response was from IP 192.168.1.200, reporting an IP address of 192.168.1.200.
+Feb 08 22:23:39 vm100-factory nmbd[491481]: [2026/02/08 22:23:39.129473,  0] ../../source3/nmbd/nmbd_namequery.c:109(query_name_response)
+Feb 08 22:23:39 vm100-factory nmbd[491481]:   query_name_response: Multiple (2) responses received for a query on subnet 192.168.1.135 for name WORKGROUP<1d>.
+Feb 08 22:23:39 vm100-factory nmbd[491481]:   This response was from IP 192.168.1.200, reporting an IP address of 192.168.1.200.
+
+active
+active
+
+=== Firewall verdict (Samba allowed?) ===
+--- zone: docker
+services: samba
+ports:    
+--- zone: public
+services: dhcpv6-client rdp samba ssh
+ports:    
+OK: Samba allowed (service samba OR ports 139/tcp+445/tcp in an active zone).
+
+=== Samba config (testparm -s) ===
+# Global parameters
+[global]
+	log file = /var/log/samba/%m.log
+	max log size = 1000
+	security = USER
+	server min protocol = SMB2
+	server string = LinuxIA-VM100
+	idmap config * : backend = tdb
+	follow symlinks = No
+
+
+[SMB_TEST]
+	create mask = 0664
+	directory mask = 0775
+	force group = gaby
+	force user = gaby
+	path = /srv/smb_test
+	read only = No
+	valid users = gaby
+
+
+[DATA_1TB_A]
+	create mask = 0664
+	directory mask = 0775
+	ea support = No
+	force group = gaby
+	force user = gaby
+	nt acl support = No
+	path = /srv/linuxia-share/DATA_1TB_A/LinuxIA_SMB
+	read only = No
+	store dos attributes = No
+	valid users = gaby
+
+
+[DATA_1TB_B]
+	create mask = 0664
+	directory mask = 0775
+	ea support = No
+	force group = gaby
+	force user = gaby
+	nt acl support = No
+	path = /srv/linuxia-share/DATA_1TB_B/LinuxIA_SMB
+	read only = No
+	store dos attributes = No
+	valid users = gaby
+
+=== Share paths extracted + filesystem checks ===
+--- [SMB_TEST] path = /srv/smb_test
+drwxrwxr-x+ 1 gaby gaby 78 Feb  2 19:58 /srv/smb_test
+Mount: /srv /dev/sda2[/@/srv] btrfs rw,relatime,seclabel,discard=async,space_cache=v2,subvolid=261,subvol=/@/srv
+--- [DATA_1TB_A] path = /srv/linuxia-share/DATA_1TB_A/LinuxIA_SMB
+drwxrwxr-x 1 gaby gaby 4096 Feb  8 20:50 /srv/linuxia-share/DATA_1TB_A/LinuxIA_SMB
+Mount: /srv/linuxia-share/DATA_1TB_A /dev/sdb6 fuseblk rw,nosuid,nodev,relatime,context=system_u:object_r:samba_share_t:s0,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096
+--- [DATA_1TB_B] path = /srv/linuxia-share/DATA_1TB_B/LinuxIA_SMB
+drwxrwxr-x 1 gaby gaby 400 Feb  8 20:50 /srv/linuxia-share/DATA_1TB_B/LinuxIA_SMB
+Mount: /srv/linuxia-share/DATA_1TB_B /dev/sdc3 fuseblk rw,nosuid,nodev,relatime,context=system_u:object_r:samba_share_t:s0,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096
+
+=== pdbedit (passdb) ===
+gaby:1000:Gaby
+
+=== smbstatus ===
+
+Samba version 4.22.7-git.460.b680c782b85160000.1.1SUSE-oS16.0-x86_64
+PID     Username     Group        Machine                                   Protocol Version  Encryption           Signing              
+----------------------------------------------------------------------------------------------------------------------------------------
+
+Service      pid     Machine       Connected at                     Encryption   Signing     
+---------------------------------------------------------------------------------------------
+
+
+
+=== Result ===
+OK: audit completed.

@@ -1,0 +1,28 @@
+{
+  "timestamp": "2026-02-08T17:16:43.191917",
+  "selinux": {
+    "getenforce": "Enforcing",
+    "samba_share_fusefs": true,
+    "samba_export_all_rw": true
+  },
+  "services": {
+    "smb_or_smbd_active": true,
+    "nmb_or_nmbd_active": true,
+    "active_raw": {
+      "smb": "active",
+      "smbd": "inactive",
+      "nmb": "active",
+      "nmbd": "inactive"
+    }
+  },
+  "samba": {
+    "testparm_ok": true,
+    "smbclient_list_ok": true,
+    "smoke_A_ok": true,
+    "smoke_B_ok": true,
+    "creds_present": true
+  },
+  "notes": [
+    "Sur FUSE/ntfs-3g, la vérification SELinux la plus fiable passe par findmnt (OPTIONS) + absence d'AVC."
+  ]
+}

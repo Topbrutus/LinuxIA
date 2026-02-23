@@ -1,0 +1,56 @@
+name: "Bug report"
+description: "Report a reproducible problem (proof-first)."
+title: "[BUG] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting 🙏
+        Please include **proof**: commands + outputs (redact secrets).
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: "Host/VM, OS version, Proxmox/openSUSE versions, kernel, etc."
+      placeholder: "VM100 (openSUSE Leap 16.0), Proxmox VE 9.x, kernel ..."
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: "What were you trying to do?"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: "Exact steps/commands to reproduce."
+      placeholder: |
+        1) ...
+        2) ...
+        3) ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+    validations:
+      required: true
+  - type: textarea
+    id: proof
+    attributes:
+      label: Proof (logs / command output)
+      description: "Paste relevant logs/output. Redact secrets."
+      render: shell
+    validations:
+      required: true

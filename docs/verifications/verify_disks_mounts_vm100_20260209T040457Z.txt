@@ -1,0 +1,189 @@
+=== VERIFY DISKS + MOUNTS + AUDIT TRAIL (VM100) ===
+Timestamp(local): 2026-02-08T23:04:57-05:00
+Timestamp(UTC):   2026-02-09T04:04:57+00:00
+Host:             vm100-factory (fqdn: vm100)
+Snapshot file:    /opt/linuxia/docs/PRODUCTION.snapshot.md
+
+
+=== SNAPSHOT ===
+--- Disques / Partitions (extrait) ---
+## Disques / Partitions
+
+NAME     SIZE FSTYPE      TYPE MOUNTPOINTS                   MODEL            SERIAL
+sda       64G             disk                               QEMU HARDDISK    drive-scsi0
+├─sda1   512M vfat        part /boot/efi                                      
+├─sda2  61,5G btrfs       part /var                                           
+│                              /usr/local                                     
+│                              /root                                          
+│                              /srv                                           
+│                              /opt                                           
+│                              /home                                          
+│                              /boot/grub2/x86_64-efi                         
+│                              /boot/grub2/i386-pc                            
+│                              /.snapshots                                    
+│                              /                                              
+└─sda3     2G swap        part [SWAP]                                         
+sdb    931,5G             disk                               QEMU HARDDISK    DATA_1TB_A
+├─sdb1   7,8G ext4        part                                                
+├─sdb2  39,1G ntfs        part                                                
+├─sdb3  97,7G ntfs        part                                                
+├─sdb4   100M vfat        part                                                
+├─sdb5    16M LVM2_member part                                                
+├─sdb6 769,8G             part /opt/linuxia/data/shareA                       
+│                              /srv/linuxia-share/DATA_1TB_A                  
+│                              /mnt/linuxia/DATA_1TB_A                        
+├─sdb7   495M ntfs        part                                                
+└─sdb8  16,6G ntfs        part                                                
+sdc    931,5G             disk                               QEMU HARDDISK    DATA_1TB_B
+├─sdc1   100M vfat        part                                                
+├─sdc2    16M             part                                                
+├─sdc3 465,1G ntfs        part /opt/linuxia/data/shareB                       
+│                              /srv/linuxia-share/DATA_1TB_B                  
+│                              /mnt/linuxia/DATA_1TB_B                        
+└─sdc4   518M ntfs        part                                                
+sdd     14,4G             disk                               DataTraveler 3.0 60A44C413DF8F280799ADD30
+└─sdd1  14,4G vfat        part /run/media/gaby/LINUXUDF                       
+zram0    7,7G             disk [SWAP]                                         
+
+
+## Montages
+--- Montages (extrait) ---
+
+=== REALITY (lsblk) ===
+NAME     SIZE FSTYPE      TYPE MOUNTPOINTS                   MODEL            SERIAL
+sda       64G             disk                               QEMU HARDDISK    drive-scsi0
+├─sda1   512M vfat        part /boot/efi                                      
+├─sda2  61.5G btrfs       part /var                                           
+│                              /usr/local                                     
+│                              /root                                          
+│                              /srv                                           
+│                              /opt                                           
+│                              /home                                          
+│                              /boot/grub2/x86_64-efi                         
+│                              /boot/grub2/i386-pc                            
+│                              /.snapshots                                    
+│                              /                                              
+└─sda3     2G swap        part [SWAP]                                         
+sdb    931.5G             disk                               QEMU HARDDISK    DATA_1TB_A
+├─sdb1   7.8G ext4        part                                                
+├─sdb2  39.1G ntfs        part                                                
+├─sdb3  97.7G ntfs        part                                                
+├─sdb4   100M vfat        part                                                
+├─sdb5    16M LVM2_member part                                                
+├─sdb6 769.8G             part /opt/linuxia/data/shareA                       
+│                              /srv/linuxia-share/DATA_1TB_A                  
+│                              /mnt/linuxia/DATA_1TB_A                        
+├─sdb7   495M ntfs        part                                                
+└─sdb8  16.6G ntfs        part                                                
+sdc    931.5G             disk                               QEMU HARDDISK    DATA_1TB_B
+├─sdc1   100M vfat        part                                                
+├─sdc2    16M             part                                                
+├─sdc3 465.1G ntfs        part /opt/linuxia/data/shareB                       
+│                              /srv/linuxia-share/DATA_1TB_B                  
+│                              /mnt/linuxia/DATA_1TB_B                        
+└─sdc4   518M ntfs        part                                                
+sdd     14.4G             disk                               DataTraveler 3.0 60A44C413DF8F280799ADD30
+└─sdd1  14.4G vfat        part /run/media/gaby/LINUXUDF                       
+zram0    7.7G             disk [SWAP]                                         
+
+=== REALITY (findmnt) ===
+/ /dev/sda2[/@/.snapshots/1/snapshot] btrfs rw,relatime,seclabel,discard=async,space_cache=v2,subvolid=266,subvol=/@/.snapshots/1/snapshot
+/dev devtmpfs devtmpfs rw,nosuid,seclabel,size=4096k,nr_inodes=1006610,mode=755,inode64
+/dev/shm tmpfs tmpfs rw,nosuid,nodev,seclabel,inode64
+/dev/pts devpts devpts rw,nosuid,noexec,relatime,seclabel,gid=5,mode=620,ptmxmode=000
+/sys sysfs sysfs rw,nosuid,nodev,noexec,relatime,seclabel
+/sys/kernel/security securityfs securityfs rw,nosuid,nodev,noexec,relatime
+/sys/fs/cgroup cgroup2 cgroup2 rw,nosuid,nodev,noexec,relatime,seclabel,nsdelegate,memory_recursiveprot
+/sys/fs/pstore pstore pstore rw,nosuid,nodev,noexec,relatime,seclabel
+/sys/firmware/efi/efivars efivarfs efivarfs rw,nosuid,nodev,noexec,relatime
+/sys/fs/bpf bpf bpf rw,nosuid,nodev,noexec,relatime,mode=700
+/proc proc proc rw,nosuid,nodev,noexec,relatime
+/run tmpfs tmpfs rw,nosuid,nodev,seclabel,size=1625032k,nr_inodes=819200,mode=755,inode64
+/sys/fs/selinux selinuxfs selinuxfs rw,nosuid,noexec,relatime
+/proc/sys/fs/binfmt_misc systemd-1 autofs rw,relatime,fd=35,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=6473
+/sys/kernel/tracing tracefs tracefs rw,nosuid,nodev,noexec,relatime,seclabel
+/dev/mqueue mqueue mqueue rw,nosuid,nodev,noexec,relatime,seclabel
+/dev/hugepages hugetlbfs hugetlbfs rw,nosuid,nodev,relatime,seclabel,pagesize=2M
+/sys/kernel/debug debugfs debugfs rw,nosuid,nodev,noexec,relatime,seclabel
+/sys/kernel/config configfs configfs rw,nosuid,nodev,noexec,relatime
+/sys/fs/fuse/connections fusectl fusectl rw,nosuid,nodev,noexec,relatime
+/run/credentials/systemd-journald.service tmpfs tmpfs ro,nosuid,nodev,noexec,relatime,nosymfollow,seclabel,size=1024k,nr_inodes=1024,mode=700,inode64,noswap
+/.snapshots /dev/sda2[/@/.snapshots] btrfs rw,relatime,seclabel,discard=async,space_cache=v2,subvolid=265,subvol=/@/.snapshots
+/boot/grub2/i386-pc /dev/sda2[/@/boot/grub2/i386-pc] btrfs rw,relatime,seclabel,discard=async,space_cache=v2,subvolid=258,subvol=/@/boot/grub2/i386-pc
+/boot/grub2/x86_64-efi /dev/sda2[/@/boot/grub2/x86_64-efi] btrfs rw,relatime,seclabel,discard=async,space_cache=v2,subvolid=257,subvol=/@/boot/grub2/x86_64-efi
+/home /dev/sda2[/@/home] btrfs rw,relatime,seclabel,discard=async,space_cache=v2,subvolid=264,subvol=/@/home
+/opt /dev/sda2[/@/opt] btrfs rw,relatime,seclabel,discard=async,space_cache=v2,subvolid=263,subvol=/@/opt
+/srv /dev/sda2[/@/srv] btrfs rw,relatime,seclabel,discard=async,space_cache=v2,subvolid=261,subvol=/@/srv
+/root /dev/sda2[/@/root] btrfs rw,relatime,seclabel,discard=async,space_cache=v2,subvolid=262,subvol=/@/root
+/tmp tmpfs tmpfs rw,nosuid,nodev,seclabel,size=4062580k,nr_inodes=1048576,inode64
+/usr/local /dev/sda2[/@/usr/local] btrfs rw,relatime,seclabel,discard=async,space_cache=v2,subvolid=260,subvol=/@/usr/local
+/var /dev/sda2[/@/var] btrfs rw,relatime,seclabel,discard=async,space_cache=v2,subvolid=259,subvol=/@/var
+/boot/efi /dev/sda1 vfat rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,utf8,errors=remount-ro
+/srv/artifacts-hot artifacts-hot virtiofs rw,relatime
+/run/credentials/getty@tty1.service tmpfs tmpfs ro,nosuid,nodev,noexec,relatime,nosymfollow,seclabel,size=1024k,nr_inodes=1024,mode=700,inode64,noswap
+/run/user/1000 tmpfs tmpfs rw,nosuid,nodev,relatime,seclabel,size=812512k,nr_inodes=203128,mode=700,uid=1000,gid=1000,inode64
+/run/user/1000/gvfs gvfsd-fuse fuse.gvfsd-fuse rw,nosuid,nodev,relatime,user_id=1000,group_id=1000
+/run/media/gaby/LINUXUDF /dev/sdd1 vfat rw,nosuid,nodev,relatime,uid=1000,gid=1000,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,showexec,utf8,flush,errors=remount-ro
+/run/user/1000/doc portal fuse.portal rw,nosuid,nodev,relatime,user_id=1000,group_id=1000
+/sys/kernel/debug/tracing tracefs tracefs rw,nosuid,nodev,noexec,relatime,seclabel
+/srv/artifacts-hot/win-ssh none virtiofs rw,relatime
+/run/user/0 tmpfs tmpfs rw,nosuid,nodev,relatime,seclabel,size=812512k,nr_inodes=203128,mode=700,inode64
+/mnt/linuxia/DATA_1TB_A /dev/sdb6 fuseblk rw,nosuid,nodev,relatime,context=system_u:object_r:samba_share_t:s0,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096
+/mnt/linuxia/DATA_1TB_B /dev/sdc3 fuseblk rw,nosuid,nodev,relatime,context=system_u:object_r:samba_share_t:s0,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096
+/srv/linuxia-share/DATA_1TB_A /dev/sdb6 fuseblk rw,nosuid,nodev,relatime,context=system_u:object_r:samba_share_t:s0,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096
+/srv/linuxia-share/DATA_1TB_B /dev/sdc3 fuseblk rw,nosuid,nodev,relatime,context=system_u:object_r:samba_share_t:s0,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096
+/opt/linuxia/data/shareA /dev/sdb6[/LinuxIA_SMB] fuseblk rw,nosuid,nodev,relatime,context=system_u:object_r:samba_share_t:s0,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096
+/opt/linuxia/data/shareB /dev/sdc3[/LinuxIA_SMB] fuseblk rw,nosuid,nodev,relatime,context=system_u:object_r:samba_share_t:s0,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096
+
+=== 4 mounts status (open/closed) ===
+/opt/linuxia/data/shareA: /opt/linuxia/data/shareA /dev/sdb6[/LinuxIA_SMB] fuseblk rw,nosuid,nodev,relatime,context=system_u:object_r:samba_share_t:s0,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096
+/opt/linuxia/data/shareB: /opt/linuxia/data/shareB /dev/sdc3[/LinuxIA_SMB] fuseblk rw,nosuid,nodev,relatime,context=system_u:object_r:samba_share_t:s0,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096
+/srv/linuxia-share/DATA_1TB_A: /srv/linuxia-share/DATA_1TB_A /dev/sdb6 fuseblk rw,nosuid,nodev,relatime,context=system_u:object_r:samba_share_t:s0,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096
+/srv/linuxia-share/DATA_1TB_B: /srv/linuxia-share/DATA_1TB_B /dev/sdc3 fuseblk rw,nosuid,nodev,relatime,context=system_u:object_r:samba_share_t:s0,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096
+
+=== SNAPSHOT vs REALITY (best effort) ===
+OK: rien de manquant côté /dev (best effort).
+
+=== AUDIT TRAIL (external media) ===
+total 8
+drwxr-x---+ 3 root root   60 Feb  7 16:08 .
+drwxr-xr-x. 4 root root   80 Feb  7 08:01 ..
+drwxr-xr-x. 7 gaby gaby 8192 Dec 31  1969 LINUXUDF
+Found: /run/media/gaby/LINUXUDF/linuxia_audit_trail/vm100
+total 40
+drwxr-xr-x. 3 gaby gaby  8192 Feb  8 17:35 .
+drwxr-xr-x. 3 gaby gaby  8192 Feb  8 17:30 ..
+-rw-r--r--. 1 gaby gaby 14645 Feb  8 17:30 VM100_20260208T223005Z.md
+drwxr-xr-x. 2 gaby gaby  8192 Feb  8 19:09 verifications
+
+=== DISK SPACE ===
+
+=== YAML SUMMARY ===
+verify_disks_result:
+  date: "2026-02-08T23:04:57-05:00"
+  machine: "vm100-factory"
+  snapshot_status:
+    file_exists: "✅"
+    disques_section_readable: "✅"
+    montages_section_readable: "✅"
+  reality_check:
+    lsblk_ok: "✅"
+    findmnt_ok: "✅"
+    snapshot_matches_reality: "✅"
+  mounts_open_closed:
+    - "/opt/linuxia/data/shareA: ✅ open"
+    - "/opt/linuxia/data/shareB: ✅ open"
+    - "/srv/linuxia-share/DATA_1TB_A: ✅ open"
+    - "/srv/linuxia-share/DATA_1TB_B: ✅ open"
+  audit_trail:
+    path_exists: "✅"
+    location_found: "/run/media/gaby/LINUXUDF/linuxia_audit_trail/vm100"
+    recommendation: "Use existing"
+  disk_space:
+    mnt_linuxia_free: "37G"
+    srv_linuxia_share_free: "37G"
+    status: "✅ sufficient"
+  issues: |
+    none
+
+=== END ===

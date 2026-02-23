@@ -1,0 +1,15 @@
+[Unit]
+Description=LinuxIA shareB bind mount (DATA_1TB_B/LinuxIA_SMB)
+Documentation=https://github.com/Topbrutus/LinuxIA
+After=mnt-linuxia-DATA_1TB_B.mount
+Requires=mnt-linuxia-DATA_1TB_B.mount
+ConditionPathExists=/mnt/linuxia/DATA_1TB_B/LinuxIA_SMB
+
+[Mount]
+What=/mnt/linuxia/DATA_1TB_B/LinuxIA_SMB
+Where=/opt/linuxia/data/shareB
+Type=none
+Options=bind,X-mount.mkdir
+
+[Install]
+WantedBy=multi-user.target

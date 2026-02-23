@@ -1,0 +1,46 @@
+2026-02-08T18:48:05-05:00
+ Static hostname: vm101-layer2
+       Icon name: computer-vm
+         Chassis: vm 🖴
+      Machine ID: 9adabb40fe2f4184813c49037af6991a
+         Boot ID: 55b1ae2ab2ea4c7f9f76e71561917428
+    Product UUID: 9adabb40-fe2f-4184-813c-49037af6991a
+  Virtualization: kvm
+Operating System: openSUSE Leap 16.0
+     CPE OS Name: cpe:/o:opensuse:leap:16.0
+          Kernel: Linux 6.12.0-160000.8-default
+    Architecture: x86-64
+ Hardware Vendor: QEMU
+  Hardware Model: Standard PC _i440FX + PIIX, 1996_
+Firmware Version: 3.20230228-4
+   Firmware Date: Tue 2023-06-06
+    Firmware Age: 2y 8month 4d
+NAME="openSUSE Leap"
+VERSION="16.0"
+ID="opensuse-leap"
+ID_LIKE="suse opensuse"
+VERSION_ID="16.0"
+PRETTY_NAME="openSUSE Leap 16.0"
+ANSI_COLOR="0;32"
+CPE_NAME="cpe:/o:opensuse:leap:16.0"
+BUG_REPORT_URL="https://bugs.opensuse.org"
+HOME_URL="https://www.opensuse.org/"
+DOCUMENTATION_URL="https://en.opensuse.org/Portal:Leap"
+LOGO="distributor-logo-Leap"
+Linux vm101-layer2 6.12.0-160000.8-default #1 SMP PREEMPT_DYNAMIC Thu Dec 11 09:18:13 UTC 2025 (5d31a95) x86_64 x86_64 x86_64 GNU/Linux
+cifs-utils-7.4-160000.2.2.x86_64
+/sbin/mount.cifs
+cifs                 1933312  0
+cifs_arc4              12288  1 cifs
+nls_ucs2_utils          8192  1 cifs
+cifs_md4               12288  1 cifs
+dns_resolver           16384  1 cifs
+netfs                 577536  1 cifs
+
+=== fstab CIFS entries ===
+
+=== findmnt (linuxia-remote) ===
+/srv/linuxia-remote/DATA_1TB_A systemd-1 autofs rw,relatime,fd=67,pgrp=1,timeout=600,minproto=5,maxproto=5,direct,pipe_ino=78721
+/srv/linuxia-remote/DATA_1TB_B systemd-1 autofs rw,relatime,fd=68,pgrp=1,timeout=600,minproto=5,maxproto=5,direct,pipe_ino=78723
+
+=== listing (top) ===
