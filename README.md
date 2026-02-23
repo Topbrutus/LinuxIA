@@ -156,6 +156,39 @@ bash scripts/linuxia-healthcheck.sh
   <sub>© 2026 LINUXIA PROJECT • MISSION CONTROL v1.5.0</sub>
 </p>
 
+<!-- LINUXIA_VITRINE_CARDS_BEGIN -->
+
+<img src="assets/readme/animations/cine-divider-hyperline.svg" width="100%" alt="divider"/>
+
+## 🖼️ Vitrine — Cinematic Cards
+
+<p align="center">
+  <img src="assets/readme/cinematic/cards/section_gallery_01.svg" width="100%" alt="Vision &amp; Platform"/>
+</p>
+<p align="center">
+  <img src="assets/readme/cinematic/cards/section_gallery_02.svg" width="100%" alt="Architecture"/>
+</p>
+<p align="center">
+  <img src="assets/readme/cinematic/cards/section_gallery_03.svg" width="100%" alt="Agents TriluxIA"/>
+</p>
+<p align="center">
+  <img src="assets/readme/cinematic/cards/section_gallery_04.svg" width="100%" alt="Immutable Proof"/>
+</p>
+<p align="center">
+  <img src="assets/readme/cinematic/cards/section_gallery_05.svg" width="100%" alt="Infra &amp; Timers"/>
+</p>
+<p align="center">
+  <img src="assets/readme/cinematic/cards/section_gallery_06.svg" width="100%" alt="Security"/>
+</p>
+<p align="center">
+  <img src="assets/readme/cinematic/cards/section_gallery_07.svg" width="100%" alt="Storage &amp; Shares"/>
+</p>
+<p align="center">
+  <img src="assets/readme/cinematic/cards/section_gallery_08.svg" width="100%" alt="Roadmap"/>
+</p>
+
+<!-- LINUXIA_VITRINE_CARDS_END -->
+
 ## ✨ Animations
 
 <p align="center">
