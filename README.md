@@ -68,25 +68,6 @@
 ---
 
 <!-- LINUXIA:ANIMATIONS:START -->
-## Animations SVG
-
-<p align="center">
-  <img src="assets/readme/anims/anim_09.svg" width="320" alt="anim_09" />
-  <img src="assets/readme/anims/anim_06.svg" width="320" alt="anim_06" />
-  <img src="assets/readme/anims/anim_01.svg" width="320" alt="anim_01" />
-</p>
-
-<p align="center">
-  <img src="assets/readme/anims/anim_05.svg" width="320" alt="anim_05" />
-  <img src="assets/readme/anims/anim_04.svg" width="320" alt="anim_04" />
-  <img src="assets/readme/anims/anim_02.svg" width="320" alt="anim_02" />
-</p>
-
-<p align="center">
-  <img src="assets/readme/anims/anim_07.svg" width="320" alt="anim_07" />
-  <img src="assets/readme/anims/anim_08.svg" width="320" alt="anim_08" />
-  <img src="assets/readme/anims/anim_03.svg" width="320" alt="anim_03" />
-</p>
 ## Infra · Security · Storage · Roadmap
 
 <p align="center">
@@ -169,3 +150,22 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) |
 ## License
 
 To be determined
+
+
+## 🧩 Hub Animations
+
+<p align="center">
+  <img src="assets/readme/anims/anim_09.svg" width="320"/>
+  <img src="assets/readme/anims/anim_06.svg" width="320"/>
+  <img src="assets/readme/anims/anim_01.svg" width="320"/>
+</p>
+<p align="center">
+  <img src="assets/readme/anims/anim_05.svg" width="320"/>
+  <img src="assets/readme/anims/anim_04.svg" width="320"/>
+  <img src="assets/readme/anims/anim_02.svg" width="320"/>
+</p>
+<p align="center">
+  <img src="assets/readme/anims/anim_07.svg" width="320"/>
+  <img src="assets/readme/anims/anim_08.svg" width="320"/>
+  <img src="assets/readme/anims/anim_03.svg" width="320"/>
+</p>
