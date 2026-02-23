@@ -1,0 +1,25 @@
+name: "Docs request"
+description: "Documentation improvements or additions."
+title: "[DOCS] "
+labels: ["documentation"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What should be documented/changed?
+    validations:
+      required: true
+  - type: textarea
+    id: where
+    attributes:
+      label: Where (file/path/section)?
+      description: "Point to docs/..., README section, or script."
+    validations:
+      required: false
+  - type: textarea
+    id: proof
+    attributes:
+      label: Proof / examples
+      description: "Commands, screenshots, links, expected outcome."
+    validations:
+      required: false
