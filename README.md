@@ -1,6 +1,5 @@
 <p align="center">
   <img src="assets/readme/banner-linuxia.svg" width="1000" alt="LinuxIA animated banner" />
-<p align="center"><a href="assets/readme/banner-linuxia.svg">&#x25B6;&#xFE0F; Voir l'animation (SVG)</a></p>
 
 </p>
 
