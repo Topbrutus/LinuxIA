@@ -138,6 +138,12 @@ bash scripts/linuxia-healthcheck.sh
 
 ## 🎬 Media Vault
 
+<p align="center">
+  <a href="assets/readme/videos/Trailer_01.mp4"><img src="assets/readme/showcase/video_thumbs/Trailer_01.jpg" width="420" alt="Trailer 01" /></a>
+  <a href="assets/readme/videos/Trailer_02.mp4"><img src="assets/readme/showcase/video_thumbs/Trailer_02.jpg" width="420" alt="Trailer 02" /></a>
+</p>
+
+
 - **Trailer 01**: [Watch](assets/readme/videos/Trailer_01.mp4)
 - **Trailer 02**: [Watch](assets/readme/videos/Trailer_02.mp4)
 - **Theme Audio**: [Listen](assets/readme/audio/Theme_01.mp3)
@@ -149,3 +155,16 @@ bash scripts/linuxia-healthcheck.sh
   <br/>
   <sub>© 2026 LINUXIA PROJECT • MISSION CONTROL v1.5.0</sub>
 </p>
+
+## ✨ Animations
+
+<p align="center">
+  <img src="assets/readme/animations/cine-mission-control.svg" width="860" alt="LinuxIA mission control" />
+</p>
+
+<p align="center">
+  <img src="assets/readme/animations/anim_01.svg" width="220" alt="anim 01" />
+  <img src="assets/readme/animations/anim_02.svg" width="220" alt="anim 02" />
+  <img src="assets/readme/animations/anim_03.svg" width="220" alt="anim 03" />
+</p>
+
