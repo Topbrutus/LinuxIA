@@ -1,33 +1,36 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-HEALTHCHECK_SCRIPT="/opt/linuxia/scripts/linuxia-healthcheck.sh"
-HEALTHCHECK_REPORT="/opt/linuxia/docs/STATE_HEALTHCHECK.md"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
-printf "[linuxia-repair] Running healthcheck...\n"
-if "$HEALTHCHECK_SCRIPT"; then
-  printf "[linuxia-repair] Healthcheck OK. No repair needed.\n"
+TAG="linuxia-repair"
+REMOUNT_SCRIPT="/usr/local/sbin/linuxia-samba-remount.sh"
+SHARE_A="/opt/linuxia/data/shareA"
+SHARE_B="/opt/linuxia/data/shareB"
+
+log() { printf "%s [%s] %s\n" "$(date -Is)" "$TAG" "$*"; }
+
+exec > >(systemd-cat -t "$TAG" 2>/dev/null || cat) 2>&1
+
+log "START"
+
+if [ -x "$REMOUNT_SCRIPT" ]; then
+  log "Running $REMOUNT_SCRIPT (timeout 180s)..."
+  if timeout 180s "$REMOUNT_SCRIPT"; then
+    log "Remount script completed successfully"
+  else
+    log "Remount script failed or timed out (exit $?), continuing to mount check"
+  fi
+fi
+
+fail=0
+findmnt -T "$SHARE_A" >/dev/null 2>&1 || { log "FAIL: $SHARE_A not mounted"; fail=1; }
+findmnt -T "$SHARE_B" >/dev/null 2>&1 || { log "FAIL: $SHARE_B not mounted"; fail=1; }
+
+if [ "$fail" -eq 0 ]; then
+  log "OK: all shares mounted"
   exit 0
 fi
 
-printf "[linuxia-repair] Healthcheck FAIL. Applying safe remedies...\n"
-
-if ! mount -a; then
-  printf "[linuxia-repair] mount -a failed. Continuing.\n"
-fi
-
-if ! systemctl is-enabled --quiet linuxia-configsnap.timer; then
-  printf "[linuxia-repair] Enabling linuxia-configsnap.timer...\n"
-  systemctl enable --now linuxia-configsnap.timer
-fi
-
-printf "[linuxia-repair] Relaunching linuxia-healthcheck.service...\n"
-systemctl start linuxia-healthcheck.service
-
-if [ -f "$HEALTHCHECK_REPORT" ] && grep -q '^Result: OK$' "$HEALTHCHECK_REPORT"; then
-  printf "[linuxia-repair] Healthcheck OK after repair.\n"
-  exit 0
-fi
-
-printf "[linuxia-repair] Healthcheck still FAIL after repair.\n"
+log "FAIL: one or more shares are not mounted"
 exit 1
