@@ -1,0 +1,17 @@
+# LinuxIA — CODEOWNERS
+# Objectif: exiger une review explicite sur les chemins critiques
+
+# Gouvernance / sécurité
+SECURITY.md                 @Topbrutus
+RISKS.md                    @Topbrutus
+
+# CI/CD et automatisation
+.github/workflows/*         @Topbrutus
+
+# Scripts d'orchestration (impact infra)
+scripts/*                   @Topbrutus
+scripts/**                  @Topbrutus
+
+# README / vitrine (évite les régressions de présentation)
+README.md                   @Topbrutus
+assets/**                   @Topbrutus
