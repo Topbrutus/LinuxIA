@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$REPO_ROOT"
+
+die()  { printf "ERROR: %s\n" "$*" >&2; exit 1; }
+have() { command -v "$1" >/dev/null 2>&1; }
+
+usage() {
+  printf "LinuxIA CLI (proof-first)\n\n"
+  printf "Usage:\n"
+  printf "  scripts/linuxia <command>\n\n"
+  printf "Commands:\n"
+  printf "  help        Show this help\n"
+  printf "  doctor      Run read-only platform verification (make doctor)\n"
+  printf "  lint        Run bash syntax + shellcheck warnings (make lint)\n"
+  printf "  syntax      Fast bash syntax-only checks (make syntax)\n"
+  printf "  verify      Alias for doctor\n"
+  printf "  version     Show git version info\n\n"
+  printf "Notes:\n"
+  printf "  - This CLI is read-only by default.\n"
+  printf "  - Prefer running from the repo root.\n"
+}
+
+cmd="${1:-help}"
+
+case "$cmd" in
+  help|-h|--help)
+    usage
+    ;;
+  doctor|verify)
+    [ -f Makefile ] || die "Makefile not found at repo root"
+    make doctor
+    ;;
+  lint)
+    [ -f Makefile ] || die "Makefile not found at repo root"
+    make lint
+    ;;
+  syntax)
+    [ -f Makefile ] || die "Makefile not found at repo root"
+    make syntax
+    ;;
+  version)
+    if have git && git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+      printf "LinuxIA repo: %s\n" "$(git rev-parse --show-toplevel 2>/dev/null || printf ".")"
+      printf "Branch:       %s\n" "$(git rev-parse --abbrev-ref HEAD 2>/dev/null || printf "unknown")"
+      printf "Commit:       %s\n" "$(git rev-parse --short HEAD 2>/dev/null || printf "unknown")"
+      if git diff --quiet && git diff --cached --quiet 2>/dev/null; then
+        printf "Dirty:        no\n"
+      else
+        printf "Dirty:        yes\n"
+      fi
+    else
+      printf "git not available (or not a git repo)\n"
+    fi
+    ;;
+  *)
+    die "Unknown command: $cmd (try: scripts/linuxia help)"
+    ;;
+esac
