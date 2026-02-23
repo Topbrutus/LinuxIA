@@ -44,6 +44,24 @@
 
 <!-- LINUXIA:SHOWCASE_CINEMATIC:END -->
 
+<!-- LINUXIA:TRAILERS_MP4:START -->
+## Trailers (MP4)
+
+> GitHub n'embed pas les MP4 inline, mais les liens ci-dessous ouvrent les videos.
+
+<p align="center">
+  <a href="assets/readme/mp4/section_01_vision.mp4"><img src="assets/readme/posters/section_01_vision.png" width="1000" alt="Trailer Vision" /></a>
+  <a href="assets/readme/mp4/section_02_architecture.mp4"><img src="assets/readme/posters/section_02_architecture.png" width="1000" alt="Trailer Architecture" /></a>
+  <a href="assets/readme/mp4/section_03_agents.mp4"><img src="assets/readme/posters/section_03_agents.png" width="1000" alt="Trailer Agents" /></a>
+  <a href="assets/readme/mp4/section_04_proof.mp4"><img src="assets/readme/posters/section_04_proof.png" width="1000" alt="Trailer Proof" /></a>
+  <a href="assets/readme/mp4/section_05_infra.mp4"><img src="assets/readme/posters/section_05_infra.png" width="1000" alt="Trailer Infra" /></a>
+  <a href="assets/readme/mp4/section_06_security.mp4"><img src="assets/readme/posters/section_06_security.png" width="1000" alt="Trailer Security" /></a>
+  <a href="assets/readme/mp4/section_07_storage.mp4"><img src="assets/readme/posters/section_07_storage.png" width="1000" alt="Trailer Storage" /></a>
+  <a href="assets/readme/mp4/section_08_roadmap.mp4"><img src="assets/readme/posters/section_08_roadmap.png" width="1000" alt="Trailer Roadmap" /></a>
+</p>
+<!-- LINUXIA:TRAILERS_MP4:END -->
+
+
 
 [![Phase 6](https://img.shields.io/badge/Phase_6-✅_Merged-success)](https://github.com/Topbrutus/LinuxIA/pulls?q=is%3Apr+is%3Aclosed)
 [![Verify](https://img.shields.io/badge/verify--platform-OK=24_WARN=0-brightgreen)](docs/runbook.md)

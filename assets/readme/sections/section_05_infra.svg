@@ -1,69 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420">
   <defs>
-    <linearGradient id="g0" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#05070f"/>
-      <stop offset="1" stop-color="#0b1024"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#040611"/>
+      <stop offset="1" stop-color="#0b1430"/>
     </linearGradient>
-    <linearGradient id="overlay" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#000" stop-opacity="0.70"/>
-      <stop offset="0.55" stop-color="#000" stop-opacity="0.45"/>
-      <stop offset="1" stop-color="#000" stop-opacity="0.70"/>
+    <linearGradient id="shade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#000" stop-opacity="0.78"/>
+      <stop offset="0.52" stop-color="#000" stop-opacity="0.38"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.78"/>
     </linearGradient>
-    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="spec" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="0.25" stop-color="#ffffff" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.0"/>
+    </linearGradient>
+    <filter id="glowCyan" x="-30%" y="-30%" width="160%" height="160%">
       <feGaussianBlur stdDeviation="6" result="b"/>
       <feColorMatrix in="b" type="matrix"
-        values="1 0 0 0 0  0 1 0 0 0.2  0 0 1 0 0.6  0 0 0 0.9 0" result="c"/>
+        values="1 0 0 0 0  0 1 0 0 0.25  0 0 1 0 0.75  0 0 0 0.95 0" result="c"/>
       <feMerge><feMergeNode in="c"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
+    <filter id="glowOrange" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="7" result="b"/>
+      <feColorMatrix in="b" type="matrix"
+        values="1 0 0 0 0.15  0 1 0 0 0.05  0 0 1 0 0  0 0 0 0.85 0" result="c"/>
+      <feMerge><feMergeNode in="c"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadowDeep">
+      <feDropShadow dx="0" dy="14" stdDeviation="12" flood-color="#000" flood-opacity="0.55"/>
+    </filter>
+    <filter id="textShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.9"/>
+    </filter>
+    <pattern id="grid" patternUnits="userSpaceOnUse" width="32" height="32">
+      <path d="M32 0H0V32" fill="none" stroke="#7aa7ff" stroke-opacity="0.10" stroke-width="1"/>
+    </pattern>
     <pattern id="scan" patternUnits="userSpaceOnUse" width="6" height="6">
       <rect width="6" height="6" fill="none"/>
-      <rect y="0" width="6" height="1" fill="#ffffff" opacity="0.06"/>
+      <rect y="0" width="6" height="1" fill="#ffffff" opacity="0.055"/>
     </pattern>
-    <filter id="textShadow">
-      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.85"/>
-    </filter>
   </defs>
-  <rect width="1200" height="420" fill="url(#g0)"/>
+  <rect width="1200" height="420" fill="url(#bg)"/>
   <image href="../gallery/p05.jpg" x="0" y="0" width="1200" height="420" preserveAspectRatio="xMidYMid slice" opacity="0.98"/>
-  <rect width="1200" height="420" fill="url(#overlay)"/>
+  <rect width="1200" height="420" fill="url(#shade)"/>
+  <rect x="0" y="0" width="1200" height="420" fill="url(#grid)" opacity="1"/>
   <rect width="1200" height="420" fill="url(#scan)" opacity="0.55"/>
-  <rect x="22" y="22" width="1156" height="376" rx="22" ry="22"
-        fill="none" stroke="#4efcff" stroke-opacity="0.55" stroke-width="2" filter="url(#softGlow)"/>
-  <rect x="30" y="30" width="1140" height="360" rx="18" ry="18"
-        fill="none" stroke="#ff7a18" stroke-opacity="0.35" stroke-width="1.5"/>
-  <g opacity="0.6">
-    <circle cx="1040" cy="92" r="2.2" fill="#4efcff"/>
-    <circle cx="980" cy="138" r="1.6" fill="#ff7a18"/>
-    <circle cx="1086" cy="170" r="1.9" fill="#b36bff"/>
-    <circle cx="1120" cy="120" r="1.3" fill="#ffffff"/>
-    <circle cx="1010" cy="210" r="1.2" fill="#ffffff"/>
+  <g filter="url(#shadowDeep)">
+    <path d="M70 58 H1130 Q1160 58 1160 88 V332 Q1160 362 1130 362 H70 Q40 362 40 332 V88 Q40 58 70 58 Z"
+          fill="#0a1026" opacity="0.55"/>
   </g>
-  <g transform="translate(70,130)">
+  <path d="M78 66 H1122 Q1148 66 1148 92 V328 Q1148 354 1122 354 H78 Q52 354 52 328 V92 Q52 66 78 66 Z"
+        fill="none" stroke="#4efcff" stroke-opacity="0.45" stroke-width="2" filter="url(#glowCyan)"/>
+  <path d="M86 74 H1114 Q1136 74 1136 96 V320 Q1136 342 1114 342 H86 Q64 342 64 320 V96 Q64 74 86 74 Z"
+        fill="none" stroke="#ff7a18" stroke-opacity="0.28" stroke-width="1.6" filter="url(#glowOrange)"/>
+  <path d="M92 80 H1108 Q1128 80 1128 100 V316 Q1128 336 1108 336 H92 Q72 336 72 316 V100 Q72 80 92 80 Z"
+        fill="url(#glass)" opacity="1"/>
+  <path d="M120 88 L520 88 Q620 88 700 130 L1000 290 Q1060 322 1120 322 L1120 336 L120 336 Z"
+        fill="url(#spec)" opacity="0.55"/>
+  <g opacity="0.75">
+    <circle cx="1060" cy="108" r="2.2" fill="#4efcff"/>
+    <circle cx="1010" cy="152" r="1.6" fill="#ff7a18"/>
+    <circle cx="1086" cy="182" r="1.9" fill="#b36bff"/>
+    <circle cx="1120" cy="130" r="1.3" fill="#ffffff"/>
+    <circle cx="1030" cy="226" r="1.2" fill="#ffffff"/>
+  </g>
+  <g transform="translate(120,160)">
     <text x="0" y="0"
-      font-family="Inter, Segoe UI, Arial" font-size="56" font-weight="800"
+      font-family="Inter, Segoe UI, Arial" font-size="58" font-weight="850"
       fill="#ffffff" filter="url(#textShadow)"
-      paint-order="stroke fill" stroke="#000" stroke-width="6" stroke-linejoin="round">
+      paint-order="stroke fill" stroke="#000" stroke-width="7" stroke-linejoin="round">
       Infra
     </text>
-    <text x="0" y="44"
-      font-family="Inter, Segoe UI, Arial" font-size="20" font-weight="600"
-      fill="#dbe6ff" opacity="0.92" filter="url(#textShadow)"
+    <text x="0" y="46"
+      font-family="Inter, Segoe UI, Arial" font-size="20" font-weight="650"
+      fill="#dbe6ff" opacity="0.95" filter="url(#textShadow)"
       paint-order="stroke fill" stroke="#000" stroke-width="4" stroke-linejoin="round">
       Timers, healthchecks, snapshots, CI — tout est tracable
     </text>
-    <text x="0" y="86"
+    <text x="0" y="90"
       font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-      font-size="14" font-weight="700"
-      fill="#4efcff" opacity="0.9" filter="url(#textShadow)"
+      font-size="14" font-weight="800"
+      fill="#4efcff" opacity="0.92" filter="url(#textShadow)"
       paint-order="stroke fill" stroke="#000" stroke-width="3" stroke-linejoin="round">
-      SECTION_05 -- LINUXIA -- PROOF-FIRST OPS
+      SECTION_05 -- LINUXIA -- 3D CINEMATIC HUD
     </text>
   </g>
-  <g transform="translate(70,330)" filter="url(#softGlow)">
-    <rect x="0" y="0" width="210" height="34" rx="17" fill="#0b1024" opacity="0.75" stroke="#4efcff" stroke-opacity="0.35"/>
-    <text x="18" y="23" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="13" fill="#cfe7ff">Proof-first - Ops - CI</text>
-    <rect x="230" y="0" width="240" height="34" rx="17" fill="#0b1024" opacity="0.75" stroke="#ff7a18" stroke-opacity="0.35"/>
-    <text x="248" y="23" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="13" fill="#ffe7d1">Multi-VM - openSUSE - systemd</text>
+  <g transform="translate(120,310)">
+    <g filter="url(#glowCyan)">
+      <rect x="0" y="0" width="220" height="34" rx="17" fill="#0b1024" opacity="0.78" stroke="#4efcff" stroke-opacity="0.35"/>
+      <text x="18" y="23" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="13" fill="#cfe7ff">Proof-first - Ops - CI</text>
+    </g>
+    <g transform="translate(240,0)" filter="url(#glowOrange)">
+      <rect x="0" y="0" width="260" height="34" rx="17" fill="#0b1024" opacity="0.78" stroke="#ff7a18" stroke-opacity="0.30"/>
+      <text x="18" y="23" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="13" fill="#ffe7d1">Multi-VM - openSUSE - systemd</text>
+    </g>
+  </g>
+  <g opacity="0.7">
+    <path d="M78 110 h18" stroke="#4efcff" stroke-opacity="0.45" stroke-width="2"/>
+    <path d="M1104 110 h18" stroke="#ff7a18" stroke-opacity="0.35" stroke-width="2"/>
+    <path d="M78 316 h18" stroke="#ff7a18" stroke-opacity="0.30" stroke-width="2"/>
+    <path d="M1104 316 h18" stroke="#4efcff" stroke-opacity="0.40" stroke-width="2"/>
   </g>
 </svg>
