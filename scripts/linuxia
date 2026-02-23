@@ -17,7 +17,8 @@ usage() {
   printf "  lint        Run bash syntax + shellcheck warnings (make lint)\n"
   printf "  syntax      Fast bash syntax-only checks (make syntax)\n"
   printf "  verify      Alias for doctor\n"
-  printf "  version     Show git version info\n\n"
+  printf "  version     Show git version info\n"
+  printf "  release     Build a release package: tarball + SHA256 checksums\n\n"
   printf "Notes:\n"
   printf "  - This CLI is read-only by default.\n"
   printf "  - Prefer running from the repo root.\n"
@@ -54,6 +55,10 @@ case "$cmd" in
     else
       printf "git not available (or not a git repo)\n"
     fi
+    ;;
+  release)
+    [ -f Makefile ] || die "Makefile not found at repo root"
+    make release
     ;;
   *)
     die "Unknown command: $cmd (try: scripts/linuxia help)"

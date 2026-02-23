@@ -41,3 +41,7 @@ syntax: ## Fast syntax-only check (bash -n)
 	for f in $(SCRIPTS_DIR)/*.sh; do \
 	  bash -n "$$f" && printf "  OK  %s\n" "$$f"; \
 	done
+
+.PHONY: release
+release: ## Build a release package: tarball + SHA256 checksums (Phase 12)
+	@bash $(SCRIPTS_DIR)/linuxia-release.sh
