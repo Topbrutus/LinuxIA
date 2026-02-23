@@ -35,12 +35,15 @@ cd /opt/linuxia
 
 # 1 — Check all scripts are syntactically valid
 make syntax
+# or: ./scripts/linuxia syntax
 
 # 2 — Run platform doctor (READ-ONLY — does not write anything)
 make doctor
+# or: ./scripts/linuxia doctor
 
 # 3 — Run full lint (bash -n + shellcheck warnings)
 make lint
+# or: ./scripts/linuxia lint
 ```
 
 Expected output from `make doctor`:

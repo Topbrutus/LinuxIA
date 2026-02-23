@@ -39,3 +39,9 @@ jobs:
           else
             printf "No Makefile (skip)\n"
           fi
+
+      - name: CLI smoke (scripts/linuxia)
+        run: |
+          bash -n scripts/linuxia
+          ./scripts/linuxia help >/dev/null
+          ./scripts/linuxia version || true
