@@ -520,6 +520,80 @@ sudo setenforce 1
 
 ---
 
+### 🚫 Permission Denied — Exit Code 126
+
+**Symptom**: Script exits with code `126` or `bash: ./scripts/foo.sh: Permission denied`
+
+Exit 126 means the shell found the file but **could not execute it**. Different from exit 127 (file not found).
+
+#### Causes and fixes
+
+**1 — Executable bit missing (most common)**
+```bash
+ls -l scripts/foo.sh
+# If you see -rw-r--r-- (no x), fix with:
+chmod +x scripts/foo.sh
+# Or for the whole scripts/ dir:
+chmod +x scripts/*.sh
+# In git (persists across clones):
+git update-index --chmod=+x scripts/foo.sh
+```
+
+**2 — Wrong shebang or missing shebang**
+```bash
+# Check first line:
+sed -n '1p' scripts/foo.sh
+# Expected: #!/usr/bin/env bash   or   #!/bin/bash
+# If blank or wrong, add: #!/usr/bin/env bash  as first line
+```
+
+**3 — Windows CRLF line endings**
+```bash
+file scripts/foo.sh
+# If output says "CRLF line terminators", strip them:
+sed -i 's/\r$//' scripts/foo.sh
+# Or with dos2unix (if installed):
+dos2unix scripts/foo.sh
+```
+
+**4 — Filesystem mounted noexec**
+```bash
+mount | grep -E "(opt|linuxia|shareA|shareB)"
+# If you see "noexec" in the mount options, the filesystem blocks execution.
+# Fix: remount without noexec (requires root):
+sudo mount -o remount,exec /opt/linuxia
+```
+
+**5 — Wrong file owner / ACL issue**
+```bash
+stat -c "%a %U:%G %n" scripts/foo.sh
+# Expected: 755 gaby:users   (or at least user-executable)
+sudo chown gaby:users scripts/foo.sh
+chmod 755 scripts/foo.sh
+```
+
+**6 — Script run via git on a root-owned object**
+```bash
+# git objects owned by root can block operations:
+sudo chown -R gaby:users /opt/linuxia/.git/objects
+sudo find /opt/linuxia/.git/objects -type d -exec chmod 775 {} \;
+sudo find /opt/linuxia/.git/objects -type f -exec chmod 664 {} \;
+```
+
+#### Quick diagnostic checklist
+
+```bash
+# All-in-one: check executable + shebang + encoding
+f=scripts/verify-platform.sh
+ls -l "$f"
+stat -c "%a %U:%G" "$f"
+sed -n '1p' "$f"
+file "$f"
+mount | grep "$(df -P "$f" | tail -1 | awk '{print $6}')" | grep noexec || printf "noexec: not set\n"
+```
+
+---
+
 ## 📊 Monitoring Checklist
 
 ### Daily (Automated via timers)
