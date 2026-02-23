@@ -63,7 +63,8 @@ backup_file(){
   local f="$1"
   local src="$REPO_DIR/$f"
   [[ -f "$src" ]] || return 0
-  local bak="/tmp/$(basename "$f").bak.$(date +%Y%m%d-%H%M%S)"
+  local bak
+  bak="/tmp/$(basename "$f").bak.$(date +%Y%m%d-%H%M%S)"
   cp -a "$src" "$bak"
   say "Backup: $f -> $bak"
 }

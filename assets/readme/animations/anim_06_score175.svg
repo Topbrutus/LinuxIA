@@ -1,0 +1,129 @@
+<svg class="hero__svg" viewBox="0 0 1440 520" preserveAspectRatio="none" aria-hidden="true">
+<defs>
+  <filter id="linuxiaTextShadow" x="-50%" y="-50%" width="200%" height="200%">
+    <feDropShadow dx="0" dy="2" stdDeviation="2.2" flood-color="#000000" flood-opacity="0.85"/>
+    <feDropShadow dx="0" dy="0" stdDeviation="1.2" flood-color="#000000" flood-opacity="0.70"/>
+  </filter>
+  <style><![CDATA[
+    text, tspan {
+      paint-order: stroke fill;
+      stroke: #000;
+      stroke-width: 6px;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+      filter: url(#linuxiaTextShadow);
+    }
+    text[font-size="10"], text[font-size="11"], text[font-size="12"], text[font-size="13"], text[font-size="14"], text[font-size="15"] {
+      stroke-width: 4.5px;
+    }
+    rect.label-bg, rect[id*="label"], rect[class*="label"] { opacity: 0 !important; }
+  ]]></style>
+</defs>
+
+<style>
+/* LinuxIA label contrast patch */
+text{
+  paint-order: stroke fill;
+  stroke: rgba(0,0,0,0.95);
+  stroke-width: 10;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+</style>
+
+            <defs>
+              <filter id="noiseLayer1">
+                <feTurbulence type="fractalNoise" baseFrequency="0.0026" numOctaves="5" seed="2" result="noise1">
+                  <animate attributeName="seed" values="2;6;12;2" dur="120s" repeatCount="indefinite"/>
+                </feTurbulence>
+                <feDisplacementMap in="SourceGraphic" in2="noise1" scale="34"/>
+              </filter>
+
+              <filter id="noiseLayer2">
+                <feTurbulence type="fractalNoise" baseFrequency="0.0031" numOctaves="7" seed="7" result="noise2">
+                  <animate attributeName="seed" values="7;14;3;7" dur="160s" repeatCount="indefinite"/>
+                </feTurbulence>
+                <feDisplacementMap in="SourceGraphic" in2="noise2" scale="22"/>
+              </filter>
+
+              <linearGradient id="linuxiaGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#070A12"/>
+                <stop offset="18%" stop-color="#6A2CFF" stop-opacity="0.70"/>
+                <stop offset="34%" stop-color="#00C8FF" stop-opacity="0.75"/>
+                <stop offset="48%" stop-color="#73BA25" stop-opacity="0.70"/>
+                <stop offset="62%" stop-color="#FFD700" stop-opacity="0.85"/>
+                <stop offset="78%" stop-color="#FF8A00" stop-opacity="0.75"/>
+                <stop offset="100%" stop-color="#00E6B8" stop-opacity="0.60"/>
+                <animate attributeName="x1" values="0;1;0" dur="23s" repeatCount="indefinite"/>
+              </linearGradient>
+
+              <radialGradient id="coreGradient">
+                <stop offset="0%" stop-color="#00C8FF" stop-opacity="0.55"/>
+                <stop offset="35%" stop-color="#FFD700" stop-opacity="0.42"/>
+                <stop offset="65%" stop-color="#FF8A00" stop-opacity="0.28"/>
+                <stop offset="100%" stop-color="#070A12" stop-opacity="0.88"/>
+              </radialGradient>
+
+              <!-- rail (mécanique) -->
+              <path id="rail" d="M190 300 C 420 120, 720 420, 990 210 S 1240 160, 1350 300" fill="none"/>
+
+              <!-- micro-orbe -->
+              <g id="orb">
+                <circle r="2.6" fill="#00C8FF" opacity="0.95"/>
+                <circle r="1.4" fill="#FFD700" opacity="0.75"/>
+                <circle r="0.8" fill="#73BA25" opacity="0.65"/>
+                <animate attributeName="opacity" values="0.55;1;0.7;1;0.6" dur="3.7s" repeatCount="indefinite"/>
+              </g>
+            </defs>
+
+            <!-- overdraw pour tuer le bord noir -->
+            <rect x="-80" y="-80" width="1600" height="680" fill="url(#linuxiaGradient)" filter="url(#noiseLayer1)" opacity="0.46"/>
+            <rect x="-80" y="-80" width="1600" height="680" fill="url(#linuxiaGradient)" filter="url(#noiseLayer2)" opacity="0.28"/>
+            <rect x="-80" y="-80" width="1600" height="680" fill="#070A12" opacity="0.18"/>
+
+            <!-- cadre épais -->
+            <rect x="10" y="10" width="1420" height="500" rx="28" fill="none" stroke="#00C8FF" stroke-width="10" opacity="0.22"/>
+            <rect x="16" y="16" width="1408" height="488" rx="26" fill="none" stroke="#FFD700" stroke-width="4" opacity="0.18" stroke-dasharray="18 12">
+              <animate attributeName="stroke-dashoffset" values="0;360" dur="7.4s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.14;0.36;0.18;0.42;0.22" dur="9.1s" repeatCount="indefinite"/>
+            </rect>
+
+            <!-- core réduit -->
+            <circle cx="720" cy="250" r="52" fill="url(#coreGradient)" opacity="0.6">
+              <animate attributeName="r" values="48;58;48" dur="8s" repeatCount="indefinite"/>
+            </circle>
+
+            <!-- proof rail -->
+            <use href="#rail" stroke="#00C8FF" stroke-width="1.2" opacity="0.26" stroke-dasharray="4 12">
+              <animate attributeName="stroke-dashoffset" values="0;520" dur="8.2s" repeatCount="indefinite"/>
+            </use>
+
+            <!-- micro-fractales 1→2→4→8→16 (toutes sur le même rail) -->
+            <g opacity="0.98">
+              <use href="#orb"><animateMotion dur="9.7s" repeatCount="indefinite" rotate="auto"><mpath href="#rail"/></animateMotion></use>
+              <use href="#orb" transform="scale(0.90)"><animateMotion dur="9.7s" begin="-2.0s" repeatCount="indefinite" rotate="auto"><mpath href="#rail"/></animateMotion></use>
+              <use href="#orb" transform="scale(0.80)"><animateMotion dur="9.7s" begin="-4.0s" repeatCount="indefinite" rotate="auto"><mpath href="#rail"/></animateMotion></use>
+              <use href="#orb" transform="scale(0.74)"><animateMotion dur="9.7s" begin="-6.0s" repeatCount="indefinite" rotate="auto"><mpath href="#rail"/></animateMotion></use>
+
+              <use href="#orb" transform="scale(0.66)"><animateMotion dur="9.7s" begin="-1.0s" repeatCount="indefinite" rotate="auto"><mpath href="#rail"/></animateMotion></use>
+              <use href="#orb" transform="scale(0.62)"><animateMotion dur="9.7s" begin="-3.0s" repeatCount="indefinite" rotate="auto"><mpath href="#rail"/></animateMotion></use>
+              <use href="#orb" transform="scale(0.58)"><animateMotion dur="9.7s" begin="-5.0s" repeatCount="indefinite" rotate="auto"><mpath href="#rail"/></animateMotion></use>
+              <use href="#orb" transform="scale(0.54)"><animateMotion dur="9.7s" begin="-7.0s" repeatCount="indefinite" rotate="auto"><mpath href="#rail"/></animateMotion></use>
+
+              <use href="#orb" transform="scale(0.48)"><animateMotion dur="9.7s" begin="-0.5s" repeatCount="indefinite" rotate="auto"><mpath href="#rail"/></animateMotion></use>
+              <use href="#orb" transform="scale(0.46)"><animateMotion dur="9.7s" begin="-1.5s" repeatCount="indefinite" rotate="auto"><mpath href="#rail"/></animateMotion></use>
+              <use href="#orb" transform="scale(0.44)"><animateMotion dur="9.7s" begin="-2.5s" repeatCount="indefinite" rotate="auto"><mpath href="#rail"/></animateMotion></use>
+              <use href="#orb" transform="scale(0.42)"><animateMotion dur="9.7s" begin="-3.5s" repeatCount="indefinite" rotate="auto"><mpath href="#rail"/></animateMotion></use>
+              <use href="#orb" transform="scale(0.40)"><animateMotion dur="9.7s" begin="-4.5s" repeatCount="indefinite" rotate="auto"><mpath href="#rail"/></animateMotion></use>
+              <use href="#orb" transform="scale(0.38)"><animateMotion dur="9.7s" begin="-5.5s" repeatCount="indefinite" rotate="auto"><mpath href="#rail"/></animateMotion></use>
+              <use href="#orb" transform="scale(0.36)"><animateMotion dur="9.7s" begin="-6.5s" repeatCount="indefinite" rotate="auto"><mpath href="#rail"/></animateMotion></use>
+              <use href="#orb" transform="scale(0.34)"><animateMotion dur="9.7s" begin="-7.5s" repeatCount="indefinite" rotate="auto"><mpath href="#rail"/></animateMotion></use>
+            </g>
+
+            <!-- scanline -->
+            <rect x="-80" y="42" width="1600" height="3" fill="#FFD700" opacity="0.12">
+              <animate attributeName="y" values="42;490;42" dur="7.7s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.06;0.22;0.08;0.18;0.07" dur="7.7s" repeatCount="indefinite"/>
+            </rect>
+          </svg>

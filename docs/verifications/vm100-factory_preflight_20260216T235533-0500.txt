@@ -1,0 +1,83 @@
+=== HEADER ===
+host=vm100-factory
+ts=20260216T235533-0500
+repo=/opt/linuxia
+sudo_non_interactive=no
+
+=== OS / KERNEL ===
+Linux vm100-factory 6.12.0-160000.9-default #1 SMP PREEMPT_DYNAMIC Fri Jan 16 09:29:05 UTC 2026 (9badd3c) x86_64 x86_64 x86_64 GNU/Linux
+NAME="openSUSE Leap"
+VERSION="16.0"
+ID="opensuse-leap"
+ID_LIKE="suse opensuse"
+VERSION_ID="16.0"
+PRETTY_NAME="openSUSE Leap 16.0"
+ANSI_COLOR="0;32"
+CPE_NAME="cpe:/o:opensuse:leap:16.0"
+BUG_REPORT_URL="https://bugs.opensuse.org"
+HOME_URL="https://www.opensuse.org/"
+DOCUMENTATION_URL="https://en.opensuse.org/Portal:Leap"
+LOGO="distributor-logo-Leap"
+
+=== NETWORK (brief) ===
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp6s18          UP             192.168.1.135/24 
+default via 192.168.1.1 dev enp6s18 proto static metric 100 
+192.168.1.0/24 dev enp6s18 proto kernel scope link src 192.168.1.135 metric 100 
+
+=== GIT (state + sync) ===
+true
+origin	git@github.com:Topbrutus/LinuxIA.git (fetch)
+origin	git@github.com:Topbrutus/LinuxIA.git (push)
+feat/phase8-systemd-mounts
+## feat/phase8-systemd-mounts
+?? docs/verifications/vm100-factory_preflight_20260216T235533-0500.txt
+--- fetch ---
+--- pull (ff-only) ---
+--- status after pull ---
+## feat/phase8-systemd-mounts
+?? docs/verifications/vm100-factory_preflight_20260216T235533-0500.txt
+
+=== CIFS / AUTOFS / MOUNTS (VM101) ===
+cifs-utils-7.4-160000.2.2.x86_64
+
+--- findmnt (filtered) ---
+/proc/sys/fs/binfmt_misc systemd-1 autofs rw,relatime,fd=35,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=8577
+/mnt/linuxia/DATA_1TB_A /dev/sdb6 fuseblk rw,nosuid,nodev,relatime,context=system_u:object_r:samba_share_t:s0,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096
+/mnt/linuxia/DATA_1TB_B /dev/sdc3 fuseblk rw,nosuid,nodev,relatime,context=system_u:object_r:samba_share_t:s0,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096
+/srv/linuxia-share/DATA_1TB_A /dev/sdb6 fuseblk rw,nosuid,nodev,relatime,context=system_u:object_r:samba_share_t:s0,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096
+/srv/linuxia-share/DATA_1TB_B /dev/sdc3 fuseblk rw,nosuid,nodev,relatime,context=system_u:object_r:samba_share_t:s0,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096
+/opt/linuxia/data/shareA /dev/sdb6[/LinuxIA_SMB] fuseblk rw,nosuid,nodev,relatime,context=system_u:object_r:samba_share_t:s0,user_id=0,group_id=0,default_permissions,allow_other,blksize=4096
+
+--- expected paths (if present) ---
+# /mnt/linuxia/DATA_1TB_A
+total 5247752
+drwxrwxr-x  1 gaby gaby      28672 13 fév 13:00 .
+drwxr-xr-x. 1 gaby gaby         40  2 fév 07:21 ..
+drwxrwxr-x  1 gaby gaby       4096 13 jan 14:25 $Recycle.Bin
+drwxrwxr-x  1 gaby gaby       4096 13 jan 16:20 $WinREAgent
+drwxrwxr-x  1 gaby gaby       4096 13 jan 16:11 AeroGlass
+-rwxrwxr-x  1 gaby gaby        112  6 avr  2023 bootTel.dat
+drwxrwxr-x  1 gaby gaby       4096 12 jan 09:53 cdwin
+drwxrwxr-x  1 gaby gaby       4096 13 jan 16:48 cell
+lrwxrwxrwx  2 gaby gaby         29 28 jun  2020 Documents and Settings -> /mnt/linuxia/DATA_1TB_A/Users
+-rwxrwxr-x  2 gaby gaby       8192 15 jan 03:55 DumpStack.log.tmp
+drwxrwxr-x  1 gaby gaby       4096 13 jan 16:55 Écono Cartouche
+drwxrwxr-x  1 gaby gaby       4096 13 jan 22:24 epic
+-rwxrwxr-x  2 gaby gaby      17734  7 nov  2007 eula.1028.txt
+-rwxrwxr-x  2 gaby gaby      17734  7 nov  2007 eula.1031.txt
+-rwxrwxr-x  2 gaby gaby      10134  7 nov  2007 eula.1033.txt
+-rwxrwxr-x  2 gaby gaby      17734  7 nov  2007 eula.1036.txt
+-rwxrwxr-x  2 gaby gaby      17734  7 nov  2007 eula.1040.txt
+-rwxrwxr-x  2 gaby gaby        118  7 nov  2007 eula.1041.txt
+-rwxrwxr-x  2 gaby gaby      17734  7 nov  2007 eula.1042.txt
+-rwxrwxr-x  2 gaby gaby      17734  7 nov  2007 eula.2052.txt
+-rwxrwxr-x  2 gaby gaby      17734  7 nov  2007 eula.3082.txt
+drwxrwxr-x  1 gaby gaby     131072 13 jan 17:21 film
+drwxrwxr-x  1 gaby gaby       4096 21 mar  2023 found.000
+drwxrwxr-x  1 gaby gaby          0  3 jun  2023 found.001
+drwxrwxr-x  1 gaby gaby          0 22 aoû  2023 found.002
+drwxrwxr-x  1 gaby gaby          0 20 fév  2024 found.003
+drwxrwxr-x  1 gaby gaby          0 24 mai  2024 found.004
+-rwxrwxr-x  1 gaby gaby       1110  7 nov  2007 globdata.ini
+-rwxrwxr-x  1 gaby gaby     562688  7 nov  2007 install.exe

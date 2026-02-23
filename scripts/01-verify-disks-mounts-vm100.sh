@@ -10,7 +10,6 @@
 set -euo pipefail;
 IFS=$'\n\t';
 
-declare -r ScriptName="$(basename "${BASH_SOURCE[0]}")";
 declare -r BaseDir="/opt/linuxia";
 declare -r DocsDir="${BaseDir}/docs";
 declare -r VerifDir="${DocsDir}/verifications";
@@ -20,8 +19,11 @@ declare ExpectedPrefix="vm100";
 declare SnapshotPath="${DocsDir}/PRODUCTION.snapshot.md";
 declare ForceRun="false";
 
-declare -r TimeStampUtc="$(date -u +%Y%m%dT%H%M%SZ)";
-declare -r TimeStampLocal="$(date -Is)";
+declare ScriptName TimeStampUtc TimeStampLocal
+ScriptName="$(basename "${BASH_SOURCE[0]}")"
+TimeStampUtc="$(date -u +%Y%m%dT%H%M%SZ)"
+TimeStampLocal="$(date -Is)"
+declare -r ScriptName TimeStampUtc TimeStampLocal
 declare EvidencePath="";
 
 declare HostShort="";
