@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="720"
+     viewBox="0 0 1600 720" role="img" aria-label="Vision &amp; Platform">
+  <defs>
+    <linearGradient id="gBorder" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0"    stop-color="#ff6a00"/>
+      <stop offset="0.48" stop-color="#00ff7b"/>
+      <stop offset="0.82" stop-color="#00b3ff"/>
+      <stop offset="1"    stop-color="#ff6a00"/>
+      <animate attributeName="x1" dur="9s" values="0;1;0"   repeatCount="indefinite"/>
+      <animate attributeName="x2" dur="9s" values="1;0;1"   repeatCount="indefinite"/>
+    </linearGradient>
+
+    <linearGradient id="gShimmer" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0"   stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.10"/>
+      <stop offset="1"   stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+
+    <radialGradient id="gVig" cx="50%" cy="45%" r="70%">
+      <stop offset="0" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.55"/>
+    </radialGradient>
+
+    <filter id="fShadow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000000" flood-opacity="0.75"/>
+    </filter>
+
+    <filter id="fGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="2.2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="fNoise" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2"
+                    stitchTiles="stitch" seed="7" result="t">
+        <animate attributeName="seed" dur="6s" values="7;9;11;7" repeatCount="indefinite"/>
+      </feTurbulence>
+      <feColorMatrix in="t" type="matrix"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.05 0" result="n"/>
+      <feComposite in="n" in2="SourceGraphic" operator="over"/>
+    </filter>
+
+    <pattern id="pScan" width="4" height="7" patternUnits="userSpaceOnUse">
+      <rect width="4" height="1" fill="#ffffff" opacity="0.05"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="720" fill="#070A10"/>
+
+  <!-- Card shell -->
+  <g filter="url(#fShadow)">
+    <rect x="80" y="76" width="1440" height="568" rx="26"
+          fill="#000000" fill-opacity="0.55" stroke="#ffffff" stroke-opacity="0.10"/>
+  </g>
+
+  <!-- Animated border frame -->
+  <g filter="url(#fGlow)">
+    <rect x="110" y="106" width="1380" height="508" rx="22"
+          fill="#07090F" fill-opacity="0.72" stroke="url(#gBorder)" stroke-width="2.2"/>
+  </g>
+
+  <!-- Photo clip -->
+  <defs>
+    <clipPath id="clipPhoto">
+      <rect x="140" y="152" width="860" height="452" rx="18"/>
+    </clipPath>
+  </defs>
+
+  <!-- Photo + drift + scanlines + vignette + shimmer -->
+  <g clip-path="url(#clipPhoto)">
+    <image href="../../gallery/LinuxIA_02.jpg" x="140" y="152" width="860" height="452"
+           preserveAspectRatio="xMidYMid slice">
+      <animateTransform attributeName="transform" type="translate" dur="11s"
+        values="0 0; -7 -2; 0 0; 7 2; 0 0" repeatCount="indefinite"/>
+    </image>
+    <rect x="140" y="152" width="860" height="452" fill="url(#pScan)" opacity="0.22"/>
+    <rect x="140" y="152" width="860" height="452" fill="url(#gVig)"/>
+    <!-- shimmer sweep -->
+    <rect x="-600" y="152" width="520" height="452" fill="url(#gShimmer)" opacity="0.38">
+      <animate attributeName="x" dur="5.8s" values="-600;1800" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <!-- Photo border glow -->
+  <rect x="140" y="152" width="860" height="452" rx="18"
+        fill="none" stroke="url(#gBorder)" stroke-width="1.5" opacity="0.55"/>
+
+  <!-- Right text block -->
+  <g filter="url(#fGlow)">
+    <text x="1060" y="200"
+      font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif"
+      font-size="30" font-weight="900" fill="#ffffff" fill-opacity="0.93">Vision &amp; Platform</text>
+
+    <text x="1060" y="234"
+      font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+      font-size="13" fill="#00ff7b" fill-opacity="0.82">proof-first · multi-agent · distributed ops</text>
+
+    <!-- Hyperline underline -->
+    <rect x="1060" y="252" width="420" height="2.6" rx="2"
+          fill="#ffffff" fill-opacity="0.10"/>
+    <rect x="1060" y="252" width="90" height="2.6" rx="2" fill="url(#gBorder)">
+      <animate attributeName="x" dur="3.2s" values="1060;1390;1060" repeatCount="indefinite"/>
+    </rect>
+
+      <g transform="translate(1060,290)">
+        <rect width="420" height="42" rx="12" fill="#000000" fill-opacity="0.55"
+              stroke="#ffffff" stroke-opacity="0.10"/>
+        <path d="M8 14 V8 H14" fill="none" stroke="url(#gBorder)" stroke-width="2">
+          <animate attributeName="opacity" dur="2.4s" values="0.55;1;0.55" repeatCount="indefinite"/>
+        </path>
+        <path d="M412 14 V8 H406" fill="none" stroke="url(#gBorder)" stroke-width="2">
+          <animate attributeName="opacity" dur="3.0999999999999996s" values="1;0.55;1" repeatCount="indefinite"/>
+        </path>
+        <text x="16" y="26"
+          font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+          font-size="12" fill="#ffffff" fill-opacity="0.84">PROOF-FIRST · READ-ONLY VERIFY</text>
+      </g>
+      <g transform="translate(1060,344)">
+        <rect width="420" height="42" rx="12" fill="#000000" fill-opacity="0.55"
+              stroke="#ffffff" stroke-opacity="0.10"/>
+        <path d="M8 14 V8 H14" fill="none" stroke="url(#gBorder)" stroke-width="2">
+          <animate attributeName="opacity" dur="2.75s" values="0.55;1;0.55" repeatCount="indefinite"/>
+        </path>
+        <path d="M412 14 V8 H406" fill="none" stroke="url(#gBorder)" stroke-width="2">
+          <animate attributeName="opacity" dur="2.75s" values="1;0.55;1" repeatCount="indefinite"/>
+        </path>
+        <text x="16" y="26"
+          font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+          font-size="12" fill="#ffffff" fill-opacity="0.84">ORCHESTRATION · TIMELINE</text>
+      </g>
+      <g transform="translate(1060,398)">
+        <rect width="420" height="42" rx="12" fill="#000000" fill-opacity="0.55"
+              stroke="#ffffff" stroke-opacity="0.10"/>
+        <path d="M8 14 V8 H14" fill="none" stroke="url(#gBorder)" stroke-width="2">
+          <animate attributeName="opacity" dur="3.0999999999999996s" values="0.55;1;0.55" repeatCount="indefinite"/>
+        </path>
+        <path d="M412 14 V8 H406" fill="none" stroke="url(#gBorder)" stroke-width="2">
+          <animate attributeName="opacity" dur="2.4s" values="1;0.55;1" repeatCount="indefinite"/>
+        </path>
+        <text x="16" y="26"
+          font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+          font-size="12" fill="#ffffff" fill-opacity="0.84">VM100 FACTORY · PVE HOST</text>
+      </g>
+  </g>
+
+  <!-- Noise overlay -->
+  <rect width="1600" height="720" filter="url(#fNoise)" opacity="1"/>
+</svg>

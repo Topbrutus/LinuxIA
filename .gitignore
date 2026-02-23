@@ -10,6 +10,12 @@ data/
 logs/
 workspace/
 
+# Node / build artifacts (showcase React app)
+assets/readme/showcase/**/node_modules/
+assets/readme/showcase/**/dist/
+assets/readme/showcase/**/.env
+assets/readme/showcase/**/.env.local
+
 # Éditeurs (éviter les fichiers de backup)
 *~
 *.swp
@@ -27,3 +33,11 @@ docs/DEBUG_systemd_*.log
 # local junk
 cd/
 ssh/
+sudo
+sudo/
+
+# Local / generated / not tracked
+apps/
+mailbox/
+vscode-extension/
+wow/

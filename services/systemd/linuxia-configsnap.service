@@ -7,4 +7,5 @@ RequiresMountsFor=/opt/linuxia/data/shareA /opt/linuxia/data/shareB
 
 [Service]
 Type=oneshot
+UMask=0002
 ExecStart=/usr/local/bin/linuxia-snapshot
