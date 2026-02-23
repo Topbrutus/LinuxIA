@@ -1,31 +1,30 @@
 # Code of Conduct
 
-## Notre engagement
+This project follows the Contributor Covenant Code of Conduct (v2.1).
 
-LinuxIA est un projet ouvert et collaboratif. Nous nous engageons à offrir un environnement accueillant, respectueux et sans harcèlement pour tous, peu importe l'origine, l'identité ou le niveau d'expérience.
+## Our Pledge
 
-## Standards attendus
+We pledge to make participation in our community a harassment-free experience for everyone.
 
-**✅ Comportements encouragés:**
-- Respect et bienveillance dans les échanges
-- Critiques constructives sur le code (jamais sur les personnes)
-- Entraide et partage de connaissances
-- Transparence sur les limitations ou erreurs
+## Our Standards
 
-**❌ Comportements inacceptables:**
-- Harcèlement, insultes ou propos discriminatoires
-- Trolling, spam ou sabotage
-- Violation de la vie privée (doxing, partage non-consenti)
-- Tout abus de confiance ou manipulation
+Examples of behavior that contributes to a positive environment include:
 
-## Application
+- Being respectful and constructive
+- Accepting feedback gracefully
+- Focusing on what is best for the community
 
-Les mainteneurs peuvent modérer, éditer ou supprimer les contributions non conformes. Les violations graves entraîneront un bannissement temporaire ou permanent.
+Examples of unacceptable behavior include:
 
-## Signalement
+- Harassment, insults, or personal attacks
+- Publishing others' private information
+- Trolling or disruptive behavior
 
-Contacte [@Topbrutus](https://github.com/Topbrutus) en privé si tu constates un manquement.
+## Enforcement
 
----
+Project maintainers are responsible for clarifying standards and enforcing them.
+To report an incident, use GitHub Issues/Discussions. For security-related matters, follow `SECURITY.md`.
 
-*Inspiré du [Contributor Covenant](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).*
+## Attribution
+
+Contributor Covenant v2.1: https://www.contributor-covenant.org/version/2/1/code_of_conduct/
