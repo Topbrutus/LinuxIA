@@ -151,21 +151,20 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) |
 
 To be determined
 
-
 ## 🧩 Hub Animations
 
 <p align="center">
-  <img src="assets/readme/anims/anim_09.svg" width="320"/>
-  <img src="assets/readme/anims/anim_06.svg" width="320"/>
-  <img src="assets/readme/anims/anim_01.svg" width="320"/>
+  <img src="assets/readme/anims/anim_09.svg" width="310"/>
+  <img src="assets/readme/anims/anim_06.svg" width="310"/>
+  <img src="assets/readme/anims/anim_01.svg" width="310"/>
 </p>
 <p align="center">
-  <img src="assets/readme/anims/anim_05.svg" width="320"/>
-  <img src="assets/readme/anims/anim_04.svg" width="320"/>
-  <img src="assets/readme/anims/anim_02.svg" width="320"/>
+  <img src="assets/readme/anims/anim_05.svg" width="310"/>
+  <img src="assets/readme/anims/anim_04.svg" width="310"/>
+  <img src="assets/readme/anims/anim_02.svg" width="310"/>
 </p>
 <p align="center">
-  <img src="assets/readme/anims/anim_07.svg" width="320"/>
-  <img src="assets/readme/anims/anim_08.svg" width="320"/>
-  <img src="assets/readme/anims/anim_03.svg" width="320"/>
+  <img src="assets/readme/anims/anim_07.svg" width="310"/>
+  <img src="assets/readme/anims/anim_08.svg" width="310"/>
+  <img src="assets/readme/anims/anim_03.svg" width="310"/>
 </p>
