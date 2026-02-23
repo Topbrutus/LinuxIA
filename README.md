@@ -52,9 +52,9 @@ bash scripts/verify-platform.sh
 
 ## Media
 
-- 🎵 Theme: [Theme_01.mp3](pour_copilot/audio/Theme_01.mp3)
-- 🎬 Trailer 01: [Trailer_01.mp4](pour_copilot/videos/Trailer_01.mp4)
-- 🎬 Trailer 02: [Trailer_02.mp4](pour_copilot/videos/Trailer_02.mp4)
+- 🎵 Theme: [Theme_01.mp3](assets/readme/audio/Theme_01.mp3)
+- 🎬 Trailer 01: [Trailer_01.mp4](assets/readme/videos/Trailer_01.mp4)
+- 🎬 Trailer 02: [Trailer_02.mp4](assets/readme/videos/Trailer_02.mp4)
 
 ## Guides
 
@@ -65,23 +65,23 @@ bash scripts/verify-platform.sh
 ## Gallery (temporary small thumbnails)
 
 <p align="center">
-  <img src="pour_copilot/photos/LinuxIA_02.jpg" width="220" alt="LinuxIA_02" />
-  <img src="pour_copilot/photos/LinuxIA_03.jpg" width="220" alt="LinuxIA_03" />
-  <img src="pour_copilot/photos/LinuxIA_04.jpg" width="220" alt="LinuxIA_04" />
-  <img src="pour_copilot/photos/LinuxIA_05.jpg" width="220" alt="LinuxIA_05" />
+  <img src="assets/readme/gallery/LinuxIA_02.jpg" width="220" alt="LinuxIA_02" />
+  <img src="assets/readme/gallery/LinuxIA_03.jpg" width="220" alt="LinuxIA_03" />
+  <img src="assets/readme/gallery/LinuxIA_04.jpg" width="220" alt="LinuxIA_04" />
+  <img src="assets/readme/gallery/LinuxIA_05.jpg" width="220" alt="LinuxIA_05" />
 </p>
 
 <p align="center">
-  <img src="pour_copilot/photos/LinuxIA_06.jpg" width="220" alt="LinuxIA_06" />
-  <img src="pour_copilot/photos/LinuxIA_07.jpg" width="220" alt="LinuxIA_07" />
-  <img src="pour_copilot/photos/LinuxIA_08.jpg" width="220" alt="LinuxIA_08" />
-  <img src="pour_copilot/photos/LinuxIA_09.jpg" width="220" alt="LinuxIA_09" />
+  <img src="assets/readme/gallery/LinuxIA_06.jpg" width="220" alt="LinuxIA_06" />
+  <img src="assets/readme/gallery/LinuxIA_07.jpg" width="220" alt="LinuxIA_07" />
+  <img src="assets/readme/gallery/LinuxIA_08.jpg" width="220" alt="LinuxIA_08" />
+  <img src="assets/readme/gallery/LinuxIA_09.jpg" width="220" alt="LinuxIA_09" />
 </p>
 
 <p align="center">
-  <img src="pour_copilot/photos/LinuxIA_10.jpg" width="220" alt="LinuxIA_10" />
-  <img src="pour_copilot/photos/LinuxIA_11.jpg" width="220" alt="LinuxIA_11" />
-  <img src="pour_copilot/photos/LinuxIA_12.jpg" width="220" alt="LinuxIA_12" />
+  <img src="assets/readme/gallery/LinuxIA_10.jpg" width="220" alt="LinuxIA_10" />
+  <img src="assets/readme/gallery/LinuxIA_11.jpg" width="220" alt="LinuxIA_11" />
+  <img src="assets/readme/gallery/LinuxIA_12.jpg" width="220" alt="LinuxIA_12" />
 </p>
 
 
