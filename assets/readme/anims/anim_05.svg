@@ -1,46 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320">
   <defs>
-    <linearGradient id="bg5" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#050713"/>
       <stop offset="1" stop-color="#0b1430"/>
     </linearGradient>
-    <pattern id="grid5" patternUnits="userSpaceOnUse" width="28" height="28">
+    <radialGradient id="vign" cx="50%" cy="45%" r="75%">
+      <stop offset="0" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.55"/>
+    </radialGradient>
+    <pattern id="grid" patternUnits="userSpaceOnUse" width="28" height="28">
       <path d="M28 0H0V28" fill="none" stroke="#7aa7ff" stroke-opacity="0.09" stroke-width="1"/>
     </pattern>
-    <pattern id="scan5" patternUnits="userSpaceOnUse" width="6" height="6">
+    <pattern id="scan" patternUnits="userSpaceOnUse" width="6" height="6">
       <rect width="6" height="6" fill="none"/>
       <rect y="0" width="6" height="1" fill="#ffffff" opacity="0.230"/>
     </pattern>
-    <filter id="glow5" x="-40%" y="-40%" width="180%" height="180%">
+    <filter id="glowC" x="-40%" y="-40%" width="180%" height="180%">
       <feGaussianBlur stdDeviation="3.8" result="b"/>
-      <feComposite in="b" in2="SourceGraphic" operator="over"/>
+      <feColorMatrix in="b" type="matrix"
+        values="1 0 0 0 0
+                0 1 0 0 0.22
+                0 0 1 0 0.70
+                0 0 0 0.95 0" result="c"/>
+      <feMerge><feMergeNode in="c"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowO" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="4.2" result="b"/>
+      <feColorMatrix in="b" type="matrix"
+        values="1 0 0 0 0.12
+                0 1 0 0 0.04
+                0 0 1 0 0
+                0 0 0 0.85 0" result="c"/>
+      <feMerge><feMergeNode in="c"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000" flood-opacity="0.55"/>
     </filter>
   </defs>
-  <!-- background -->
-  <rect width="320" height="320" fill="url(#bg5)"/>
-  <rect width="320" height="320" fill="url(#grid5)"/>
-  <rect width="320" height="320" fill="url(#scan5)"/>
-  <!-- stars -->
-  <circle cx="105" cy="65" r="1.90" fill="#ff7a18" opacity="0.25"/><circle cx="142" cy="118" r="0.80" fill="#b36bff" opacity="0.41"/><circle cx="179" cy="171" r="1.35" fill="#ffffff" opacity="0.57"/><circle cx="216" cy="224" r="1.90" fill="#4efcff" opacity="0.33"/><circle cx="253" cy="277" r="0.80" fill="#ff7a18" opacity="0.49"/><circle cx="290" cy="30" r="1.35" fill="#b36bff" opacity="0.25"/><circle cx="27" cy="83" r="1.90" fill="#ffffff" opacity="0.41"/><circle cx="64" cy="136" r="0.80" fill="#4efcff" opacity="0.57"/><circle cx="101" cy="189" r="1.35" fill="#ff7a18" opacity="0.33"/><circle cx="138" cy="242" r="1.90" fill="#b36bff" opacity="0.49"/><circle cx="175" cy="295" r="0.80" fill="#ffffff" opacity="0.25"/><circle cx="212" cy="48" r="1.35" fill="#4efcff" opacity="0.41"/><circle cx="249" cy="101" r="1.90" fill="#ff7a18" opacity="0.57"/><circle cx="286" cy="154" r="0.80" fill="#b36bff" opacity="0.33"/><circle cx="23" cy="207" r="1.35" fill="#ffffff" opacity="0.49"/><circle cx="60" cy="260" r="1.90" fill="#4efcff" opacity="0.25"/><circle cx="97" cy="13" r="0.80" fill="#ff7a18" opacity="0.41"/><circle cx="134" cy="66" r="1.35" fill="#b36bff" opacity="0.57"/>
-  <!-- orbit rings -->
-  <ellipse cx="160.0" cy="160.0" rx="100" ry="84" fill="none" stroke="#4efcff" stroke-opacity="0.18" stroke-width="1.5" stroke-dasharray="4 6"/>
-  <ellipse cx="160.0" cy="160.0" rx="80" ry="70" fill="none" stroke="#ff8c00" stroke-opacity="0.12" stroke-width="1"/>
-  <!-- HUD ticks -->
-  <line x1="254.00" y1="160.00" x2="272.00" y2="160.00" stroke="#4efcff" stroke-opacity="0.35" stroke-width="1.2"/><line x1="246.84" y1="195.97" x2="263.47" y2="202.86" stroke="#4efcff" stroke-opacity="0.35" stroke-width="1.2"/><line x1="226.47" y1="226.47" x2="239.20" y2="239.20" stroke="#4efcff" stroke-opacity="0.35" stroke-width="1.2"/><line x1="195.97" y1="246.84" x2="202.86" y2="263.47" stroke="#4efcff" stroke-opacity="0.35" stroke-width="1.2"/><line x1="160.00" y1="254.00" x2="160.00" y2="272.00" stroke="#4efcff" stroke-opacity="0.35" stroke-width="1.2"/><line x1="124.03" y1="246.84" x2="117.14" y2="263.47" stroke="#4efcff" stroke-opacity="0.35" stroke-width="1.2"/><line x1="93.53" y1="226.47" x2="80.80" y2="239.20" stroke="#4efcff" stroke-opacity="0.35" stroke-width="1.2"/><line x1="73.16" y1="195.97" x2="56.53" y2="202.86" stroke="#4efcff" stroke-opacity="0.35" stroke-width="1.2"/><line x1="66.00" y1="160.00" x2="48.00" y2="160.00" stroke="#4efcff" stroke-opacity="0.35" stroke-width="1.2"/><line x1="73.16" y1="124.03" x2="56.53" y2="117.14" stroke="#4efcff" stroke-opacity="0.35" stroke-width="1.2"/><line x1="93.53" y1="93.53" x2="80.80" y2="80.80" stroke="#4efcff" stroke-opacity="0.35" stroke-width="1.2"/><line x1="124.03" y1="73.16" x2="117.14" y2="56.53" stroke="#4efcff" stroke-opacity="0.35" stroke-width="1.2"/><line x1="160.00" y1="66.00" x2="160.00" y2="48.00" stroke="#4efcff" stroke-opacity="0.35" stroke-width="1.2"/><line x1="195.97" y1="73.16" x2="202.86" y2="56.53" stroke="#4efcff" stroke-opacity="0.35" stroke-width="1.2"/><line x1="226.47" y1="93.53" x2="239.20" y2="80.80" stroke="#4efcff" stroke-opacity="0.35" stroke-width="1.2"/><line x1="246.84" y1="124.03" x2="263.47" y2="117.14" stroke="#4efcff" stroke-opacity="0.35" stroke-width="1.2"/>
-  <!-- center sphere -->
-  <circle cx="160.0" cy="160.0" r="22" fill="#0b1a3a" stroke="#4efcff" stroke-opacity="0.5" stroke-width="1.8"/>
-  <circle cx="160.0" cy="160.0" r="8" fill="#4efcff" opacity="0.18"/>
-  <text x="160.0" y="164.0" text-anchor="middle" font-family="monospace" font-size="7" fill="#4efcff" opacity="0.7">CORE</text>
-  <!-- orbiting dot (SMIL) -->
-  <circle cx="260.00" cy="160.00" r="5.5" fill="#4efcff" filter="url(#glow5)">
-    <animateTransform attributeName="transform" type="rotate"
-      from="0 160.0 160.0" to="360 160.0 160.0"
-      dur="3.90s" repeatCount="indefinite"/>
-  </circle>
-  <!-- data bars -->
-  <rect x="26" y="249" width="8" height="21" fill="#4efcff" opacity="0.25" rx="1"/><rect x="40" y="261" width="8" height="9" fill="#4efcff" opacity="0.32" rx="1"/><rect x="54" y="252" width="8" height="18" fill="#4efcff" opacity="0.39" rx="1"/><rect x="68" y="264" width="8" height="6" fill="#4efcff" opacity="0.18" rx="1"/><rect x="82" y="255" width="8" height="15" fill="#4efcff" opacity="0.25" rx="1"/><rect x="96" y="246" width="8" height="24" fill="#4efcff" opacity="0.32" rx="1"/><rect x="110" y="258" width="8" height="12" fill="#4efcff" opacity="0.39" rx="1"/><rect x="124" y="249" width="8" height="21" fill="#4efcff" opacity="0.18" rx="1"/><rect x="138" y="261" width="8" height="9" fill="#4efcff" opacity="0.25" rx="1"/>
-  <!-- label -->
-  <text x="10" y="14" font-family="monospace" font-size="9" fill="#ff8c00" opacity="0.7">SYS-05</text>
-  <text x="10" y="26" font-family="monospace" font-size="7" fill="#4efcff" opacity="0.45">LINUXIA · HUB</text>
+  <rect width="320" height="320" fill="url(#bg)"/>
+  <rect width="320" height="320" fill="url(#grid)"/>
+  <rect width="320" height="320" fill="url(#scan)" opacity="0.55"/>
+  <rect width="320" height="320" fill="url(#vign)"/>
+  <g filter="url(#shadow)">
+    <rect x="18" y="18" width="284" height="284" rx="22" fill="#0a1026" opacity="0.35"/>
+  </g>
+  <rect x="18" y="18" width="284" height="284" rx="22" fill="none" stroke="#4efcff" stroke-opacity="0.40" stroke-width="2" filter="url(#glowC)"/>
+  <rect x="26" y="26" width="268" height="268" rx="18" fill="none" stroke="#ff7a18" stroke-opacity="0.22" stroke-width="1.6" filter="url(#glowO)"/>
+  <g opacity="0.65">
+    <path d="M28 54 h20" stroke="#4efcff" stroke-opacity="0.45" stroke-width="2"/>
+    <path d="M272 54 h20" stroke="#ff7a18" stroke-opacity="0.30" stroke-width="2"/>
+    <path d="M28 266 h20" stroke="#ff7a18" stroke-opacity="0.28" stroke-width="2"/>
+    <path d="M272 266 h20" stroke="#4efcff" stroke-opacity="0.38" stroke-width="2"/>
+  </g>
+  <g><circle cx="105" cy="65" r="1.9000000000000001" fill="#ff7a18" opacity="0.25"/><circle cx="142" cy="118" r="0.8" fill="#b36bff" opacity="0.41000000000000003"/><circle cx="179" cy="171" r="1.35" fill="#ffffff" opacity="0.5700000000000001"/><circle cx="216" cy="224" r="1.9000000000000001" fill="#4efcff" opacity="0.33"/><circle cx="253" cy="277" r="0.8" fill="#ff7a18" opacity="0.49"/><circle cx="290" cy="30" r="1.35" fill="#b36bff" opacity="0.25"/><circle cx="27" cy="83" r="1.9000000000000001" fill="#ffffff" opacity="0.41000000000000003"/><circle cx="64" cy="136" r="0.8" fill="#4efcff" opacity="0.5700000000000001"/><circle cx="101" cy="189" r="1.35" fill="#ff7a18" opacity="0.33"/><circle cx="138" cy="242" r="1.9000000000000001" fill="#b36bff" opacity="0.49"/><circle cx="175" cy="295" r="0.8" fill="#ffffff" opacity="0.25"/><circle cx="212" cy="48" r="1.35" fill="#4efcff" opacity="0.41000000000000003"/><circle cx="249" cy="101" r="1.9000000000000001" fill="#ff7a18" opacity="0.5700000000000001"/><circle cx="286" cy="154" r="0.8" fill="#b36bff" opacity="0.33"/><circle cx="23" cy="207" r="1.35" fill="#ffffff" opacity="0.49"/><circle cx="60" cy="260" r="1.9000000000000001" fill="#4efcff" opacity="0.25"/><circle cx="97" cy="13" r="0.8" fill="#ff7a18" opacity="0.41000000000000003"/><circle cx="134" cy="66" r="1.35" fill="#b36bff" opacity="0.5700000000000001"/></g>
+  <g transform="translate(160.0,160.0) rotate(115)">
+    <circle r="94" fill="none" stroke="#4efcff" stroke-opacity="0.28" stroke-width="2" filter="url(#glowC)"/>
+    <circle r="112" fill="none" stroke="#ff7a18" stroke-opacity="0.18" stroke-width="1.6" filter="url(#glowO)"/>
+    <path d="M -94 0 A 94 94 0 0 1 0 -94"
+          fill="none" stroke="#4efcff" stroke-opacity="0.38" stroke-width="2"
+          stroke-dasharray="4 10" stroke-linecap="round" filter="url(#glowC)"/>
+    <circle r="60" fill="none" stroke="#b36bff" stroke-opacity="0.14" stroke-width="2"/>
+    <g id="orb5">
+      <circle cx="100" cy="0" r="3.2" fill="#4efcff" opacity="0.92" filter="url(#glowC)"/>
+      <circle cx="100" cy="0" r="5.4" fill="none" stroke="#4efcff" stroke-opacity="0.22" stroke-width="2"/>
+      <animateTransform attributeName="transform" type="rotate"
+        from="0 0 0" to="360 0 0" dur="3.90s" repeatCount="indefinite"/>
+    </g>
+  </g>
+  <g transform="translate(26,274)">
+    <rect x="0" y="0" width="132" height="22" rx="11" fill="#0b1024" opacity="0.70" stroke="#4efcff" stroke-opacity="0.18"/>
+    <g transform="translate(10,6)"><rect x="0" y="-7" width="10" height="21" rx="2" fill="#4efcff" opacity="0.25"/><rect x="14" y="5" width="10" height="9" rx="2" fill="#4efcff" opacity="0.32"/><rect x="28" y="-4" width="10" height="18" rx="2" fill="#4efcff" opacity="0.39"/><rect x="42" y="8" width="10" height="6" rx="2" fill="#4efcff" opacity="0.18"/><rect x="56" y="-1" width="10" height="15" rx="2" fill="#4efcff" opacity="0.25"/><rect x="70" y="-10" width="10" height="24" rx="2" fill="#4efcff" opacity="0.32"/><rect x="84" y="2" width="10" height="12" rx="2" fill="#4efcff" opacity="0.39"/><rect x="98" y="-7" width="10" height="21" rx="2" fill="#4efcff" opacity="0.18"/><rect x="112" y="5" width="10" height="9" rx="2" fill="#4efcff" opacity="0.25"/></g>
+    <text x="150" y="16" font-family="ui-monospace, Menlo, Consolas, monospace" font-size="12" fill="#cfe7ff" opacity="0.75">HUB_ANIM_05</text>
+  </g>
 </svg>
