@@ -1,10 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="260" viewBox="0 0 1200 260">
 <style>
+  .linuxia-label-contrast {
+    fill: #ffffff;
+    stroke: #000000;
+    stroke-width: 8;
+    paint-order: stroke;
+    stroke-linejoin: round;
+    opacity: 0.95;
+  }
+</style>
+
+<style>
   .label { paint-order: stroke fill; stroke: rgba(0,0,0,0.85); stroke-width: 6px; stroke-linejoin: round; }
 </style>
 
   <rect width="1200" height="260" fill="#07070a"/>
   <circle cx="260" cy="130" r="70" fill="#ff6a00"/>
-  <text x="380" y="145" fill="#ffffff" font-family="monospace" font-size="34" class="label">LinuxIA</text>
-  <text x="380" y="185" fill="#bdbdbd" font-family="monospace" font-size="16" class="label">banner placeholder (replace with your animated one)</text>
+  <text x="380" y="145" fill="#ffffff" font-family="monospace" font-size="34" class="label linuxia-label-contrast">LinuxIA</text>
+  <text x="380" y="185" fill="#bdbdbd" font-family="monospace" font-size="16" class="label linuxia-label-contrast">banner placeholder (replace with your animated one)</text>
 </svg>
