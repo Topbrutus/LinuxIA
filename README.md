@@ -1,203 +1,465 @@
-# 🧠 LinuxIA — Proof-First Agent Ops
+LinuxIA — Proof-First Agent Orchestration Framework
 
-<p align="center">
-  <img src="assets/readme/sections/section_01_vision.svg" width="1000" alt="Vision"/>
-</p>
+Phase 6 – Stable Core
+verify-platform: OK
 
-> **LinuxIA n'est pas un projet. C'est un organisme informatique distribué.**
-> Chaque action laisse une preuve. Chaque agent a un rôle. Chaque VM est un organe.
+Deterministic multi-VM orchestration with mandatory evidence generation.
+Built on Proxmox, openSUSE, systemd and GitHub CI.
 
-**LinuxIA** is a self-hosted, proof-first multi-agent AI platform running on Proxmox VE. Every infrastructure change generates timestamped evidence stored in append-only logs and shared storage. AI proposes — humans validate.
+Abstract
 
-> 🆕 **New here?** → [**docs/start-here.md**](docs/start-here.md) — platform overview, prerequisites, and 3-command quickstart.
+LinuxIA is an experimental infrastructure orchestration framework designed around a strict principle:
 
----
+No change without proof.
 
-## 🚀 Quick Start
+Every infrastructure mutation must produce verifiable, timestamped evidence.
+The system combines reproducible automation, multi-VM isolation, and CI enforcement to create a verifiable operational model.
 
-```bash
-# Clone the repository (requires write access to /opt/linuxia on VM100)
+This project explores a proof-driven approach to agent-assisted infrastructure management.
+
+Core Principles
+1. Proof-First Operations
+
+Every action produces:
+
+Timestamped execution logs
+
+Deterministic output
+
+CI validation trace
+
+Health verification artifacts
+
+No silent state changes.
+
+2. Deterministic Automation
+
+Bash scripts with set -euo pipefail
+
+ShellCheck validation
+
+Explicit exit codes
+
+Structured output expectations
+
+Infrastructure must be reproducible.
+
+3. Isolation by Design
+
+Multi-VM topology:
+
+VM100 (vm100-factory)
+Main repository, storage, Samba, health reports
+
+VM101 (vm101-layer2)
+CIFS client validation, independent evidence generation
+
+VM102 (vm102-tool)
+Sandbox, API orchestration experiments
+
+Separation reduces systemic coupling.
+
+4. CI-Backed Integrity
+
+GitHub PR workflow enforces:
+
+Code validation before merge
+
+Branch protection
+
+Controlled integration
+
+Review traceability
+
+main is protected and stable.
+
+System Architecture
+User → Script → systemd timer → Verification → Artifact → CI check → Merge
+
+
+Key components:
+
+/scripts/ — deterministic operational commands
+
+/services/ — systemd units & timers
+
+/docs/ — operational proof & status
+
+.github/workflows/ — CI validation
+
+All infrastructure state transitions must be observable.
+
+Quick Start
 git clone git@github.com:Topbrutus/LinuxIA.git /opt/linuxia
 cd /opt/linuxia
-
-# Syntax-check all scripts
-bash -n scripts/verify-platform.sh
-
-# Run platform verification (read-only)
 bash scripts/verify-platform.sh
 
-# Run system health check
-bash scripts/linuxia-healthcheck.sh
-```
 
-> ℹ️ On VM100, the repository lives at `/opt/linuxia`. To clone elsewhere (e.g., for local development), omit the target path.
+Expected result:
 
----
+OK >= 20
+WARN >= 0
+FAIL = 0
 
-## 🧩 Hub Status
+Current Status
 
-<p align="center">
-  <img src="assets/readme/anims/anim_01.svg" width="155"/>
-  <img src="assets/readme/anims/anim_02.svg" width="155"/>
-  <img src="assets/readme/anims/anim_03.svg" width="155"/>
-  <img src="assets/readme/anims/anim_04.svg" width="155"/>
-  <img src="assets/readme/anims/anim_05.svg" width="155"/>
-  <img src="assets/readme/anims/anim_06.svg" width="155"/>
-</p>
-<p align="center">
-  <img src="assets/readme/anims/anim_07.svg" width="155"/>
-  <img src="assets/readme/anims/anim_08.svg" width="155"/>
-  <img src="assets/readme/anims/anim_09.svg" width="155"/>
-</p>
+Phase 6 merged.
 
----
+Health reports operational
 
-## 🌌 Architecture & Orchestration
+Systemd timers validated
 
-<p align="center">
-  <img src="assets/readme/sections/section_02_architecture.svg" width="1000" alt="Architecture"/>
-</p>
+CI active
 
-## 🤖 Agents TriluxIA
+Security policy defined
 
-<p align="center">
-  <img src="assets/readme/sections/section_03_agents.svg" width="1000" alt="Agents"/>
-</p>
+Proof references:
 
-## 🛡️ Immutable Proof
+docs/status.md
 
-<p align="center">
-  <img src="assets/readme/sections/section_04_proof.svg" width="1000" alt="Proof"/>
-</p>
+docs/runbook.md
 
-## ⚙️ Infra & Timers
+docs/checklists/
 
-<p align="center">
-  <img src="assets/readme/sections/section_05_infra.svg" width="1000" alt="Infra"/>
-</p>
+Governance Model
 
-## 🔒 Security
+LinuxIA is publicly visible and open to contributions.
+However:
 
-<p align="center">
-  <img src="assets/readme/sections/section_06_security.svg" width="1000" alt="Security"/>
-</p>
+Architectural direction remains under core maintainership
 
-## 💾 Storage
+Infrastructure and security changes are strictly reviewed
 
-<p align="center">
-  <img src="assets/readme/sections/section_07_storage.svg" width="1000" alt="Storage"/>
-</p>
+All changes must pass CI and proof validation
 
-## 🗺️ Roadmap
+This project operates under a controlled open governance model.
 
-<p align="center">
-  <img src="assets/readme/sections/section_08_roadmap.svg" width="1000" alt="Roadmap"/>
-</p>
+Security Model
 
----
+Vulnerability reporting via SECURITY.md
 
-## 🖥️ VM Architecture
+Responsible disclosure encouraged
 
-| VM | Role | Key Services |
-|----|------|--------------|
-| **VM100** Factory | Control plane, orchestration | systemd timers, configsnap, runbooks |
-| **VM101** Layer2 | Specialized agents (research, analysis) | Agent containers |
-| **VM102** Tool | Dedicated tooling agents | Tool containers |
+Critical components reviewed internally before integration
 
----
+Contribution Guidelines
 
-## 📁 Repository Structure
+Contributions are welcome if they:
 
-```
-/opt/linuxia/
-├── scripts/          # Operational scripts (verify-platform, healthcheck…)
-├── services/         # SystemD unit files and timers
-├── docs/             # Documentation (runbook, security, verifications…)
-├── ops/              # VM setup and orchestrator guides
-├── sessions/         # Session logs (not in Git)
-├── data/             # Shared storage (not in Git)
-│   ├── shareA/       # Archives and configsnap evidence
-│   └── shareB/       # Shared workspace
-└── logs/             # Application logs (not in Git)
-```
+Respect deterministic behavior
 
----
+Maintain reproducibility
 
-## 📚 Documentation
+Do not weaken CI enforcement
 
-- [Inventory](docs/INVENTORY.md) — Complete reference: all scripts, animations, services, and error-free install procedure
-- [Runbook](docs/runbook.md) — Operational procedures for VM100
-- [Project Overview](docs/PROJECT_OVERVIEW.md) — Architecture and design decisions
-- [Security](docs/security.md) — Security principles and configurations
-- [Verification Scripts](docs/verify.md) — SystemD verification usage
-- [Contributing](CONTRIBUTING.md) — Contribution guidelines and PR checklist
-- [Security Policy](SECURITY.md) — Vulnerability reporting
-- [Risks & Mitigations](RISKS.md) — Risk posture: LLM, infra, CI, governance (Palier 1–2)
+Preserve proof generation logic
 
----
+See CONTRIBUTING.md for details.
 
-## 🎬 Media Vault
+Research Scope
 
-<p align="center">
-  <a href="assets/readme/videos/Trailer_01.mp4"><img src="assets/readme/showcase/video_thumbs/Trailer_01.jpg" width="420" alt="Trailer 01" /></a>
-  <a href="assets/readme/videos/Trailer_02.mp4"><img src="assets/readme/showcase/video_thumbs/Trailer_02.jpg" width="420" alt="Trailer 02" /></a>
-</p>
+LinuxIA is not yet a production-ready orchestration engine.
+It is an evolving research framework exploring:
+
+Agent-assisted infrastructure management
+
+Proof-driven DevOps
+
+Multi-VM validation patterns
+
+Deterministic operational pipelines
+
+License
+
+To be defined.
+
+🎯 Ce que ça change
+
+Cette version :
+
+Positionne LinuxIA comme framework expérimental sérieux
+
+Introduit un “Abstract” scientifique
+
+Définit un modèle de gouvernance hybride
+
+Clarifie la séparation recherche / production
+
+Établit une autorité technique
+
+Si tu veux, on peut aller encore plus loin et :
+
+Ajouter un diagramme ASCII propre
+
+Ajouter un badge CI dynamique
+
+Ajouter une section “Why this matters”
+
+Ajouter une roadmap scientifique
+
+On peut le rendre vraiment pionnier. 🚀
+
+Est-ce que tu pourrais le faire en anglais-français, s'il vous plaît? Le reste à l'abord. Peut-être mettre un peu plus d'émoticônes, pas beaucoup, mais juste un peu.
+
+Bien sûr 🙂 Voici une version bilingue EN/FR, scientifique, avec quelques émoticônes discrètes (pas trop). Tu peux remplacer ton README.md par ceci :
+
+LinuxIA — Proof-First Agent Ops / Orchestration (EN/FR) 🧪
+
+Phase 6 – Stable Core ✅
+verify-platform: OK
+
+EN: Deterministic multi-VM orchestration with mandatory evidence generation.
+FR: Orchestration multi-VM déterministe avec génération de preuves obligatoire.
+
+Built on Proxmox + openSUSE + systemd + GitHub CI.
+
+Abstract / Résumé
+
+EN: LinuxIA is an experimental infrastructure orchestration framework designed around a strict principle:
+
+No change without proof.
+
+Every infrastructure mutation must produce verifiable, timestamped evidence. LinuxIA combines reproducible automation, multi-VM isolation, and CI enforcement to build a proof-driven operational model.
+
+FR: LinuxIA est un framework expérimental d’orchestration d’infrastructure basé sur un principe strict :
+
+Aucun changement sans preuve.
+
+Chaque action sur l’infrastructure doit produire des preuves vérifiables et horodatées. LinuxIA combine automatisation reproductible, isolation multi-VM et validation CI pour construire un modèle opérationnel “proof-driven”.
+
+Core Principles / Principes clés 🎯
+1) Proof-First Operations / Opérations “Proof-First”
+
+EN: Every action produces:
+
+Timestamped execution logs
+
+Deterministic output
+
+CI validation trace
+
+Health verification artifacts
+
+FR: Chaque action produit :
+
+Logs d’exécution horodatés
+
+Sorties déterministes
+
+Traces de validation CI
+
+Artéfacts de vérification de santé
+
+No silent changes / Aucun changement silencieux.
+
+2) Deterministic Automation / Automatisation déterministe
+
+EN:
+
+Bash scripts with set -euo pipefail
+
+ShellCheck validation
+
+Explicit exit codes
+
+Structured output expectations
+
+FR:
+
+Scripts Bash avec set -euo pipefail
+
+Validation ShellCheck
+
+Codes de sortie explicites
+
+Attentes de sortie structurées
+
+3) Isolation by Design / Isolation par conception 🔒
+
+EN: Multi-VM topology reduces systemic coupling.
+
+FR: La topologie multi-VM réduit le couplage systémique.
+
+VM100 (vm100-factory)
+EN: Main repo, storage, Samba, health reports
+FR: Repo principal, stockage, Samba, rapports de santé
+
+VM101 (vm101-layer2)
+EN: CIFS client validation, independent evidence generation
+FR: Validation client CIFS, preuves indépendantes
+
+VM102 (vm102-tool)
+EN: Sandbox, tests, API orchestrator experiments
+FR: Bac à sable, tests, expériences API orchestrateur
+
+4) CI-Backed Integrity / Intégrité appuyée par CI ✅
+
+EN: GitHub PR workflow enforces controlled integration:
+
+Validation before merge
+
+Branch protection
+
+Review traceability
+
+FR: Le workflow PR GitHub impose une intégration contrôlée :
+
+Validation avant merge
+
+Protection de branches
+
+Traçabilité des reviews
+
+main is stable / main est stable.
+
+System Architecture / Architecture du système 🏗️
+User → Script → systemd timer → Verification → Artifact → CI check → Merge
 
 
-- **Trailer 01**: [Watch](assets/readme/videos/Trailer_01.mp4)
-- **Trailer 02**: [Watch](assets/readme/videos/Trailer_02.mp4)
-- **Theme Audio**: [Listen](assets/readme/audio/Theme_01.mp3)
+EN — Key components
 
----
+/scripts/ — deterministic operational commands
 
-<p align="center">
-  <img src="assets/readme/anims/anim_09.svg" width="120"/>
-  <br/>
-  <sub>© 2026 LINUXIA PROJECT • MISSION CONTROL v1.5.0</sub>
-</p>
+/services/ — systemd units & timers
 
-<!-- LINUXIA_VITRINE_CARDS_BEGIN -->
+/docs/ — operational proof & status
 
-<img src="assets/readme/animations/cine-divider-hyperline.svg" width="100%" alt="divider"/>
+.github/workflows/ — CI validation
 
-## 🖼️ Vitrine — Cinematic Cards
+FR — Composants clés
 
-<p align="center">
-  <img src="assets/readme/cinematic/cards/section_gallery_01.svg" width="100%" alt="Vision &amp; Platform"/>
-</p>
-<p align="center">
-  <img src="assets/readme/cinematic/cards/section_gallery_02.svg" width="100%" alt="Architecture"/>
-</p>
-<p align="center">
-  <img src="assets/readme/cinematic/cards/section_gallery_03.svg" width="100%" alt="Agents TriluxIA"/>
-</p>
-<p align="center">
-  <img src="assets/readme/cinematic/cards/section_gallery_04.svg" width="100%" alt="Immutable Proof"/>
-</p>
-<p align="center">
-  <img src="assets/readme/cinematic/cards/section_gallery_05.svg" width="100%" alt="Infra &amp; Timers"/>
-</p>
-<p align="center">
-  <img src="assets/readme/cinematic/cards/section_gallery_06.svg" width="100%" alt="Security"/>
-</p>
-<p align="center">
-  <img src="assets/readme/cinematic/cards/section_gallery_07.svg" width="100%" alt="Storage &amp; Shares"/>
-</p>
-<p align="center">
-  <img src="assets/readme/cinematic/cards/section_gallery_08.svg" width="100%" alt="Roadmap"/>
-</p>
+/scripts/ — commandes opérationnelles déterministes
 
-<!-- LINUXIA_VITRINE_CARDS_END -->
+/services/ — unités & timers systemd
 
-## ✨ Animations
+/docs/ — preuves & statut opérationnel
 
-<p align="center">
-  <img src="assets/readme/animations/cine-mission-control.svg" width="860" alt="LinuxIA mission control" />
-</p>
+.github/workflows/ — validation CI
 
-<p align="center">
-  <img src="assets/readme/animations/anim_01.svg" width="220" alt="anim 01" />
-  <img src="assets/readme/animations/anim_02.svg" width="220" alt="anim 02" />
-  <img src="assets/readme/animations/anim_03.svg" width="220" alt="anim 03" />
-</p>
+EN/FR: All state transitions must be observable / Tous les changements d’état doivent être observables.
 
+Quick Start / Démarrage rapide 🚀
+git clone git@github.com:Topbrutus/LinuxIA.git /opt/linuxia
+cd /opt/linuxia
+bash scripts/verify-platform.sh
+
+
+EN — Expected result
+
+OK >= 20
+
+WARN >= 0
+
+FAIL = 0
+
+FR — Résultat attendu
+
+OK >= 20
+
+WARN >= 0
+
+FAIL = 0
+
+Current Status / Statut actuel 📌
+
+EN: Phase 6 merged.
+
+Health reports operational
+
+systemd timers validated
+
+CI active
+
+Security policy defined
+
+FR: Phase 6 mergée.
+
+Rapports de santé opérationnels
+
+Timers systemd validés
+
+CI active
+
+Politique de sécurité définie
+
+Proof references / Références de preuves :
+
+docs/status.md
+
+docs/runbook.md
+
+docs/checklists/
+
+Governance Model / Modèle de gouvernance 🤝
+
+EN: LinuxIA is publicly visible and open to contributions. However:
+
+Architectural direction remains under core maintainership
+
+Infrastructure & security changes are strictly reviewed
+
+All changes must pass CI and proof validation
+
+FR: LinuxIA est public et ouvert aux contributions. Toutefois :
+
+La direction d’architecture reste sous maintenance “core”
+
+Les changements infra & sécurité sont revus strictement
+
+Tout doit passer CI et validation par preuves
+
+This is controlled open governance / Gouvernance ouverte mais contrôlée.
+
+Security Model / Modèle de sécurité 🛡️
+
+EN: Responsible disclosure via SECURITY.md.
+FR: Divulgation responsable via SECURITY.md.
+
+EN: Please do not open public issues for critical vulnerabilities.
+FR: Merci de ne pas ouvrir d’issues publiques pour les vulnérabilités critiques.
+
+Contribution Guidelines / Guide de contribution ✍️
+
+EN: Contributions are welcome if they:
+
+Preserve determinism & reproducibility
+
+Do not weaken CI enforcement
+
+Keep proof generation intact
+
+FR: Les contributions sont bienvenues si elles :
+
+Préservent déterminisme & reproductibilité
+
+Ne réduisent pas les protections CI
+
+Maintiennent la génération de preuves
+
+See / Voir : CONTRIBUTING.md
+
+Research Scope / Portée de recherche 🔬
+
+EN: LinuxIA is not yet production-ready. It is a research framework exploring:
+
+Agent-assisted infrastructure management
+
+Proof-driven DevOps
+
+Multi-VM validation patterns
+
+Deterministic operational pipelines
+
+FR: LinuxIA n’est pas encore “production-ready”. C’est un framework de recherche explorant :
+
+Gestion infra assistée par agents
+
+DevOps piloté par preuves
+
+Patterns de validation multi-VM
+
+Pipelines opérationnels déterministes
+
+License / Licence 📄
+
+To be defined / À définir.
