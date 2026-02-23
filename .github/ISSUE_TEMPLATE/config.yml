@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability report
+    url: https://github.com/Topbrutus/LinuxIA/security/policy
+    about: Please report security vulnerabilities via the SECURITY policy.
+  - name: Questions / Discussions
+    url: https://github.com/Topbrutus/LinuxIA/discussions
+    about: Ask questions and share ideas here.

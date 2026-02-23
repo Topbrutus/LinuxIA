@@ -1,0 +1,5 @@
+{
+  "name": "LinuxIA: Cinematic Showcase",
+  "description": "A professional, NASA-style interactive simulation for LinuxIA. Features a symmetric, modular architecture with real-time SVG animations and proof-first agent orchestration.",
+  "requestFramePermissions": []
+}

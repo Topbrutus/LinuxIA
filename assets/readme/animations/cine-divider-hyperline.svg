@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="84" viewBox="0 0 1600 84" role="img" aria-label="Hyperline divider"><!-- v2 -->
+  <defs>
+    <linearGradient id="h" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ff6a00"/>
+      <stop offset="0.5" stop-color="#00ff7b"/>
+      <stop offset="0.85" stop-color="#00b3ff"/>
+      <stop offset="1" stop-color="#ff6a00"/>
+      <animate attributeName="x1" dur="6.5s" values="0;1;0" repeatCount="indefinite"/>
+      <animate attributeName="x2" dur="6.5s" values="1;0;1" repeatCount="indefinite"/>
+    </linearGradient>
+    <filter id="g" x="-25%" y="-60%" width="150%" height="220%">
+      <feGaussianBlur stdDeviation="2.6" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1600" height="84" fill="#070A10"/>
+  <g filter="url(#g)" opacity="0.95">
+    <path d="M0 42 C 240 10, 420 74, 640 42 S 1040 10, 1260 42 S 1400 74, 1600 42"
+          fill="none" stroke="url(#h)" stroke-width="2.6" stroke-linecap="round">
+      <animate attributeName="stroke-width" dur="2.6s" values="2.6;3.8;2.6" repeatCount="indefinite"/>
+    </path>
+    <circle cx="180" cy="42" r="3.6" fill="#00ff7b">
+      <animate attributeName="cx" dur="4.6s" values="180;1500;180" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1500" cy="42" r="3.6" fill="#ff6a00">
+      <animate attributeName="cx" dur="5.2s" values="1500;180;1500" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg>

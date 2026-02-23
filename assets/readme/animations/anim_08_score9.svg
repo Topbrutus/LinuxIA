@@ -1,0 +1,46 @@
+<svg width="100%" height="72" viewBox="0 0 1440 72" preserveAspectRatio="none">
+<defs>
+  <filter id="linuxiaTextShadow" x="-50%" y="-50%" width="200%" height="200%">
+    <feDropShadow dx="0" dy="2" stdDeviation="2.2" flood-color="#000000" flood-opacity="0.85"/>
+    <feDropShadow dx="0" dy="0" stdDeviation="1.2" flood-color="#000000" flood-opacity="0.70"/>
+  </filter>
+  <style><![CDATA[
+    text, tspan {
+      paint-order: stroke fill;
+      stroke: #000;
+      stroke-width: 6px;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+      filter: url(#linuxiaTextShadow);
+    }
+    text[font-size="10"], text[font-size="11"], text[font-size="12"], text[font-size="13"], text[font-size="14"], text[font-size="15"] {
+      stroke-width: 4.5px;
+    }
+    rect.label-bg, rect[id*="label"], rect[class*="label"] { opacity: 0 !important; }
+  ]]></style>
+</defs>
+
+<style>
+/* LinuxIA label contrast patch */
+text{
+  paint-order: stroke fill;
+  stroke: rgba(0,0,0,0.95);
+  stroke-width: 10;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+</style>
+
+  <defs>
+    <linearGradient id="scanG" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.26"/>
+      <stop offset="50%" stop-color="#00C8FF" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#73BA25" stop-opacity="0.10"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="52" height="72" fill="url(#scanG)" opacity="0.7">
+    <animate attributeName="x" from="-60" to="1440" dur="18s" repeatCount="indefinite"/>
+  </rect>
+</svg>

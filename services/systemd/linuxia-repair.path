@@ -1,0 +1,9 @@
+[Unit]
+Description=Watch LinuxIA healthcheck report for failures
+
+[Path]
+PathChanged=/opt/linuxia/docs/STATE_HEALTHCHECK.md
+Unit=linuxia-repair.service
+
+[Install]
+WantedBy=multi-user.target

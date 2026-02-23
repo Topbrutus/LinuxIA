@@ -51,8 +51,8 @@ cd /opt/linuxia && git status
 
 ## What's Next
 
-**Phase 11:** Vitrine (this doc) + CONTRIBUTING + GitHub templates  
-**Phase 12:** Release packaging (tag, checksums, gh release)  
+**Phase 11:** ✅ Vitrine + CONTRIBUTING + GitHub templates (completed)  
+**Phase 12:** 🔄 Release packaging — `scripts/linuxia-release.sh` + `make release` + `scripts/linuxia release`  
 **VM102:** Provision + API `/api/state` implementation
 
 ## Progress by VM
