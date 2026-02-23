@@ -168,3 +168,27 @@ To be determined
   <img src="assets/readme/anims/anim_08.svg" width="310"/>
   <img src="assets/readme/anims/anim_03.svg" width="310"/>
 </p>
+
+<!-- LINUXIA_CINEMATIC_BEGIN -->
+
+<img src="assets/cinematic/cine-divider-hyperline.svg" width="100%" alt="divider"/>
+
+## 🌌 Vitrine cinématique (GitHub-safe)
+
+<p align="center">
+  <img src="assets/cinematic/cine-mission-control.svg" alt="LinuxIA Mission Control" width="100%"/>
+</p>
+
+<p align="center">
+  <img src="assets/cinematic/cine-orbit-telemetry.svg" alt="LinuxIA Orbit Telemetry" width="100%"/>
+</p>
+
+### 🔥 Ce que cette vitrine démontre (sans JavaScript)
+
+- **Animations SMIL** (compatibles GitHub) : gradients, orbits, scans, glow
+- **Design NASA-tech** + **Proxmox orange** + **Matrix green** + accents multi
+- **Narration ops** : Health → Ledger → Proof → Orchestration
+- **Lisible** et "wow" : fine, technique, complexe, mais propre
+
+<!-- LINUXIA_CINEMATIC_END -->
+
