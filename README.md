@@ -71,26 +71,22 @@
 ## Animations SVG
 
 <p align="center">
-  <img src="assets/readme/animations/anim_09_score422.svg" width="320" alt="anim_09" />
-  <img src="assets/readme/animations/anim_06_score175.svg" width="320" alt="anim_06" />
-  <img src="assets/readme/animations/anim_01_score90.svg" width="320" alt="anim_01" />
+  <img src="assets/readme/anims/anim_09.svg" width="320" alt="anim_09" />
+  <img src="assets/readme/anims/anim_06.svg" width="320" alt="anim_06" />
+  <img src="assets/readme/anims/anim_01.svg" width="320" alt="anim_01" />
 </p>
+
 <p align="center">
-  <img src="assets/readme/animations/anim_05_score25.svg" width="320" alt="anim_05" />
-  <img src="assets/readme/animations/anim_04_score15.svg" width="320" alt="anim_04" />
-  <img src="assets/readme/animations/anim_02_score11.svg" width="320" alt="anim_02" />
+  <img src="assets/readme/anims/anim_05.svg" width="320" alt="anim_05" />
+  <img src="assets/readme/anims/anim_04.svg" width="320" alt="anim_04" />
+  <img src="assets/readme/anims/anim_02.svg" width="320" alt="anim_02" />
 </p>
+
 <p align="center">
-  <img src="assets/readme/animations/anim_07_score11.svg" width="320" alt="anim_07" />
-  <img src="assets/readme/animations/anim_08_score9.svg" width="320" alt="anim_08" />
-  <img src="assets/readme/animations/anim_03_score9.svg" width="320" alt="anim_03" />
+  <img src="assets/readme/anims/anim_07.svg" width="320" alt="anim_07" />
+  <img src="assets/readme/anims/anim_08.svg" width="320" alt="anim_08" />
+  <img src="assets/readme/anims/anim_03.svg" width="320" alt="anim_03" />
 </p>
-
-<!-- LINUXIA:ANIMATIONS:END -->
-
----
-
-<!-- LINUXIA:SECTIONS_REST:START -->
 ## Infra · Security · Storage · Roadmap
 
 <p align="center">
