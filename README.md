@@ -9,35 +9,35 @@
 ## Showcase Cinematic
 
 <p align="center">
-  <img src="assets/readme/sections/section_01_vision.svg" width="1000" alt="LinuxIA Vision" />
+  <img src="assets/readme/showcase/cards/section_01.png" width="1000" alt="LinuxIA Vision" />
 </p>
 
 <p align="center">
-  <img src="assets/readme/sections/section_02_architecture.svg" width="1000" alt="LinuxIA Architecture" />
+  <img src="assets/readme/showcase/cards/section_02.png" width="1000" alt="LinuxIA Architecture" />
 </p>
 
 <p align="center">
-  <img src="assets/readme/sections/section_03_agents.svg" width="1000" alt="LinuxIA Agents" />
+  <img src="assets/readme/showcase/cards/section_03.png" width="1000" alt="LinuxIA Agents" />
 </p>
 
 <p align="center">
-  <img src="assets/readme/sections/section_04_proof.svg" width="1000" alt="LinuxIA Proof" />
+  <img src="assets/readme/showcase/cards/section_04.png" width="1000" alt="LinuxIA Proof" />
 </p>
 
 <p align="center">
-  <img src="assets/readme/sections/section_05_infra.svg" width="1000" alt="LinuxIA Infra" />
+  <img src="assets/readme/showcase/cards/section_05.png" width="1000" alt="LinuxIA Infra" />
 </p>
 
 <p align="center">
-  <img src="assets/readme/sections/section_06_security.svg" width="1000" alt="LinuxIA Security" />
+  <img src="assets/readme/showcase/cards/section_06.png" width="1000" alt="LinuxIA Security" />
 </p>
 
 <p align="center">
-  <img src="assets/readme/sections/section_07_storage.svg" width="1000" alt="LinuxIA Storage" />
+  <img src="assets/readme/showcase/cards/section_07.png" width="1000" alt="LinuxIA Storage" />
 </p>
 
 <p align="center">
-  <img src="assets/readme/sections/section_08_roadmap.svg" width="1000" alt="LinuxIA Roadmap" />
+  <img src="assets/readme/showcase/cards/section_08.png" width="1000" alt="LinuxIA Roadmap" />
 </p>
 
 > Echange `assets/readme/gallery/p01.jpg` ... `p08.jpg` pour changer les photos sans toucher au README.
@@ -50,14 +50,14 @@
 > GitHub n'embed pas les MP4 inline, mais les liens ci-dessous ouvrent les videos.
 
 <p align="center">
-  <a href="assets/readme/mp4/section_01_vision.mp4"><img src="assets/readme/posters/section_01_vision.png" width="1000" alt="Trailer Vision" /></a>
-  <a href="assets/readme/mp4/section_02_architecture.mp4"><img src="assets/readme/posters/section_02_architecture.png" width="1000" alt="Trailer Architecture" /></a>
-  <a href="assets/readme/mp4/section_03_agents.mp4"><img src="assets/readme/posters/section_03_agents.png" width="1000" alt="Trailer Agents" /></a>
-  <a href="assets/readme/mp4/section_04_proof.mp4"><img src="assets/readme/posters/section_04_proof.png" width="1000" alt="Trailer Proof" /></a>
-  <a href="assets/readme/mp4/section_05_infra.mp4"><img src="assets/readme/posters/section_05_infra.png" width="1000" alt="Trailer Infra" /></a>
-  <a href="assets/readme/mp4/section_06_security.mp4"><img src="assets/readme/posters/section_06_security.png" width="1000" alt="Trailer Security" /></a>
-  <a href="assets/readme/mp4/section_07_storage.mp4"><img src="assets/readme/posters/section_07_storage.png" width="1000" alt="Trailer Storage" /></a>
-  <a href="assets/readme/mp4/section_08_roadmap.mp4"><img src="assets/readme/posters/section_08_roadmap.png" width="1000" alt="Trailer Roadmap" /></a>
+  <a href="assets/readme/mp4/section_01_vision.mp4"><img src="assets/readme/showcase/cards/section_01.png" width="1000" alt="Trailer Vision" /></a>
+  <a href="assets/readme/mp4/section_02_architecture.mp4"><img src="assets/readme/showcase/cards/section_02.png" width="1000" alt="Trailer Architecture" /></a>
+  <a href="assets/readme/mp4/section_03_agents.mp4"><img src="assets/readme/showcase/cards/section_03.png" width="1000" alt="Trailer Agents" /></a>
+  <a href="assets/readme/mp4/section_04_proof.mp4"><img src="assets/readme/showcase/cards/section_04.png" width="1000" alt="Trailer Proof" /></a>
+  <a href="assets/readme/mp4/section_05_infra.mp4"><img src="assets/readme/showcase/cards/section_05.png" width="1000" alt="Trailer Infra" /></a>
+  <a href="assets/readme/mp4/section_06_security.mp4"><img src="assets/readme/showcase/cards/section_06.png" width="1000" alt="Trailer Security" /></a>
+  <a href="assets/readme/mp4/section_07_storage.mp4"><img src="assets/readme/showcase/cards/section_07.png" width="1000" alt="Trailer Storage" /></a>
+  <a href="assets/readme/mp4/section_08_roadmap.mp4"><img src="assets/readme/showcase/cards/section_08.png" width="1000" alt="Trailer Roadmap" /></a>
 </p>
 <!-- LINUXIA:TRAILERS_MP4:END -->
 
