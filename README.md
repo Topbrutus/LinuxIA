@@ -192,3 +192,54 @@ To be determined
 
 <!-- LINUXIA_CINEMATIC_END -->
 
+
+<!-- LINUXIA_README_SUITE_BEGIN -->
+
+<p align="center">
+  <img src="assets/readme/hero-linuxia.svg" width="100%" alt="LinuxIA Hero"/>
+</p>
+
+<p align="center">
+  <img src="assets/readme/divider-hyperline.svg" width="100%" alt="divider"/>
+</p>
+
+## 🚀 LinuxIA — Proof-First Agent Ops
+
+LinuxIA est un framework d'opérations infra **orienté preuves** : chaque changement déclenche des vérifications,
+génère des rapports, et dépose des éléments d'évidence exploitables (audit).
+
+### 🧠 Suite (symétrique, bloc → bloc)
+
+<p align="center">
+  <img src="assets/readme/section-vision.svg" width="100%" alt="Vision"/>
+</p>
+
+<p align="center">
+  <img src="assets/readme/divider-hyperline.svg" width="100%" alt="divider"/>
+</p>
+
+<p align="center">
+  <img src="assets/readme/section-architecture.svg" width="100%" alt="Architecture"/>
+</p>
+
+<p align="center">
+  <img src="assets/readme/divider-hyperline.svg" width="100%" alt="divider"/>
+</p>
+
+<p align="center">
+  <img src="assets/readme/section-agents.svg" width="100%" alt="Agents"/>
+</p>
+
+<p align="center">
+  <img src="assets/readme/divider-hyperline.svg" width="100%" alt="divider"/>
+</p>
+
+<p align="center">
+  <img src="assets/readme/section-proof.svg" width="100%" alt="Proof"/>
+</p>
+
+### ✅ Règle d'or
+
+> **Every change → timestamped proof.**
+
+<!-- LINUXIA_README_SUITE_END -->
