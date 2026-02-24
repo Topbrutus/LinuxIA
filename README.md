@@ -482,6 +482,14 @@ License / Licence 📄
 
 To be defined / À définir.
 
+## Community / Communauté 🤝
+
+EN: This project follows the [Contributor Covenant Code of Conduct v2.1](CODE_OF_CONDUCT.md).
+By participating, you are expected to uphold this code.
+
+FR: Ce projet suit le [Code de conduite Contributor Covenant v2.1](CODE_OF_CONDUCT.md).
+En participant, vous vous engagez à respecter ce code.
+
 <!-- LINUXIA_CINEMATIC_CARDS_BEGIN -->
 
 ## 🎞️ Vitrine — Cinematic Cards (GitHub-safe, 0 JS)
