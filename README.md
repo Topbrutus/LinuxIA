@@ -154,7 +154,7 @@ This project operates under a controlled open governance model.
 
 Security Model
 
-Vulnerability reporting via SECURITY.md
+Vulnerability reporting via [SECURITY.md](SECURITY.md)
 
 Responsible disclosure encouraged
 
@@ -430,8 +430,8 @@ This is controlled open governance / Gouvernance ouverte mais contrôlée.
 
 Security Model / Modèle de sécurité 🛡️
 
-EN: Responsible disclosure via SECURITY.md.
-FR: Divulgation responsable via SECURITY.md.
+EN: Responsible disclosure via [SECURITY.md](SECURITY.md).
+FR: Divulgation responsable via [SECURITY.md](SECURITY.md).
 
 EN: Please do not open public issues for critical vulnerabilities.
 FR: Merci de ne pas ouvrir d’issues publiques pour les vulnérabilités critiques.
