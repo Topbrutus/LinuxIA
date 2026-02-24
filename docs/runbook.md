@@ -594,6 +594,49 @@ mount | grep "$(df -P "$f" | tail -1 | awk '{print $6}')" | grep noexec || print
 
 ---
 
+## 🩺 Platform Doctor (`make doctor` / `linuxia doctor`)
+
+A single command that performs a full read-only health check and writes a timestamped report:
+
+```bash
+# From the repo root:
+make doctor
+
+# Or via the CLI wrapper:
+scripts/linuxia doctor
+```
+
+### What it does
+
+1. **Runs `scripts/verify-platform.sh`** — checks critical paths, disk usage, failed systemd units, required timers, configsnap archives, optional mounts, and health report freshness. Exits with code `0` (OK), `1` (WARN), or `2` (FAIL).
+2. **Runs `scripts/health-report.sh`** (if present) — writes a timestamped `.txt` report collecting uptime, disk, mounts, logs, and timer status.
+3. **Prints report paths** so you know exactly where to look:
+   - Health logs: `/opt/linuxia/logs/health`
+   - Health share copy: `/opt/linuxia/data/shareA/reports/health`
+
+### Overriding report directories
+
+```bash
+make doctor HEALTH_LOG_DIR=/tmp/health HEALTH_SHARE_DIR=/tmp/health-share
+```
+
+### Expected output (healthy system)
+
+```
+=== LinuxIA verify-platform (READ-ONLY) ===
+...
+OK=N WARN=0 FAIL=0
+
+=== LinuxIA health-report ===
+OK: report written -> /opt/linuxia/logs/health/health-vm100-20260224-120000.txt
+
+=== Report paths ===
+  Health logs:   /opt/linuxia/logs/health
+  Health share:  /opt/linuxia/data/shareA/reports/health
+```
+
+---
+
 ## 📊 Monitoring Checklist
 
 ### Daily (Automated via timers)
@@ -601,8 +644,8 @@ mount | grep "$(df -P "$f" | tail -1 | awk '{print $6}')" | grep noexec || print
 - [ ] healthcheck ran without errors
 
 ### Weekly (Manual)
+- [ ] Run `make doctor` (or `scripts/linuxia doctor`) → verify-platform + health-report, exit 0
 - [ ] Run `./scripts/verify-systemd.sh` → exit 0
-- [ ] Run `./scripts/verify-platform.sh` → exit 0
 - [ ] Review disk usage trends: `df -h /opt/linuxia`
 - [ ] Check systemd errors: `journalctl -p err --since "7 days ago" | grep linuxia`
 - [ ] Verify mount points: `mount | grep -E '(shareA|shareB|DATA_1TB)'`

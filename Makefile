@@ -3,8 +3,11 @@
 SHELL := /usr/bin/env bash
 .DEFAULT_GOAL := help
 
-SCRIPTS_DIR := scripts
-VERIFY      := $(SCRIPTS_DIR)/verify-platform.sh
+SCRIPTS_DIR    := scripts
+VERIFY         := $(SCRIPTS_DIR)/verify-platform.sh
+HEALTH_REPORT  := $(SCRIPTS_DIR)/health-report.sh
+HEALTH_LOG_DIR ?= /opt/linuxia/logs/health
+HEALTH_SHARE_DIR ?= /opt/linuxia/data/shareA/reports/health
 
 .PHONY: help
 help: ## Show this help
@@ -12,9 +15,20 @@ help: ## Show this help
 	  awk 'BEGIN{FS=":.*?## "}{printf "  \033[36m%-18s\033[0m %s\n",$$1,$$2}'
 
 .PHONY: doctor
-doctor: ## Run platform verification (READ-ONLY)
+doctor: ## Run verify-platform + health-report (READ-ONLY); print report paths
 	@bash -n "$(VERIFY)"
 	@LINUXIA_READONLY=1 bash "$(VERIFY)" || true
+	@echo
+	@if [ -f "$(HEALTH_REPORT)" ]; then \
+	  echo "=== LinuxIA health-report ==="; \
+	  OUT_DIR="$(HEALTH_LOG_DIR)" SHAREA_DIR="$(HEALTH_SHARE_DIR)" bash "$(HEALTH_REPORT)" || true; \
+	else \
+	  printf "[WARN] health-report not found: %s\n" "$(HEALTH_REPORT)"; \
+	fi
+	@echo
+	@echo "=== Report paths ==="
+	@printf "  Health logs:   %s\n" "$(HEALTH_LOG_DIR)"
+	@printf "  Health share:  %s\n" "$(HEALTH_SHARE_DIR)"
 
 .PHONY: verify
 verify: ## Alias for doctor
