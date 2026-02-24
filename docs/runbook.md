@@ -5,6 +5,61 @@ This runbook provides step-by-step procedures for installing, verifying, restori
 
 ---
 
+## 📦 Storage Mounts (shareA / shareB)
+
+### Overview
+LinuxIA uses two bind mounts for shared storage:
+- `/opt/linuxia/data/shareA` ← `/srv/linuxia-share/DATA_1TB_A/LinuxIA_SMB`
+- `/opt/linuxia/data/shareB` ← `/srv/linuxia-share/DATA_1TB_B/LinuxIA_SMB`
+
+These are managed via systemd mount units (auto-generated from `/etc/fstab`).
+
+### Activate Mounts (One-Time Setup)
+```bash
+# On VM100, as root:
+sudo -i
+
+systemctl start opt-linuxia-data-shareA.mount
+systemctl start opt-linuxia-data-shareB.mount
+
+# Make persistent (survive reboots):
+systemctl enable opt-linuxia-data-shareA.mount
+systemctl enable opt-linuxia-data-shareB.mount
+```
+
+### Verify Mounts
+```bash
+# Check systemd status:
+systemctl status opt-linuxia-data-shareA.mount
+systemctl status opt-linuxia-data-shareB.mount
+
+# Check actual mounts:
+mount | grep -E "shareA|shareB"
+
+# Expected output:
+# /srv/linuxia-share/DATA_1TB_A/LinuxIA_SMB on /opt/linuxia/data/shareA type none (bind,nofail)
+# /srv/linuxia-share/DATA_1TB_B/LinuxIA_SMB on /opt/linuxia/data/shareB type none (bind,nofail)
+```
+
+### Troubleshooting
+**Symptom**: Mounts are inactive after boot
+```bash
+# Check if source directories exist:
+ls -ld /srv/linuxia-share/DATA_1TB_A/LinuxIA_SMB
+ls -ld /srv/linuxia-share/DATA_1TB_B/LinuxIA_SMB
+
+# Check fstab entries:
+grep shareA /etc/fstab
+
+# Manually mount (if enabled):
+systemctl start opt-linuxia-data-shareA.mount
+```
+
+**Symptom**: Permission denied when writing
+See "Permissions & ACLs" section below (Phase 8 PR2).
+
+---
+
 ## 🔧 Initial Installation
 
 ### Prerequisites
@@ -45,6 +100,57 @@ cd /opt/linuxia
 ./scripts/verify-platform.sh
 # Expected: All [OK], exit code 0
 ```
+
+### Step 5: Configure Storage Mounts (Optional)
+```bash
+# On VM100, as root:
+sudo -i
+
+# Activate bind mounts for shareA/shareB
+systemctl start opt-linuxia-data-shareA.mount
+systemctl start opt-linuxia-data-shareB.mount
+
+# Make persistent (survive reboots)
+systemctl enable opt-linuxia-data-shareA.mount
+systemctl enable opt-linuxia-data-shareB.mount
+
+# Verify
+mount | grep -E "shareA|shareB"
+```
+
+### Step 6: Set Permissions for Shared Storage
+```bash
+# On VM100, as root:
+sudo -i
+
+# Ensure reports directory exists with proper permissions
+mkdir -p /opt/linuxia/data/shareA/reports
+mkdir -p /opt/linuxia/data/shareB/reports
+
+# Option A: Simple group ownership (recommended for single-user systems)
+chown -R gaby:users /opt/linuxia/data/shareA/reports
+chown -R gaby:users /opt/linuxia/data/shareB/reports
+chmod -R 775 /opt/linuxia/data/shareA/reports
+chmod -R 775 /opt/linuxia/data/shareB/reports
+
+# Option B: ACLs (if multiple users/services need write access)
+# Install acl package if not present:
+# zypper install acl
+#
+# setfacl -R -m u:gaby:rwx /opt/linuxia/data/shareA/reports
+# setfacl -R -m g:users:rwx /opt/linuxia/data/shareA/reports
+# setfacl -R -d -m u:gaby:rwx /opt/linuxia/data/shareA/reports  # default for new files
+# setfacl -R -d -m g:users:rwx /opt/linuxia/data/shareA/reports
+
+# Verify permissions
+ls -ld /opt/linuxia/data/shareA/reports
+getfacl /opt/linuxia/data/shareA/reports  # if using ACLs
+```
+
+**Notes**:
+- Use Option A (simple permissions) unless you need fine-grained multi-user access
+- If systemd services write to reports/, ensure their User= directive matches permissions
+- The `nofail` mount option ensures system boots even if mounts fail
 
 ---
 
@@ -220,6 +326,101 @@ sudo systemctl reset-failed linuxia-configsnap.service
 
 ---
 
+### Permission Denied Writing to shareA/shareB
+**Symptom**: Services fail with "Permission denied" when writing to `/opt/linuxia/data/shareA/reports`
+
+**Diagnosis**:
+```bash
+# Check current permissions
+ls -ld /opt/linuxia/data/shareA/reports
+getfacl /opt/linuxia/data/shareA/reports  # if using ACLs
+
+# Check mount status
+mount | grep shareA
+systemctl status opt-linuxia-data-shareA.mount
+
+# Check which user is running the service
+systemctl show -p User linuxia-health-report.service
+
+# Test write access
+sudo -u gaby touch /opt/linuxia/data/shareA/reports/test.txt
+```
+
+**Common Causes**:
+1. **Wrong ownership**: Directory owned by root or wrong user
+2. **Restrictive permissions**: 755 instead of 775, missing group write
+3. **Mount not active**: shareA not mounted, writing to empty local directory
+4. **SELinux context**: Wrong security context on NTFS mounts
+
+**Resolution**:
+```bash
+# On VM100, as root:
+sudo -i
+
+# Ensure shareA is mounted
+systemctl start opt-linuxia-data-shareA.mount
+mount | grep shareA  # verify
+
+# Fix ownership and permissions
+chown -R gaby:users /opt/linuxia/data/shareA/reports
+chmod -R 775 /opt/linuxia/data/shareA/reports
+
+# If using ACLs:
+setfacl -R -m u:gaby:rwx /opt/linuxia/data/shareA/reports
+setfacl -R -m g:users:rwx /opt/linuxia/data/shareA/reports
+setfacl -R -d -m u:gaby:rwx /opt/linuxia/data/shareA/reports
+setfacl -R -d -m g:users:rwx /opt/linuxia/data/shareA/reports
+
+# Verify write access
+sudo -u gaby touch /opt/linuxia/data/shareA/reports/test-$(date +%s).txt
+ls -la /opt/linuxia/data/shareA/reports/
+```
+
+---
+
+### Mounts Inactive After Reboot
+**Symptom**: `systemctl status opt-linuxia-data-shareA.mount` shows "inactive (dead)"
+
+**Diagnosis**:
+```bash
+# Check if mount is enabled
+systemctl is-enabled opt-linuxia-data-shareA.mount
+
+# Check source directories exist
+ls -ld /srv/linuxia-share/DATA_1TB_A/LinuxIA_SMB
+
+# Check fstab entries
+grep shareA /etc/fstab
+
+# Check systemd mount unit
+systemctl cat opt-linuxia-data-shareA.mount
+```
+
+**Resolution**:
+```bash
+# On VM100, as root:
+sudo -i
+
+# Enable mount to auto-activate
+systemctl enable opt-linuxia-data-shareA.mount
+systemctl enable opt-linuxia-data-shareB.mount
+
+# Start now
+systemctl start opt-linuxia-data-shareA.mount
+systemctl start opt-linuxia-data-shareB.mount
+
+# Verify
+systemctl status opt-linuxia-data-shareA.mount
+mount | grep shareA
+```
+
+**Notes**:
+- Mounts use `nofail` option to prevent boot failures
+- If physical disk (`/mnt/linuxia/DATA_1TB_A`) is unmounted, shareA bind mount will fail
+- Check `/srv/linuxia-share/` intermediate bind mounts are active
+
+---
+
 ### Disk Space Full
 **Symptom**: `/opt/linuxia` partition at high usage
 
@@ -315,6 +516,80 @@ sudo semodule -i linuxia_local.pp
 
 # Re-enable enforcing
 sudo setenforce 1
+```
+
+---
+
+### 🚫 Permission Denied — Exit Code 126
+
+**Symptom**: Script exits with code `126` or `bash: ./scripts/foo.sh: Permission denied`
+
+Exit 126 means the shell found the file but **could not execute it**. Different from exit 127 (file not found).
+
+#### Causes and fixes
+
+**1 — Executable bit missing (most common)**
+```bash
+ls -l scripts/foo.sh
+# If you see -rw-r--r-- (no x), fix with:
+chmod +x scripts/foo.sh
+# Or for the whole scripts/ dir:
+chmod +x scripts/*.sh
+# In git (persists across clones):
+git update-index --chmod=+x scripts/foo.sh
+```
+
+**2 — Wrong shebang or missing shebang**
+```bash
+# Check first line:
+sed -n '1p' scripts/foo.sh
+# Expected: #!/usr/bin/env bash   or   #!/bin/bash
+# If blank or wrong, add: #!/usr/bin/env bash  as first line
+```
+
+**3 — Windows CRLF line endings**
+```bash
+file scripts/foo.sh
+# If output says "CRLF line terminators", strip them:
+sed -i 's/\r$//' scripts/foo.sh
+# Or with dos2unix (if installed):
+dos2unix scripts/foo.sh
+```
+
+**4 — Filesystem mounted noexec**
+```bash
+mount | grep -E "(opt|linuxia|shareA|shareB)"
+# If you see "noexec" in the mount options, the filesystem blocks execution.
+# Fix: remount without noexec (requires root):
+sudo mount -o remount,exec /opt/linuxia
+```
+
+**5 — Wrong file owner / ACL issue**
+```bash
+stat -c "%a %U:%G %n" scripts/foo.sh
+# Expected: 755 gaby:users   (or at least user-executable)
+sudo chown gaby:users scripts/foo.sh
+chmod 755 scripts/foo.sh
+```
+
+**6 — Script run via git on a root-owned object**
+```bash
+# git objects owned by root can block operations:
+sudo chown -R gaby:users /opt/linuxia/.git/objects
+sudo find /opt/linuxia/.git/objects -type d -exec chmod 775 {} \;
+sudo find /opt/linuxia/.git/objects -type f -exec chmod 664 {} \;
+```
+
+#### Quick diagnostic checklist
+
+```bash
+# All-in-one: check executable + shebang + encoding
+f=scripts/verify-platform.sh
+ls -l "$f"
+stat -c "%a %U:%G" "$f"
+sed -n '1p' "$f"
+file "$f"
+mount | grep "$(df -P "$f" | tail -1 | awk '{print $6}')" | grep noexec || printf "noexec: not set\n"
 ```
 
 ---

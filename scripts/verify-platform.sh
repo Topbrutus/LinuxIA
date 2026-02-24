@@ -114,6 +114,8 @@ OPTIONAL_PATHS=(
   "/srv/artifacts-hot"
   "/mnt/linuxia/DATA_1TB_A"
   "/mnt/linuxia/DATA_1TB_B"
+  "/opt/linuxia/data/shareA"
+  "/opt/linuxia/data/shareB"
 )
 
 # Configsnap archive pattern (WARN if none found, FAIL if dir missing already handled in CRITICAL_PATHS)

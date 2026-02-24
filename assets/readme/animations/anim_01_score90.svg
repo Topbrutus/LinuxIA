@@ -1,0 +1,179 @@
+<svg width="100%" height="520" viewBox="0 0 1440 520" preserveAspectRatio="none">
+<defs>
+  <filter id="linuxiaTextShadow" x="-50%" y="-50%" width="200%" height="200%">
+    <feDropShadow dx="0" dy="2" stdDeviation="2.2" flood-color="#000000" flood-opacity="0.85"/>
+    <feDropShadow dx="0" dy="0" stdDeviation="1.2" flood-color="#000000" flood-opacity="0.70"/>
+  </filter>
+  <style><![CDATA[
+    text, tspan {
+      paint-order: stroke fill;
+      stroke: #000;
+      stroke-width: 6px;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+      filter: url(#linuxiaTextShadow);
+    }
+    text[font-size="10"], text[font-size="11"], text[font-size="12"], text[font-size="13"], text[font-size="14"], text[font-size="15"] {
+      stroke-width: 4.5px;
+    }
+    rect.label-bg, rect[id*="label"], rect[class*="label"] { opacity: 0 !important; }
+  ]]></style>
+</defs>
+
+<style>
+/* LinuxIA label contrast patch */
+text{
+  paint-order: stroke fill;
+  stroke: rgba(0,0,0,0.95);
+  stroke-width: 10;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+</style>
+
+
+<defs>
+
+<!-- ============================= -->
+<!-- MULTI-LAYER FRACTAL TURBULENCE -->
+<!-- ============================= -->
+
+<filter id="noiseLayer1">
+  <feTurbulence type="fractalNoise"
+                baseFrequency="0.002"
+                numOctaves="6"
+                seed="2"
+                result="noise1">
+    <animate attributeName="seed"
+             values="2;6;12;2"
+             dur="120s"
+             repeatCount="indefinite"/>
+  </feTurbulence>
+  <feDisplacementMap in="SourceGraphic"
+                     in2="noise1"
+                     scale="50"/>
+</filter>
+
+<filter id="noiseLayer2">
+  <feTurbulence type="fractalNoise"
+                baseFrequency="0.003"
+                numOctaves="8"
+                seed="7"
+                result="noise2">
+    <animate attributeName="seed"
+             values="7;14;3;7"
+             dur="160s"
+             repeatCount="indefinite"/>
+  </feTurbulence>
+  <feDisplacementMap in="SourceGraphic"
+                     in2="noise2"
+                     scale="30"/>
+</filter>
+
+<!-- ============================= -->
+<!-- GRADIENT SYSTEM -->
+<!-- ============================= -->
+
+<linearGradient id="linuxiaGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+  <stop offset="0%" stop-color="#0D1117"/>
+  <stop offset="35%" stop-color="#FFD700"/>
+  <stop offset="65%" stop-color="#FFA500"/>
+  <stop offset="100%" stop-color="#73BA25"/>
+</linearGradient>
+
+<radialGradient id="coreGradient">
+  <stop offset="0%" stop-color="#FFD700"/>
+  <stop offset="100%" stop-color="#0D1117"/>
+</radialGradient>
+
+</defs>
+
+<!-- ============================= -->
+<!-- FRACTAL BACKGROUND LAYER 1 -->
+<!-- ============================= -->
+
+<rect width="100%" height="100%"
+      fill="url(#linuxiaGradient)"
+      filter="url(#noiseLayer1)"
+      opacity="0.35"/>
+
+<!-- ============================= -->
+<!-- FRACTAL BACKGROUND LAYER 2 -->
+<!-- ============================= -->
+
+<rect width="100%" height="100%"
+      fill="url(#linuxiaGradient)"
+      filter="url(#noiseLayer2)"
+      opacity="0.25"/>
+
+<!-- ============================= -->
+<!-- CENTRAL CORE -->
+<!-- ============================= -->
+
+<circle cx="720" cy="260" r="90"
+        fill="url(#coreGradient)"
+        opacity="0.5">
+  <animate attributeName="r"
+           values="85;100;85"
+           dur="8s"
+           repeatCount="indefinite"/>
+</circle>
+
+<!-- ============================= -->
+<!-- VM ORBITS -->
+<!-- ============================= -->
+
+<!-- VM100 -->
+<circle r="10" fill="#FFD700">
+  <animateMotion dur="18s" repeatCount="indefinite"
+    path="M720,170 a90,90 0 1,1 -1,0"/>
+</circle>
+
+<!-- VM101 -->
+<circle r="8" fill="#FFA500">
+  <animateMotion dur="12s" repeatCount="indefinite"
+    path="M720,130 a130,130 0 1,1 -1,0"/>
+</circle>
+
+<!-- VM102 -->
+<circle r="6" fill="#73BA25">
+  <animateMotion dur="8s" repeatCount="indefinite"
+    path="M720,100 a160,160 0 1,1 -1,0"/>
+</circle>
+
+<!-- ============================= -->
+<!-- NEURAL CONNECTION LINES -->
+<!-- ============================= -->
+
+<line x1="720" y1="260" x2="720" y2="170"
+      stroke="#FFD700"
+      stroke-width="1"
+      opacity="0.3">
+  <animate attributeName="opacity"
+           values="0.2;0.6;0.2"
+           dur="4s"
+           repeatCount="indefinite"/>
+</line>
+
+<line x1="720" y1="260" x2="720" y2="130"
+      stroke="#FFA500"
+      stroke-width="1"
+      opacity="0.3">
+  <animate attributeName="opacity"
+           values="0.2;0.5;0.2"
+           dur="5s"
+           repeatCount="indefinite"/>
+</line>
+
+<line x1="720" y1="260" x2="720" y2="100"
+      stroke="#73BA25"
+      stroke-width="1"
+      opacity="0.3">
+  <animate attributeName="opacity"
+           values="0.2;0.4;0.2"
+           dur="6s"
+           repeatCount="indefinite"/>
+</line>
+
+</svg>
