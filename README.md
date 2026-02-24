@@ -172,7 +172,7 @@ Do not weaken CI enforcement
 
 Preserve proof generation logic
 
-See CONTRIBUTING.md for details.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 Research Scope
 
@@ -454,7 +454,7 @@ Ne réduisent pas les protections CI
 
 Maintiennent la génération de preuves
 
-See / Voir : CONTRIBUTING.md
+See / Voir : [CONTRIBUTING.md](CONTRIBUTING.md)
 
 Research Scope / Portée de recherche 🔬
 
