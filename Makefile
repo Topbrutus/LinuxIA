@@ -42,6 +42,11 @@ syntax: ## Fast syntax-only check (bash -n)
 	  bash -n "$$f" && printf "  OK  %s\n" "$$f"; \
 	done
 
+.PHONY: clear-cache
+clear-cache: ## Clear application cache (DRY_RUN=1 for preview)
+	@bash -n "$(SCRIPTS_DIR)/linuxia-clear-cache.sh"
+	@DRY_RUN="${DRY_RUN:-0}" bash "$(SCRIPTS_DIR)/linuxia-clear-cache.sh"
+
 .PHONY: release
 release: ## Build a release package: tarball + SHA256 checksums (Phase 12)
 	@bash $(SCRIPTS_DIR)/linuxia-release.sh

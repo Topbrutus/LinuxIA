@@ -616,6 +616,40 @@ mount | grep "$(df -P "$f" | tail -1 | awk '{print $6}')" | grep noexec || print
 
 ---
 
+## 🧹 Clearing Application Cache
+
+Use `linuxia-clear-cache.sh` to free memory (page/dentry/inode cache) and trim
+stale `/tmp` files and old health-report logs.
+
+### Dry-run (preview only — no changes)
+```bash
+DRY_RUN=1 bash /opt/linuxia/scripts/linuxia-clear-cache.sh
+# or via make:
+DRY_RUN=1 make clear-cache
+```
+
+### Execute (requires root for page-cache drop)
+```bash
+sudo bash /opt/linuxia/scripts/linuxia-clear-cache.sh
+# or via make (from /opt/linuxia):
+sudo make clear-cache
+```
+
+### Options
+| Variable | Default | Description |
+| --- | --- | --- |
+| `DRY_RUN` | `0` | `1` = preview only, no deletions |
+| `TMP_AGE_DAYS` | `7` | Minimum age (days) for `/tmp/linuxia-*` cleanup |
+| `KEEP_HEALTH_REPORTS` | `30` | Number of health-report log files to keep |
+| `LOGS_DIR` | `/opt/linuxia/logs` | Path to LinuxIA logs directory |
+
+### What it clears
+1. **Linux page/dentry/inode cache** (`/proc/sys/vm/drop_caches=3`) — root only.
+2. **Stale `/tmp/linuxia-*` files** older than `TMP_AGE_DAYS` days.
+3. **Old health-report logs** beyond the `KEEP_HEALTH_REPORTS` retention count.
+
+---
+
 ## 🆘 Emergency Contacts
 
 ### Quick SSH Reference
