@@ -6,9 +6,11 @@ set -euo pipefail
 # --------------------------------------------------
 
 REPO_ROOT="."
-SRC_AUDIO="/home/gaby/pour_copilot/audio"
-SRC_PHOTOS="/home/gaby/pour_copilot/photos"
-SRC_VIDEOS="/home/gaby/pour_copilot/videos"
+# Media source directories. Override via env vars if sources are not in the repo's pour_copilot/ folder.
+# Example: LINUXIA_SRC_AUDIO=/mnt/media/audio bash master-linuxia.sh
+SRC_AUDIO="${LINUXIA_SRC_AUDIO:-$REPO_ROOT/pour_copilot/audio}"
+SRC_PHOTOS="${LINUXIA_SRC_PHOTOS:-$REPO_ROOT/pour_copilot/photos}"
+SRC_VIDEOS="${LINUXIA_SRC_VIDEOS:-$REPO_ROOT/pour_copilot/videos}"
 ASSETS_DIR="$REPO_ROOT/assets/readme"
 
 # --------------------------------------------------
