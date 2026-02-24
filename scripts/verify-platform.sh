@@ -130,7 +130,7 @@ FAIL_COUNT=0
 EXIT_CODE=0
 
 ok()   { printf "[OK]   %s\n" "$*"; OK_COUNT=$((OK_COUNT+1)); }
-warn() { printf "[WARN] %s\n" "$*"; WARN_COUNT=$((WARN_COUNT+1)); [[ $EXIT_CODE -lt 1 ]] && EXIT_CODE=1; }
+warn() { printf "[WARN] %s\n" "$*"; WARN_COUNT=$((WARN_COUNT+1)); [[ $EXIT_CODE -lt 1 ]] && EXIT_CODE=1 || true; }
 fail() { printf "[FAIL] %s\n" "$*"; FAIL_COUNT=$((FAIL_COUNT+1)); EXIT_CODE=2; }
 
 need_cmd() {

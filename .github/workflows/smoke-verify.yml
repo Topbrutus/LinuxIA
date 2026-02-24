@@ -1,6 +1,7 @@
 name: smoke-verify-platform
 
 on:
+  push:
   pull_request:
   workflow_dispatch:
 
@@ -22,6 +23,12 @@ jobs:
           if ls scripts/*.sh >/dev/null 2>&1; then
             for f in scripts/*.sh; do bash -n "$f"; done
           fi
+
+      - name: Run verify-platform (read-only smoke)
+        run: |
+          output=$(bash scripts/verify-platform.sh 2>&1) || true
+          echo "$output"
+          echo "$output" | grep -q "=== Summary ===" || { echo "ERROR: Summary line missing from verify-platform output"; exit 1; }
 
       - name: ShellCheck (warnings)
         continue-on-error: true
