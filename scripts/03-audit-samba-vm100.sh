@@ -10,6 +10,9 @@
 set -euo pipefail;
 IFS=$'\n\t';
 
+# shellcheck source=scripts/lib/common.sh
+source "$(dirname "${BASH_SOURCE[0]}")/lib/common.sh";
+
 declare -r BaseDir="/opt/linuxia";
 declare -r DocsDir="${BaseDir}/docs";
 declare -r VerifDir="${DocsDir}/verifications";
@@ -17,8 +20,7 @@ declare -r DefaultConfig="/etc/samba/smb.conf";
 
 declare ScriptName TimeStampUtc TimeStampLocal
 ScriptName="$(basename "${BASH_SOURCE[0]}")"
-TimeStampUtc="$(date -u +%Y%m%dT%H%M%SZ)"
-TimeStampLocal="$(date -Is)"
+init_timestamps;
 declare -r ScriptName TimeStampUtc TimeStampLocal
 
 declare ExpectedHost="vm100-factory";
@@ -35,38 +37,6 @@ declare HostFqdn="";
 declare EvidenceRepoPath="";
 declare GitTag="";
 
-declare -r LockDir="/run/lock/${ScriptName}.lock.d";
-declare -r LockDirFallback="/tmp/${ScriptName}.lock.d";
-
-function cleanup() {
-  if [[ -d "${LockDir}" ]];
-  then
-    rmdir "${LockDir}" 2>/dev/null || true;
-  fi;
-
-  if [[ -d "${LockDirFallback}" ]];
-  then
-    rmdir "${LockDirFallback}" 2>/dev/null || true;
-  fi;
-}
-
-function acquire_lock() {
-  if mkdir "${LockDir}" 2>/dev/null;
-  then
-    trap cleanup EXIT INT TERM;
-    return 0;
-  fi;
-
-  if mkdir "${LockDirFallback}" 2>/dev/null;
-  then
-    trap cleanup EXIT INT TERM;
-    return 0;
-  fi;
-
-  printf '%s\n' "ERROR: Lock exists (${LockDir} or ${LockDirFallback}). Another run may be in progress.";
-  exit 1;
-}
-
 function warn() {
   declare Msg="${1}";
   printf '%s\n' "WARN: ${Msg}";
@@ -77,15 +47,6 @@ function fail() {
   declare Msg="${1}";
   printf '%s\n' "ERROR: ${Msg}";
   ReturnCode=1;
-}
-
-function have_cmd() {
-  declare Cmd="${1}";
-  if command -v "${Cmd}" >/dev/null 2>&1;
-  then
-    return 0;
-  fi;
-  return 1;
 }
 
 function print_usage() {
@@ -150,11 +111,6 @@ function require_root() {
   fi;
 }
 
-function detect_host() {
-  HostShort="$(hostname -s 2>/dev/null || hostname)";
-  HostFqdn="$(hostname -f 2>/dev/null || true)";
-}
-
 function refuse_if_not_vm100() {
   if [[ "${ForceRun}" == "true" ]];
   then
@@ -176,11 +132,6 @@ function refuse_if_not_vm100() {
   printf '%s\n' "       Detected host: ${HostShort} (fqdn: ${HostFqdn:-N/A})";
   printf '%s\n' "       Expected: host='${ExpectedHost}' OR prefix='${ExpectedPrefix}*'";
   exit 1;
-}
-
-function section() {
-  declare Title="${1}";
-  printf '\n%s\n' "=== ${Title} ===";
 }
 
 function run_cmd() {

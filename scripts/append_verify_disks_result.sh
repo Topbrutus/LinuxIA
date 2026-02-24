@@ -10,18 +10,17 @@
 set -euo pipefail;
 IFS=$'\n\t';
 
+# shellcheck source=scripts/lib/common.sh
+source "$(dirname "${BASH_SOURCE[0]}")/lib/common.sh";
+
 declare -r BaseDir="/opt/linuxia";
 declare -r VerifDir="${BaseDir}/docs/verifications";
 declare -r DefaultSnapshot="${BaseDir}/docs/PRODUCTION.snapshot.md";
 
 declare ScriptName TimeStampUtc TimeStampLocal
 ScriptName="$(basename "${BASH_SOURCE[0]}")"
-TimeStampUtc="$(date -u +%Y%m%dT%H%M%SZ)"
-TimeStampLocal="$(date -Is)"
+init_timestamps;
 declare -r ScriptName TimeStampUtc TimeStampLocal
-
-declare -r LockDir="/run/lock/${ScriptName}.lock.d";
-declare -r LockDirFallback="/tmp/${ScriptName}.lock.d";
 
 declare EvidencePath="";
 declare SnapshotPath="${DefaultSnapshot}";
@@ -51,44 +50,6 @@ declare Issues="";
 declare NextAction="";
 
 declare -i ReturnCode=0;
-
-function cleanup() {
-  if [[ -d "${LockDir}" ]];
-  then
-    rmdir "${LockDir}" 2>/dev/null || true;
-  fi;
-
-  if [[ -d "${LockDirFallback}" ]];
-  then
-    rmdir "${LockDirFallback}" 2>/dev/null || true;
-  fi;
-}
-
-function acquire_lock() {
-  if mkdir "${LockDir}" 2>/dev/null;
-  then
-    trap cleanup EXIT INT TERM;
-    return 0;
-  fi;
-
-  if mkdir "${LockDirFallback}" 2>/dev/null;
-  then
-    trap cleanup EXIT INT TERM;
-    return 0;
-  fi;
-
-  printf '%s\n' "ERROR: Lock exists (${LockDir} or ${LockDirFallback}).";
-  exit 1;
-}
-
-function have_cmd() {
-  declare Cmd="${1}";
-  if command -v "${Cmd}" >/dev/null 2>&1;
-  then
-    return 0;
-  fi;
-  return 1;
-}
 
 function add_issue() {
   declare Msg="${1}";

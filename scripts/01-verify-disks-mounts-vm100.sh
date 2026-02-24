@@ -10,6 +10,9 @@
 set -euo pipefail;
 IFS=$'\n\t';
 
+# shellcheck source=scripts/lib/common.sh
+source "$(dirname "${BASH_SOURCE[0]}")/lib/common.sh";
+
 declare -r BaseDir="/opt/linuxia";
 declare -r DocsDir="${BaseDir}/docs";
 declare -r VerifDir="${DocsDir}/verifications";
@@ -21,8 +24,7 @@ declare ForceRun="false";
 
 declare ScriptName TimeStampUtc TimeStampLocal
 ScriptName="$(basename "${BASH_SOURCE[0]}")"
-TimeStampUtc="$(date -u +%Y%m%dT%H%M%SZ)"
-TimeStampLocal="$(date -Is)"
+init_timestamps;
 declare -r ScriptName TimeStampUtc TimeStampLocal
 declare EvidencePath="";
 
@@ -50,24 +52,6 @@ declare -i ReturnCode=0;
 
 declare -a MountTargets=("/opt/linuxia/data/shareA" "/opt/linuxia/data/shareB" "/srv/linuxia-share/DATA_1TB_A" "/srv/linuxia-share/DATA_1TB_B");
 declare -a MountStates=();
-
-function cleanup() {
-  declare -r LockDir="/tmp/${ScriptName}.lock.d";
-  if [[ -d "${LockDir}" ]];
-  then
-    rmdir "${LockDir}" 2>/dev/null || true;
-  fi;
-}
-
-function acquire_lock() {
-  declare -r LockDir="/tmp/${ScriptName}.lock.d";
-  if ! mkdir "${LockDir}" 2>/dev/null;
-  then
-    printf '%s\n' "ERROR: Lock exists (${LockDir}).";
-    exit 1;
-  fi;
-  trap cleanup EXIT INT TERM;
-}
 
 function add_issue() {
   declare Msg="${1}";
@@ -109,11 +93,6 @@ function parse_args() {
   done;
 }
 
-function detect_host() {
-  HostShort="$(hostname -s 2>/dev/null || hostname)";
-  HostFqdn="$(hostname -f 2>/dev/null || true)";
-}
-
 function refuse_if_not_vm100() {
   if [[ "${ForceRun}" == "true" ]];
   then
@@ -133,11 +112,6 @@ function refuse_if_not_vm100() {
 
   printf '%s\n' "ERROR: Anti-fausse preuve: VM100 only. Host=${HostShort} fqdn=${HostFqdn:-N/A}";
   exit 1;
-}
-
-function section() {
-  declare Title="${1}";
-  printf '\n%s\n' "=== ${Title} ===";
 }
 
 function snapshot_extract() {

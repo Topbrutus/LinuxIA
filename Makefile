@@ -21,14 +21,14 @@ verify: ## Alias for doctor
 	@$(MAKE) doctor
 
 .PHONY: lint
-lint: ## bash -n + shellcheck on scripts/*.sh (warnings)
+lint: ## bash -n + shellcheck on scripts/*.sh and scripts/lib/*.sh (warnings)
 	@set -euo pipefail; \
 	shopt -s nullglob; \
-	for f in $(SCRIPTS_DIR)/*.sh; do \
+	for f in $(SCRIPTS_DIR)/*.sh $(SCRIPTS_DIR)/lib/*.sh; do \
 	  bash -n "$$f" && printf "  bash -n OK  %s\n" "$$f"; \
 	done; \
 	if command -v shellcheck >/dev/null 2>&1; then \
-	  shellcheck -x --severity=warning $(SCRIPTS_DIR)/*.sh || true; \
+	  shellcheck -x --severity=warning $(SCRIPTS_DIR)/*.sh $(SCRIPTS_DIR)/lib/*.sh || true; \
 	  printf "  shellcheck done (warnings may remain)\n"; \
 	else \
 	  printf "  WARN: shellcheck not found (install: sudo zypper in ShellCheck)\n"; \
@@ -38,7 +38,7 @@ lint: ## bash -n + shellcheck on scripts/*.sh (warnings)
 syntax: ## Fast syntax-only check (bash -n)
 	@set -euo pipefail; \
 	shopt -s nullglob; \
-	for f in $(SCRIPTS_DIR)/*.sh; do \
+	for f in $(SCRIPTS_DIR)/*.sh $(SCRIPTS_DIR)/lib/*.sh; do \
 	  bash -n "$$f" && printf "  OK  %s\n" "$$f"; \
 	done
 
