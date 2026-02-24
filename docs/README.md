@@ -3,13 +3,9 @@
 Ce dossier contient la documentation du projet.
 
 Génération d'un état de la VM100:
-- scripts/linuxia-preflight.sh
-- scripts/linuxia-state-report.sh
-- scripts/linuxia-configsnap-index.sh
 - scripts/linuxia-healthcheck.sh (génère docs/STATE_HEALTHCHECK.md)
-- scripts/linuxia-repair.sh (auto-réparation minimale en cas d'échec healthcheck)
-
-Les fichiers générés (STATE_VM100.md, CONFIGSNAP_LATEST.txt, etc.) sont ignorés par git.
+- scripts/linuxia-repair.sh (auto-réparation ciblée des partages Samba)
+- services/systemd/linuxia-repair.service (unité systemd oneshot déclenché par linuxia-repair.path)
 
 Auto-réparation (VM100):
 - lancement manuel: sudo -i && systemctl start linuxia-repair.service
