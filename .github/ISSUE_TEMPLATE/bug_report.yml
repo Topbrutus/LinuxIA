@@ -1,0 +1,29 @@
+name: Bug report
+description: Signaler un bug reproductible
+title: "[BUG] "
+labels: ["bug"]
+body:
+  - type: textarea
+    attributes:
+      label: Contexte
+      description: OS, branche, commande, environnement
+      placeholder: "openSUSE..., branch..., commande..."
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Étapes pour reproduire
+      placeholder: "1) ... 2) ... 3) ..."
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Résultat attendu
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Résultat obtenu / logs
+      description: Colle les lignes ERROR/failed/fatal + logs
+    validations:
+      required: true
