@@ -5,6 +5,33 @@ This runbook provides step-by-step procedures for installing, verifying, restori
 
 ---
 
+## 🗺️ Architecture: Timers / Services / Output Paths
+
+```mermaid
+graph LR
+    T1["⏱ linuxia-configsnap.timer<br/>daily 03:00"]
+    T2["⏱ linuxia-healthcheck.timer<br/>daily 03:05"]
+    T3["⏱ linuxia-health-report.timer<br/>daily 03:10"]
+
+    S1["⚙ linuxia-configsnap.service"]
+    S2["⚙ linuxia-healthcheck.service"]
+    S3["⚙ linuxia-health-report.service"]
+
+    A1["/opt/linuxia/data/shareA/<br/>archives/configsnap/"]
+    A2["/opt/linuxia/docs/<br/>STATE_HEALTHCHECK.md"]
+    A3["/opt/linuxia/logs/health/<br/>(local report)"]
+    A4["/opt/linuxia/data/shareA/<br/>reports/health/<br/>(shareA copy)"]
+
+    T1 --> S1 --> A1
+    T2 --> S2 --> A2
+    T3 --> S3 --> A3
+    T3 --> S3 --> A4
+```
+
+→ Full architecture: [`docs/architecture.md`](architecture.md)
+
+---
+
 ## 📦 Storage Mounts (shareA / shareB)
 
 ### Overview
