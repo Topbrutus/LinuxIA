@@ -4,16 +4,41 @@ title: "[FEATURE] "
 labels: ["enhancement"]
 body:
   - type: textarea
+    id: context
     attributes:
-      label: Problème / motivation
+      label: Contexte / motivation
+      description: Quel problème essaies-tu de résoudre ? Quel est l'environnement (OS, branche, outil) ?
+      placeholder: "openSUSE..., branch..., commande..."
     validations:
       required: true
   - type: textarea
+    id: repro
     attributes:
-      label: Solution proposée
+      label: Comportement actuel (étapes pour reproduire la limitation)
+      placeholder: "1) ... 2) ... 3) ..."
     validations:
       required: true
   - type: textarea
+    id: expected
+    attributes:
+      label: Comportement attendu / solution proposée
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Résultat actuel obtenu
+    validations:
+      required: true
+  - type: textarea
+    id: proof
+    attributes:
+      label: Logs / preuves / exemples
+      description: Colle les sorties de commandes, captures d'écran ou liens pertinents.
+    validations:
+      required: false
+  - type: textarea
+    id: alternatives
     attributes:
       label: Alternatives considérées
     validations:

@@ -4,9 +4,30 @@ title: "[DOCS] "
 labels: ["documentation"]
 body:
   - type: textarea
-    id: what
+    id: context
     attributes:
-      label: What should be documented/changed?
+      label: Contexte
+      description: "OS, branche, section concernée. Pourquoi cette documentation est-elle nécessaire ?"
+      placeholder: "openSUSE..., branch..., section docs/..."
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Étapes pour reproduire le manque de documentation
+      placeholder: "1) ... 2) ... 3) ..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Ce que la documentation devrait expliquer (résultat attendu)
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Ce qui est actuellement documenté / manquant (résultat obtenu)
     validations:
       required: true
   - type: textarea
@@ -19,7 +40,7 @@ body:
   - type: textarea
     id: proof
     attributes:
-      label: Proof / examples
+      label: Proof / logs / examples
       description: "Commands, screenshots, links, expected outcome."
     validations:
       required: false
