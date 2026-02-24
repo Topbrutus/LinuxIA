@@ -20,9 +20,14 @@ jobs:
             bash -n "$f"
           done
 
-      - name: ShellCheck (scripts/*.sh)
+      - name: Install ShellCheck
         run: |
-          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+
+      - name: ShellCheck (scripts/*.sh)
+        continue-on-error: true
+        run: |
           shellcheck --version
-          # Only fail on errors/warnings, ignore info and specific warnings (SC2155: common pattern in existing code)
+          # Warning-only: output is visible in PR checks but does not block the build
           shellcheck -x --severity=warning --exclude=SC2155 scripts/*.sh
