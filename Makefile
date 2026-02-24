@@ -45,3 +45,8 @@ syntax: ## Fast syntax-only check (bash -n)
 .PHONY: release
 release: ## Build a release package: tarball + SHA256 checksums (Phase 12)
 	@bash $(SCRIPTS_DIR)/linuxia-release.sh
+
+.PHONY: run
+run: ## Run commands sequentially from a file: make run CMDS=<file>
+	@[ -n "$(CMDS)" ] || { echo "Usage: make run CMDS=<commands-file>"; exit 1; }
+	@bash $(SCRIPTS_DIR)/run-seq.sh "$(CMDS)"
