@@ -18,6 +18,44 @@ Objectif: une base robuste, reproductible, auditable.
 - **CI + docs**: chaque changement laisse une trace claire
 <!-- VITRINE_END -->
 
+---
+
+## 🚀 Start here
+
+New to LinuxIA? Three commands get you oriented in under 15 minutes:
+
+```bash
+git clone git@github.com:Topbrutus/LinuxIA.git /opt/linuxia
+cd /opt/linuxia
+bash scripts/verify-platform.sh   # read-only doctor check
+```
+
+Full guide → **[docs/start-here.md](docs/start-here.md)**  
+Operational runbook → **[docs/runbook.md](docs/runbook.md)**
+
+---
+
+## 🤝 How to help
+
+Pick one of three paths:
+
+1. **Improve the runbook** — fix an unclear step, add a missing troubleshooting entry, or translate a section.  
+   Files: [`docs/runbook.md`](docs/runbook.md) · [`docs/start-here.md`](docs/start-here.md)  
+   Label: [`good first issue`](https://github.com/Topbrutus/LinuxIA/labels/good%20first%20issue)
+
+2. **CI / smoke tests** — extend `.github/workflows/` or `scripts/ci.sh` to cover an untested path.  
+   Files: [`.github/workflows/`](.github/workflows/) · [`scripts/ci.sh`](scripts/ci.sh)  
+   Label: [`good first issue`](https://github.com/Topbrutus/LinuxIA/labels/good%20first%20issue)
+
+3. **Ops / mounts / perms (Phase 8)** — help validate storage mounts, Samba shares, and permission hardening on VM100.  
+   Files: [`docs/runbook.md`](docs/runbook.md) · [`ops/`](ops/) · [`services/systemd/`](services/systemd/)  
+   Label: [`good first issue`](https://github.com/Topbrutus/LinuxIA/labels/good%20first%20issue)
+
+→ Browse all **[good first issues](https://github.com/Topbrutus/LinuxIA/issues?q=label%3A%22good+first+issue%22)**.
+
+Contribution rules: read [`CONTRIBUTING.md`](CONTRIBUTING.md) (proof-first; every PR must include command output as evidence).
+
+---
 
 [![CI](https://github.com/Topbrutus/LinuxIA/actions/workflows/linuxia-ci.yml/badge.svg)](https://github.com/Topbrutus/LinuxIA/actions/workflows/linuxia-ci.yml) [![Release](https://img.shields.io/github/v/release/Topbrutus/LinuxIA?sort=semver)](https://github.com/Topbrutus/LinuxIA/releases)
 
