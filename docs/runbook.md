@@ -522,38 +522,43 @@ sudo setenforce 1
 
 ### 🚫 Permission Denied — Exit Code 126
 
-**Symptom**: Script exits with code `126` or `bash: ./scripts/foo.sh: Permission denied`
+**Symptom**: `./scripts/verify-platform.sh` (or any script) exits with code `126`, or the shell prints:
+```
+bash: ./scripts/verify-platform.sh: Permission denied
+```
 
 Exit 126 means the shell found the file but **could not execute it**. Different from exit 127 (file not found).
+
+**Root cause**: The executable bit (`+x`) is missing on the script file, or a secondary cause listed below prevents execution.
 
 #### Causes and fixes
 
 **1 — Executable bit missing (most common)**
 ```bash
-ls -l scripts/foo.sh
+ls -l scripts/verify-platform.sh
 # If you see -rw-r--r-- (no x), fix with:
-chmod +x scripts/foo.sh
+chmod +x scripts/verify-platform.sh
 # Or for the whole scripts/ dir:
 chmod +x scripts/*.sh
 # In git (persists across clones):
-git update-index --chmod=+x scripts/foo.sh
+git update-index --chmod=+x scripts/verify-platform.sh
 ```
 
 **2 — Wrong shebang or missing shebang**
 ```bash
 # Check first line:
-sed -n '1p' scripts/foo.sh
+sed -n '1p' scripts/verify-platform.sh
 # Expected: #!/usr/bin/env bash   or   #!/bin/bash
 # If blank or wrong, add: #!/usr/bin/env bash  as first line
 ```
 
 **3 — Windows CRLF line endings**
 ```bash
-file scripts/foo.sh
+file scripts/verify-platform.sh
 # If output says "CRLF line terminators", strip them:
-sed -i 's/\r$//' scripts/foo.sh
+sed -i 's/\r$//' scripts/verify-platform.sh
 # Or with dos2unix (if installed):
-dos2unix scripts/foo.sh
+dos2unix scripts/verify-platform.sh
 ```
 
 **4 — Filesystem mounted noexec**
@@ -566,10 +571,10 @@ sudo mount -o remount,exec /opt/linuxia
 
 **5 — Wrong file owner / ACL issue**
 ```bash
-stat -c "%a %U:%G %n" scripts/foo.sh
+stat -c "%a %U:%G %n" scripts/verify-platform.sh
 # Expected: 755 gaby:users   (or at least user-executable)
-sudo chown gaby:users scripts/foo.sh
-chmod 755 scripts/foo.sh
+sudo chown gaby:users scripts/verify-platform.sh
+chmod 755 scripts/verify-platform.sh
 ```
 
 **6 — Script run via git on a root-owned object**
@@ -591,6 +596,42 @@ sed -n '1p' "$f"
 file "$f"
 mount | grep "$(df -P "$f" | tail -1 | awk '{print $6}')" | grep noexec || printf "noexec: not set\n"
 ```
+
+#### ⚠️ Related failure: `tcp: commande non trouvée` (exit 127)
+
+**Symptom**: After running `./scripts/verify-platform.sh`, the terminal shows:
+
+```
+tcp: commande non trouvée
+```
+
+**Root cause**: This happens when you **copy and paste the script output** back into the terminal instead of the command itself. The verification output of `verify-platform.sh` includes lines from `ss -lntup` (network listeners), such as:
+
+```
+tcp   LISTEN  0  128  0.0.0.0:22  ...
+```
+
+When this output is selected and pasted into a shell prompt, the shell tries to execute `tcp` as a command, producing `tcp: commande non trouvée` (French for "command not found").
+
+**Fix**: This is harmless — no action is required on the platform. Simply re-run the script cleanly:
+
+```bash
+./scripts/verify-platform.sh
+```
+
+#### 🛡️ Prevention tips
+
+- **Only paste command blocks, never outputs.** When following this runbook, copy only the lines inside ` ```bash ` fences — never the output that appears below those commands.
+- **Verify what you paste.** Before pressing Enter, confirm the shell prompt (`$` or `#`) is present before your pasted text.
+- **Use script logging to avoid manual copy and paste.** Capture output to a file instead:
+  ```bash
+  ./scripts/verify-platform.sh | tee /tmp/verify-$(date +%Y%m%d-%H%M%S).txt
+  ```
+- **Maintain executable bits in git.** Always run `git update-index --chmod=+x scripts/*.sh` after creating or modifying scripts, so the bit is preserved across clones:
+  ```bash
+  git update-index --chmod=+x scripts/verify-platform.sh
+  git update-index --chmod=+x scripts/verify-systemd.sh
+  ```
 
 ---
 
