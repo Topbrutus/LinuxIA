@@ -1,20 +1,40 @@
-name: Feature request
-description: Proposer une amélioration
-title: "[FEATURE] "
+name: "Feature request"
+description: "Propose an improvement (proof-first)."
+title: "[FEAT] "
 labels: ["enhancement"]
 body:
-  - type: textarea
+  - type: markdown
     attributes:
-      label: Problème / motivation
+      value: |
+        Please describe the problem, the proposed solution, and acceptance criteria.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement
+      description: "What problem are we solving?"
     validations:
       required: true
   - type: textarea
+    id: proposal
     attributes:
-      label: Solution proposée
+      label: Proposed solution
+      description: "What do you want to happen?"
     validations:
       required: true
   - type: textarea
+    id: acceptance
     attributes:
-      label: Alternatives considérées
+      label: Acceptance criteria (Definition of Done)
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+        - [ ] Proof: ...
+    validations:
+      required: true
+  - type: textarea
+    id: proof
+    attributes:
+      label: Proof / references
+      description: "Links to docs, prior issues, logs, experiments."
     validations:
       required: false

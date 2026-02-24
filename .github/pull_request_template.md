@@ -1,9 +1,18 @@
-## Résumé
-- [ ] Description courte du changement
+## What
 
-## Preuves (obligatoire)
-- [ ] Commandes / logs / captures (si pertinent)
+Describe the change.
 
-## Checklist
-- [ ] `bash -n` / tests OK (si scripts)
-- [ ] Docs mises à jour si nécessaire
+## Why
+
+Why is this needed?
+
+## How to Test
+
+```bash
+cd /opt/linuxia
+bash scripts/verify-platform.sh
+```
+
+## Risks/Notes
+
+Any compatibility concerns, rollback plan, or special notes.
