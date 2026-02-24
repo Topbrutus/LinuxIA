@@ -463,3 +463,35 @@ Pipelines opérationnels déterministes
 License / Licence 📄
 
 To be defined / À définir.
+
+<!-- LINUXIA_CINEMATIC_CARDS_BEGIN -->
+
+## 🎞️ Vitrine — Cinematic Cards (GitHub-safe, 0 JS)
+
+<p align="center">
+  <img src="assets/readme/cinematic/cards/section_gallery_01.svg" width="100%" alt="Vision &amp; Platform"/>
+</p>
+<p align="center">
+  <img src="assets/readme/cinematic/cards/section_gallery_02.svg" width="100%" alt="Architecture"/>
+</p>
+<p align="center">
+  <img src="assets/readme/cinematic/cards/section_gallery_03.svg" width="100%" alt="Agents TriluxIA"/>
+</p>
+<p align="center">
+  <img src="assets/readme/cinematic/cards/section_gallery_04.svg" width="100%" alt="Immutable Proof"/>
+</p>
+<p align="center">
+  <img src="assets/readme/cinematic/cards/section_gallery_05.svg" width="100%" alt="Infra &amp; Timers"/>
+</p>
+<p align="center">
+  <img src="assets/readme/cinematic/cards/section_gallery_06.svg" width="100%" alt="Security"/>
+</p>
+<p align="center">
+  <img src="assets/readme/cinematic/cards/section_gallery_07.svg" width="100%" alt="Storage &amp; Shares"/>
+</p>
+<p align="center">
+  <img src="assets/readme/cinematic/cards/section_gallery_08.svg" width="100%" alt="Roadmap"/>
+</p>
+
+<!-- LINUXIA_CINEMATIC_CARDS_END -->
+
