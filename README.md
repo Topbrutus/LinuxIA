@@ -217,10 +217,6 @@ Ajouter une roadmap scientifique
 
 On peut le rendre vraiment pionnier. 🚀
 
-Est-ce que tu pourrais le faire en anglais-français, s'il vous plaît? Le reste à l'abord. Peut-être mettre un peu plus d'émoticônes, pas beaucoup, mais juste un peu.
-
-Bien sûr 🙂 Voici une version bilingue EN/FR, scientifique, avec quelques émoticônes discrètes (pas trop). Tu peux remplacer ton README.md par ceci :
-
 LinuxIA — Proof-First Agent Ops / Orchestration (EN/FR) 🧪
 
 Phase 6 – Stable Core ✅
@@ -512,4 +508,3 @@ To be defined / À définir.
 </p>
 
 <!-- LINUXIA_CINEMATIC_CARDS_END -->
-
