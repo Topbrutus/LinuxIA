@@ -109,16 +109,11 @@ export default function HomePage() {
             className="flex flex-wrap gap-4"
           >
             <Link
-              href="/catalogue"
+              href="/splash"
+              aria-label="Bienvenue — Entrer dans le magasin"
               className="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-base font-bold text-emerald-700 shadow-lg transition-all duration-200 hover:bg-emerald-50 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-emerald-600"
             >
-              Voir le catalogue →
-            </Link>
-            <Link
-              href="/promotions"
-              className="inline-flex items-center justify-center rounded-full border-2 border-white/70 px-8 py-4 text-base font-bold text-white transition-all duration-200 hover:border-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-emerald-600"
-            >
-              Nos promotions ✨
+              Bienvenue — Entrer
             </Link>
           </motion.div>
         </Container>
