@@ -18,7 +18,10 @@ usage() {
   printf "  syntax      Fast bash syntax-only checks (make syntax)\n"
   printf "  verify      Alias for doctor\n"
   printf "  version     Show git version info\n"
-  printf "  release     Build a release package: tarball + SHA256 checksums\n\n"
+  printf "  release     Build a release package: tarball + SHA256 checksums\n"
+  printf "  run         Execute commands one by one, show output, then continue\n"
+  printf "              Usage: scripts/linuxia run <commands-file>\n"
+  printf "                     scripts/linuxia run -- \"cmd1\" \"cmd2\" ...\n\n"
   printf "Notes:\n"
   printf "  - This CLI is read-only by default.\n"
   printf "  - Prefer running from the repo root.\n"
@@ -59,6 +62,10 @@ case "$cmd" in
   release)
     [ -f Makefile ] || die "Makefile not found at repo root"
     make release
+    ;;
+  run)
+    shift
+    exec bash "$(dirname "${BASH_SOURCE[0]}")/run-seq.sh" "$@"
     ;;
   *)
     die "Unknown command: $cmd (try: scripts/linuxia help)"
