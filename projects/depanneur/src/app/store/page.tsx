@@ -14,6 +14,7 @@ import { hotspots } from "@/data/storeMap";
 import { products } from "@/data/products";
 import type { Product } from "@/types/product";
 import { useCartStore } from "@/store/cartStore";
+import { useUserStore } from "@/store/userStore";
 import { cn } from "@/lib/utils";
 
 /* ── Drawer config by zoneType ──────────────────────────────────── */
@@ -121,10 +122,10 @@ function ProductCard({ product }: { product: Product }) {
 
         <div className="mt-auto flex items-center justify-between pt-2">
           <div>
-            <p className="text-base font-extrabold text-gray-900">
-              {product.price.toFixed(2)} €
-            </p>
-            <p className="text-xs text-gray-400">Stock : {product.stock}</p>
+            <span className="inline-block rounded-full bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700">
+              Paiement à la livraison
+            </span>
+            <p className="mt-0.5 text-xs text-gray-400">Stock : {product.stock}</p>
           </div>
 
           <button
@@ -296,6 +297,7 @@ export default function StorePage() {
   const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
   const [hoveredZoneId, setHoveredZoneId]   = useState<string | null>(null);
   const triggerRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
+  const user = useUserStore((s) => s.user);
 
   const selectedZone = selectedZoneId
     ? (zones.find((z) => z.id === selectedZoneId) ?? null)
@@ -449,6 +451,50 @@ export default function StorePage() {
             :                     "Caisse (liste compacte)"}
           </span>
         ))}
+      </div>
+
+      {/* ── HUD Avatar (fixed bas-gauche) ─────────────────────── */}
+      <div className="fixed bottom-6 left-6 z-50">
+        {user ? (
+          <button
+            aria-label={`Profil de ${user.name}`}
+            className={cn(
+              "group flex items-end gap-3 rounded-2xl",
+              "border border-white/10 bg-gray-900/80 px-3 py-2 shadow-xl backdrop-blur-sm",
+              "transition-all hover:border-emerald-500/50 hover:bg-gray-800/90",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+            )}
+          >
+            {/* Silhouette */}
+            <div className={cn(
+              "relative flex h-14 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl",
+              user.avatarId === "blank-black" ? "bg-gray-200" : "bg-gray-700"
+            )}>
+              <Image
+                src={`/avatars/${user.avatarId}.svg`}
+                alt={`Avatar de ${user.name}`}
+                width={36}
+                height={56}
+                className="h-full w-full object-contain"
+                unoptimized
+              />
+            </div>
+
+            {/* Infos */}
+            <div className="flex flex-col items-start gap-0.5 pb-0.5">
+              <span className="text-xs font-bold text-white leading-tight">
+                {user.name}
+              </span>
+              <span className="rounded-full bg-emerald-600/20 px-2 py-0.5 text-[10px] font-semibold text-emerald-400">
+                Profil
+              </span>
+            </div>
+          </button>
+        ) : (
+          <div className="rounded-xl border border-white/10 bg-gray-900/70 px-3 py-2 text-xs text-gray-500 backdrop-blur-sm">
+            Invité
+          </div>
+        )}
       </div>
     </div>
   );

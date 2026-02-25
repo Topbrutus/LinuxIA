@@ -3,15 +3,22 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { useUserStore } from "@/store/userStore";
-import type { UserGender } from "@/store/userStore";
+import type { UserGender, AvatarId } from "@/store/userStore";
 import Container from "@/components/ui/Container";
+import { cn } from "@/lib/utils";
 
 const GENDER_OPTIONS: { value: UserGender; label: string }[] = [
   { value: "homme",               label: "Homme" },
   { value: "femme",               label: "Femme" },
   { value: "autre",               label: "Autre" },
   { value: "prefere-ne-pas-dire", label: "Préfère ne pas dire" },
+];
+
+const AVATAR_OPTIONS: { id: AvatarId; label: string; bg: string }[] = [
+  { id: "blank-white", label: "Claire",  bg: "bg-gray-800" },
+  { id: "blank-black", label: "Sombre",  bg: "bg-gray-200" },
 ];
 
 const inputCls =
@@ -23,10 +30,11 @@ export default function WelcomePage() {
   const setUser = useUserStore((s) => s.setUser);
   const user    = useUserStore((s) => s.user);
 
-  const [name,    setName]    = useState("");
-  const [address, setAddress] = useState("");
-  const [gender,  setGender]  = useState<UserGender>("prefere-ne-pas-dire");
-  const [error,   setError]   = useState<string | null>(null);
+  const [name,     setName]     = useState("");
+  const [address,  setAddress]  = useState("");
+  const [gender,   setGender]   = useState<UserGender>("prefere-ne-pas-dire");
+  const [avatarId, setAvatarId] = useState<AvatarId>("blank-white");
+  const [error,    setError]    = useState<string | null>(null);
 
   /* Déjà un profil → /store directement */
   useEffect(() => {
@@ -40,7 +48,7 @@ export default function WelcomePage() {
     if (!name.trim())    return setError("Votre prénom est requis.");
     if (!address.trim()) return setError("Votre adresse est requise.");
 
-    setUser({ name: name.trim(), address: address.trim(), gender });
+    setUser({ name: name.trim(), address: address.trim(), gender, avatarId });
     router.replace("/store");
   }
 
@@ -140,6 +148,48 @@ export default function WelcomePage() {
                 ))}
               </select>
             </div>
+
+            {/* Avatar */}
+            <fieldset className="flex flex-col gap-2">
+              <legend className="text-sm font-semibold text-gray-300">
+                Silhouette
+              </legend>
+              <div className="flex gap-3" role="radiogroup">
+                {AVATAR_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    role="radio"
+                    aria-checked={avatarId === opt.id}
+                    aria-label={`Silhouette ${opt.label}`}
+                    onClick={() => setAvatarId(opt.id)}
+                    className={cn(
+                      "flex flex-1 flex-col items-center gap-2 rounded-xl border-2 p-3 transition-all",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500",
+                      avatarId === opt.id
+                        ? "border-emerald-500 bg-emerald-500/10"
+                        : "border-white/10 bg-white/5 hover:border-white/30"
+                    )}
+                  >
+                    <div className={cn("flex h-16 w-10 items-center justify-center rounded-lg", opt.bg)}>
+                      <Image
+                        src={`/avatars/${opt.id}.svg`}
+                        alt={opt.label}
+                        width={32}
+                        height={64}
+                        className="h-14 w-auto"
+                      />
+                    </div>
+                    <span className="text-xs font-medium text-gray-300">
+                      {opt.label}
+                    </span>
+                    {avatarId === opt.id && (
+                      <span className="text-xs font-bold text-emerald-400">✓</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </fieldset>
 
             {/* Erreur */}
             {error && (

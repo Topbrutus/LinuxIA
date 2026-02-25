@@ -7,10 +7,13 @@ export type UserGender =
   | "autre"
   | "prefere-ne-pas-dire";
 
+export type AvatarId = "blank-white" | "blank-black" | (string & {});
+
 export interface UserProfile {
   name: string;
   address: string;
   gender: UserGender;
+  avatarId: AvatarId;
 }
 
 interface UserStore {
