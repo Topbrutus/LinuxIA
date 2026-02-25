@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useUserStore } from "@/store/userStore";
@@ -13,70 +13,59 @@ const TIPS = [
   "Astuce : utilise le menu pour retrouver les promotions.",
 ];
 
-const DURATION_MS = 1800;
-const TICK_MS     = 30;
-
 export default function SplashPage() {
-  const router   = useRouter();
-  const user     = useUserStore((s) => s.user);
-  const hasInit  = useRef(false);
+  const router = useRouter();
+  const user   = useUserStore((s) => s.user);
 
-  const [progress, setProgress]   = useState(0);
-  const [tipIndex, setTipIndex]   = useState(0);
-  const [done, setDone]           = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [tipIndex, setTipIndex] = useState(0);
 
-  /* Précharge store.png */
+  /* ── Barre de progression : +1% toutes les 18ms ─────────────── */
   useEffect(() => {
-    const img = new window.Image();
-    img.src = "/store.png";
-  }, []);
-
-  /* Barre de progression fake */
-  useEffect(() => {
-    if (hasInit.current) return;
-    hasInit.current = true;
-
-    const steps  = DURATION_MS / TICK_MS;
-    let   current = 0;
-
     const interval = setInterval(() => {
-      current += 1;
-      /* Courbe d'accélération : rapide au début, ralentit vers 100 */
-      const raw  = current / steps;
-      const eased = raw < 0.8 ? raw * 1.1 : 0.88 + (raw - 0.8) * 0.6;
-      setProgress(Math.min(Math.round(eased * 100), 100));
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          return 100;
+        }
+        return prev + 1;
+      });
+    }, 18);
 
-      if (current >= steps) {
-        clearInterval(interval);
-        setProgress(100);
-        setDone(true);
-      }
-    }, TICK_MS);
-
-    /* Rotation tips */
-    const tipInterval = setInterval(() => {
-      setTipIndex((i) => (i + 1) % TIPS.length);
-    }, 2200);
-
-    return () => {
-      clearInterval(interval);
-      clearInterval(tipInterval);
-    };
+    return () => clearInterval(interval);
   }, []);
 
-  /* Redirection après chargement */
+  /* ── Redirection quand progress === 100 ──────────────────────── */
   useEffect(() => {
-    if (!done) return;
+    if (progress < 100) return;
     const timeout = setTimeout(() => {
       router.replace(user ? "/store" : "/welcome");
     }, 350);
     return () => clearTimeout(timeout);
-  }, [done, user, router]);
+  }, [progress, user, router]);
+
+  /* ── Tips rotatifs ───────────────────────────────────────────── */
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTipIndex((i) => (i + 1) % TIPS.length);
+    }, 2200);
+    return () => clearInterval(interval);
+  }, []);
+
+  /* ── Préchargement store.png ─────────────────────────────────── */
+  useEffect(() => {
+    try {
+      const img = new window.Image();
+      img.src = "/store.png";
+    } catch (e) {
+      console.error("[splash] preload error", e);
+    }
+  }, []);
 
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-gray-950 px-6 text-center select-none">
 
-      {/* Bruit d'ambiance — overlay grain */}
+      {/* Grain overlay */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.03]"
         style={{
@@ -102,11 +91,9 @@ export default function SplashPage() {
         <div className="flex h-20 w-20 items-center justify-center rounded-2xl border border-emerald-700/40 bg-emerald-950/60 text-5xl shadow-xl ring-1 ring-emerald-500/20 backdrop-blur-sm">
           🛍️
         </div>
-
         <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
           Supermarché du Quartier
         </h1>
-
         <p className="text-sm font-medium text-emerald-400">
           Chargement du magasin…
         </p>
@@ -124,11 +111,10 @@ export default function SplashPage() {
         aria-valuemax={100}
         aria-label="Chargement du magasin"
       >
-        <div className="overflow-hidden rounded-full bg-white/10 h-2">
-          <motion.div
-            className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 shadow-[0_0_12px_2px_rgba(52,211,153,0.4)]"
+        <div className="h-2 overflow-hidden rounded-full bg-white/10">
+          <div
+            className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 shadow-[0_0_12px_2px_rgba(52,211,153,0.4)] transition-[width] duration-[18ms] ease-linear"
             style={{ width: `${progress}%` }}
-            transition={{ duration: 0.03 }}
           />
         </div>
         <p className="mt-2 text-right text-xs tabular-nums text-emerald-500/70">
@@ -154,7 +140,7 @@ export default function SplashPage() {
 
       {/* Flash de sortie */}
       <AnimatePresence>
-        {done && (
+        {progress >= 100 && (
           <motion.div
             key="flash"
             initial={{ opacity: 0 }}
