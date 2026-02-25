@@ -12,6 +12,7 @@ export interface Product {
   shape: ProductShape;
   image: string;
   category: string;
+  price: number;
   stock: number;
   placement: ProductPlacement;
 }

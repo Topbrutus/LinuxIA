@@ -13,6 +13,7 @@ import type { StoreZone, ZoneType } from "@/data/storeLayout";
 import { hotspots } from "@/data/storeMap";
 import { products } from "@/data/products";
 import type { Product } from "@/types/product";
+import { useCartStore } from "@/store/cartStore";
 import { cn } from "@/lib/utils";
 
 /* ── Drawer config by zoneType ──────────────────────────────────── */
@@ -37,7 +38,7 @@ const DRAWER_CONFIG: Record<ZoneType, DrawerConfig> = {
   shelf: {
     side: "bottom",
     panelCls:
-      "bottom-0 left-0 right-0 h-72 w-full flex-row overflow-x-auto snap-x snap-mandatory",
+      "bottom-0 left-0 right-0 h-80 w-full flex-row overflow-x-auto snap-x snap-mandatory",
     variants: {
       hidden:  { y: "100%", opacity: 0 },
       visible: { y: 0,      opacity: 1, transition: EASE_SPRING },
@@ -46,7 +47,7 @@ const DRAWER_CONFIG: Record<ZoneType, DrawerConfig> = {
   },
   counter: {
     side: "right",
-    panelCls: "top-0 right-0 h-full w-72 max-w-full flex-col overflow-y-auto",
+    panelCls: "top-0 right-0 h-full w-80 max-w-full flex-col overflow-y-auto",
     variants: {
       hidden:  { x: "100%", opacity: 0 },
       visible: { x: 0,      opacity: 1, transition: EASE_SPRING },
@@ -67,24 +68,104 @@ const ZONE_LABEL_COLORS: Record<ZoneType, string> = {
   counter: "bg-pink-600",
 };
 
-/* ── Product card ───────────────────────────────────────────────── */
+const SHAPE_ICON: Record<Product["shape"], string> = {
+  can:    "🥫",
+  bottle: "🍶",
+  pouch:  "🛍️",
+  round:  "🍎",
+  box:    "📦",
+};
+
+/* ── ProductCard ────────────────────────────────────────────────── */
 function ProductCard({ product }: { product: Product }) {
+  const addItem = useCartStore((s) => s.addItem);
+  const [added, setAdded] = useState(false);
+
+  function handleAdd() {
+    addItem({ id: product.id, name: product.name, price: product.price, quantity: 1, image: product.image });
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
+  }
+
   return (
-    <div className="flex shrink-0 snap-start flex-col gap-2 rounded-xl border border-gray-100 bg-white p-4 shadow-sm w-48">
-      <div className="flex h-20 w-full items-center justify-center rounded-lg bg-gray-50 text-3xl">
-        {product.shape === "can"    ? "🥫"
-        : product.shape === "bottle" ? "🍶"
-        : product.shape === "pouch"  ? "🛍️"
-        : product.shape === "round"  ? "🍎"
-        :                              "📦"}
+    <div className="flex w-52 shrink-0 snap-start flex-col rounded-xl border border-gray-100 bg-white shadow-sm overflow-hidden">
+      {/* Image / icône */}
+      <div className="relative flex h-28 w-full items-center justify-center bg-gray-50">
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          className="object-contain p-3"
+          onError={() => {/* fallback géré par le span ci-dessous */}}
+          sizes="208px"
+          unoptimized
+        />
+        <span className="relative z-10 text-4xl select-none" aria-hidden="true">
+          {SHAPE_ICON[product.shape]}
+        </span>
       </div>
-      <p className="line-clamp-1 text-sm font-bold text-gray-900">
-        {product.name}
-      </p>
-      <p className="text-xs text-gray-400">{product.category}</p>
-      <p className="text-xs font-semibold text-emerald-600">
-        Stock : {product.stock}
-      </p>
+
+      {/* Infos */}
+      <div className="flex flex-1 flex-col gap-1.5 p-3">
+        <p className="line-clamp-1 text-sm font-bold text-gray-900">{product.name}</p>
+        <p className="line-clamp-2 text-xs leading-relaxed text-gray-400">{product.description}</p>
+
+        <div className="mt-1 flex flex-wrap gap-1">
+          <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-500">
+            {product.category}
+          </span>
+          <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-500">
+            slot {product.placement.slot}
+          </span>
+        </div>
+
+        <div className="mt-auto flex items-center justify-between pt-2">
+          <div>
+            <p className="text-base font-extrabold text-gray-900">
+              {product.price.toFixed(2)} €
+            </p>
+            <p className="text-xs text-gray-400">Stock : {product.stock}</p>
+          </div>
+
+          <button
+            onClick={handleAdd}
+            disabled={added || product.stock === 0}
+            aria-label={`Ajouter ${product.name} au panier`}
+            className={cn(
+              "rounded-full px-3 py-1.5 text-xs font-bold transition-all duration-200",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-1",
+              added
+                ? "bg-emerald-100 text-emerald-700"
+                : product.stock === 0
+                ? "cursor-not-allowed bg-gray-100 text-gray-400"
+                : "bg-emerald-600 text-white hover:bg-emerald-700 active:scale-95"
+            )}
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              {added ? (
+                <motion.span
+                  key="added"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex items-center gap-1"
+                >
+                  ✓ Ajouté
+                </motion.span>
+              ) : (
+                <motion.span
+                  key="add"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  {product.stock === 0 ? "Épuisé" : "+ Panier"}
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
