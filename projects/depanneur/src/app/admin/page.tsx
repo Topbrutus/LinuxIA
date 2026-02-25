@@ -187,32 +187,17 @@ export default function AdminPage() {
               </Field>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <Field label="Prix (€)" required>
-                <input
-                  className={inputCls}
-                  type="number"
-                  min={0}
-                  step={0.01}
-                  value={draft.price}
-                  onChange={(e) =>
-                    setField("price", parseFloat(e.target.value) || 0)
-                  }
-                />
-              </Field>
-
-              <Field label="Stock">
-                <input
-                  className={inputCls}
-                  type="number"
-                  min={0}
-                  value={draft.stock}
-                  onChange={(e) =>
-                    setField("stock", parseInt(e.target.value, 10) || 0)
-                  }
-                />
-              </Field>
-            </div>
+            <Field label="Stock">
+              <input
+                className={inputCls}
+                type="number"
+                min={0}
+                value={draft.stock}
+                onChange={(e) =>
+                  setField("stock", parseInt(e.target.value, 10) || 0)
+                }
+              />
+            </Field>
 
             <div className="grid grid-cols-2 gap-4">
               <Field label="Zone" required>
