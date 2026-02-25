@@ -252,7 +252,7 @@ export default function StorePage() {
   }
 
   return (
-    <div className="flex min-h-[calc(100vh-4rem)] flex-col bg-gray-950">
+    <div className="bg-gray-950 pb-8">
       {/* Page header */}
       <div className="border-b border-white/10 bg-gray-900 px-6 py-5">
         <p className="mb-0.5 text-xs font-semibold uppercase tracking-widest text-emerald-400">
@@ -266,18 +266,17 @@ export default function StorePage() {
         </p>
       </div>
 
-      {/* Map container */}
-      <div className="relative flex-1 overflow-hidden">
+      {/* Map container — aspect-[2/3] = ratio exact de store.png (1024×1536), pas de recadrage */}
+      <div className="relative mx-auto w-full max-w-4xl aspect-[2/3] overflow-hidden">
         {/* Fond magasin */}
-        <div className="absolute inset-0">
-          <Image
-            src="/placeholder-store.svg"
-            alt="Plan du magasin"
-            fill
-            className="object-cover object-center"
-            priority
-          />
-        </div>
+        <Image
+          src="/store.png"
+          alt="Plan du magasin — Supermarché du Quartier"
+          fill
+          className="object-cover"
+          priority
+          sizes="(max-width: 896px) 100vw, 896px"
+        />
 
         {/* Zone overlays */}
         {hotspots.map((hs) => {

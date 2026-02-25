@@ -12,10 +12,12 @@ export interface StoreZone {
 }
 
 export const zones: StoreZone[] = [
-  { id: "frigo-1",   label: "Frigo boissons",    capacity: 40, zoneType: "fridge"  },
-  { id: "frigo-2",   label: "Frigo produits",    capacity: 40, zoneType: "fridge"  },
-  { id: "etagere-a", label: "Étagère snacks",    capacity: 60, zoneType: "shelf"   },
-  { id: "etagere-b", label: "Étagère épicerie",  capacity: 80, zoneType: "shelf"   },
-  { id: "menage",    label: "Produits ménagers", capacity: 50, zoneType: "shelf"   },
-  { id: "caisse",    label: "Caisse",            capacity: 20, zoneType: "counter" },
+  { id: "frigo-1",   label: "Bières & Vin",       capacity: 40, zoneType: "fridge"  },
+  { id: "frigo-2",   label: "Jus & Eaux",          capacity: 40, zoneType: "fridge"  },
+  { id: "frigo-3",   label: "Produits Laitiers",   capacity: 40, zoneType: "fridge"  },
+  { id: "frigo-4",   label: "Produits Frais",      capacity: 40, zoneType: "fridge"  },
+  { id: "etagere-a", label: "Îlot gauche",         capacity: 60, zoneType: "shelf"   },
+  { id: "etagere-b", label: "Îlot centre",         capacity: 80, zoneType: "shelf"   },
+  { id: "menage",    label: "Îlot droite",         capacity: 50, zoneType: "shelf"   },
+  { id: "caisse",    label: "Comptoir caisse",     capacity: 20, zoneType: "counter" },
 ];
