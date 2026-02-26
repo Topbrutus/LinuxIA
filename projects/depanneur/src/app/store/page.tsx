@@ -10,11 +10,12 @@ import Image from "next/image";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { zones } from "@/data/storeLayout";
 import type { StoreZone, ZoneType } from "@/data/storeLayout";
-import { hotspots } from "@/data/storeMap";
+import { hotspots, getZoneAnchor } from "@/data/storeMap";
 import { products } from "@/data/products";
 import type { Product } from "@/types/product";
 import { useCartStore } from "@/store/cartStore";
-import { useUserStore } from "@/store/userStore";
+import { usePlayerStore } from "@/store/playerStore";
+import PlayerAvatar from "@/components/store/PlayerAvatar";
 import { cn } from "@/lib/utils";
 
 /* ── Drawer config by zoneType ──────────────────────────────────── */
@@ -296,8 +297,8 @@ function Drawer({ zone, zoneProducts, onClose }: DrawerProps) {
 export default function StorePage() {
   const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
   const [hoveredZoneId, setHoveredZoneId]   = useState<string | null>(null);
-  const triggerRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
-  const user = useUserStore((s) => s.user);
+  const triggerRefs    = useRef<Map<string, HTMLButtonElement>>(new Map());
+  const setPlayerTarget = usePlayerStore((s) => s.setTarget);
 
   const selectedZone = selectedZoneId
     ? (zones.find((z) => z.id === selectedZoneId) ?? null)
@@ -323,14 +324,27 @@ export default function StorePage() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
 
+  /** Ouvre le drawer ET déplace le sprite vers l'ancre de la zone */
   function openZone(zoneId: string) {
     setSelectedZoneId(zoneId);
+    const anchor = getZoneAnchor(zoneId);
+    setPlayerTarget(anchor.ax, anchor.ay);
+  }
+
+  /**
+   * Clic sur le fond de la carte → déplace le sprite vers ce point.
+   * Les clics sur les boutons de zone sont ignorés (gérés par openZone).
+   */
+  function handleMapClick(e: React.MouseEvent<HTMLDivElement>) {
+    if ((e.target as HTMLElement).closest("button")) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = Math.max(2, Math.min(98, ((e.clientX - rect.left)  / rect.width)  * 100));
+    const y = Math.max(5, Math.min(95, ((e.clientY - rect.top)   / rect.height) * 100));
+    setPlayerTarget(x, y);
   }
 
   function closeDrawer() {
-    if (selectedZoneId) {
-      triggerRefs.current.get(selectedZoneId)?.focus();
-    }
+    if (selectedZoneId) triggerRefs.current.get(selectedZoneId)?.focus();
     setSelectedZoneId(null);
   }
 
@@ -350,7 +364,11 @@ export default function StorePage() {
       </div>
 
       {/* Map container — aspect-[2/3] = ratio exact de store.png (1024×1536), pas de recadrage */}
-      <div className="relative mx-auto w-full max-w-4xl aspect-[2/3] overflow-hidden">
+      <div
+        className="relative mx-auto w-full max-w-4xl aspect-[2/3] overflow-hidden cursor-crosshair"
+        onClick={handleMapClick}
+        aria-label="Carte du magasin — cliquez pour déplacer votre personnage"
+      >
         {/* Fond magasin */}
         <Image
           src="/store.png"
@@ -431,6 +449,9 @@ export default function StorePage() {
             />
           )}
         </AnimatePresence>
+
+        {/* ── PlayerAvatar (absolu dans la carte, click-to-move) ──── */}
+        <PlayerAvatar onZoneReached={(zoneId) => setSelectedZoneId(zoneId)} />
       </div>
 
       {/* Legend */}
@@ -451,50 +472,6 @@ export default function StorePage() {
             :                     "Caisse (liste compacte)"}
           </span>
         ))}
-      </div>
-
-      {/* ── HUD Avatar (fixed bas-gauche) ─────────────────────── */}
-      <div className="fixed bottom-6 left-6 z-50">
-        {user ? (
-          <button
-            aria-label={`Profil de ${user.name}`}
-            className={cn(
-              "group flex items-end gap-3 rounded-2xl",
-              "border border-white/10 bg-gray-900/80 px-3 py-2 shadow-xl backdrop-blur-sm",
-              "transition-all hover:border-emerald-500/50 hover:bg-gray-800/90",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
-            )}
-          >
-            {/* Silhouette */}
-            <div className={cn(
-              "relative flex h-14 w-9 shrink-0 items-center justify-center overflow-hidden rounded-xl",
-              user.avatarId === "blank-black" ? "bg-gray-200" : "bg-gray-700"
-            )}>
-              <Image
-                src={`/avatars/${user.avatarId}.svg`}
-                alt={`Avatar de ${user.name}`}
-                width={36}
-                height={56}
-                className="h-full w-full object-contain"
-                unoptimized
-              />
-            </div>
-
-            {/* Infos */}
-            <div className="flex flex-col items-start gap-0.5 pb-0.5">
-              <span className="text-xs font-bold text-white leading-tight">
-                {user.name}
-              </span>
-              <span className="rounded-full bg-emerald-600/20 px-2 py-0.5 text-[10px] font-semibold text-emerald-400">
-                Profil
-              </span>
-            </div>
-          </button>
-        ) : (
-          <div className="rounded-xl border border-white/10 bg-gray-900/70 px-3 py-2 text-xs text-gray-500 backdrop-blur-sm">
-            Invité
-          </div>
-        )}
       </div>
     </div>
   );
