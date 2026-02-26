@@ -8,13 +8,13 @@ import { hotspots, DEFAULT_ANCHOR } from "@/data/storeMap";
 import { smoothNoise, hashSeed } from "@/lib/noise";
 import { cn } from "@/lib/utils";
 
-/* ── Movement constants ─────────────────────────────────────────── */
+/* ── Constantes de mouvement ─────────────────────────────────────────── */
 const BASE_SPEED     = 13;   // %/sec vitesse normale
-const SLOW_RADIUS    = 4.5;  // % — commence à décélérer
-const STOP_THRESHOLD = 0.25; // % — considéré arrivé
-const SPEED_LERP     = 0.09; // lissage accélération/décélération
-const VEL_LERP       = 0.14; // lissage vélocité pour le tilt
-const WALK_FREQ      = 4.2;  // foulées/sec (rebond)
+const SLOW_RADIUS    = 4.5;  // % — début de décélération
+const STOP_THRESHOLD = 0.30; // % — considéré arrivé au waypoint
+const SPEED_LERP     = 0.09;
+const VEL_LERP       = 0.14;
+const WALK_FREQ      = 4.2;  // foulées/sec
 
 function pointInHotspot(
   x: number,
@@ -36,19 +36,18 @@ export default function PlayerAvatar({ onZoneReached }: PlayerAvatarProps) {
     ? `/avatars/${avatarId}.svg`
     : `/avatars/${avatarId}.webp`;
 
-  /* Seed stable par nom — change si l'utilisateur change */
   const seed = hashSeed(name);
 
-  /* ── DOM refs ─────────────────────────────────────────────────── */
-  const containerRef = useRef<HTMLDivElement>(null); // position left/top %
-  const animRef      = useRef<HTMLDivElement>(null);  // mouvements organiques
-  const shadowRef    = useRef<HTMLDivElement>(null);  // ombre au sol
+  /* ── DOM refs ──────────────────────────────────────────────────────── */
+  const containerRef = useRef<HTMLDivElement>(null);
+  const animRef      = useRef<HTMLDivElement>(null);
+  const shadowRef    = useRef<HTMLDivElement>(null);
 
-  /* ── State refs (aucun re-render React) ──────────────────────── */
+  /* ── State refs (aucun re-render) ────────────────────────────────── */
   const posRef          = useRef({ x: DEFAULT_ANCHOR.ax, y: DEFAULT_ANCHOR.ay });
   const targetRef       = useRef({ x: DEFAULT_ANCHOR.ax, y: DEFAULT_ANCHOR.ay });
   const currentSpeedRef = useRef(0);
-  const velRef          = useRef({ x: 0, y: 0 }); // vélocité lissée pour tilt
+  const velRef          = useRef({ x: 0, y: 0 });
   const movingRef       = useRef(false);
   const lastZoneRef     = useRef<string | null>(null);
 
@@ -56,20 +55,35 @@ export default function PlayerAvatar({ onZoneReached }: PlayerAvatarProps) {
   const onZoneReachedRef = useRef(onZoneReached);
   useEffect(() => { onZoneReachedRef.current = onZoneReached; }, [onZoneReached]);
 
-  /* Sync cible depuis playerStore (subscribe = pas de re-render) */
+  /* ── Sync cible depuis le store ───────────────────────────────────
+     Deux types de changements :
+     1. currentPath change → pointer sur le premier waypoint
+     2. targetX/Y change sans path → destination directe
+  */
   useEffect(() =>
-    usePlayerStore.subscribe((state) => {
-      targetRef.current = { x: state.targetX, y: state.targetY };
+    usePlayerStore.subscribe((state, prev) => {
+      if (state.currentPath !== prev.currentPath) {
+        const first = state.currentPath[0];
+        targetRef.current = first
+          ? { x: first.x, y: first.y }
+          : { x: state.targetX, y: state.targetY };
+      } else if (
+        state.targetX !== prev.targetX ||
+        state.targetY !== prev.targetY
+      ) {
+        if (state.currentPath.length === 0) {
+          targetRef.current = { x: state.targetX, y: state.targetY };
+        }
+      }
     }),
   []);
 
-  /* ── Boucle rAF principale ────────────────────────────────────── */
+  /* ── Boucle rAF ────────────────────────────────────────────────────── */
   useEffect(() => {
     let rafId: number;
     let lastTime = performance.now();
 
     function tick(now: number) {
-      /* Delta-time (capé à 50 ms pour éviter les sauts après perte de focus) */
       const dt   = Math.min((now - lastTime) / 1000, 0.05);
       lastTime   = now;
       const t    = now / 1000;
@@ -80,14 +94,24 @@ export default function PlayerAvatar({ onZoneReached }: PlayerAvatarProps) {
       const dy     = target.y - pos.y;
       const dist   = Math.sqrt(dx * dx + dy * dy);
 
-      /* ── Mouvement ─────────────────────────────────────────────── */
+      /* ── Mouvement ────────────────────────────────────────────────── */
       if (dist < STOP_THRESHOLD) {
-        if (movingRef.current) {
-          pos.x = target.x;
-          pos.y = target.y;
+        pos.x = target.x;
+        pos.y = target.y;
+
+        const store = usePlayerStore.getState();
+
+        if (store.currentPath.length > 0) {
+          /* Waypoint intermédiaire atteint → avancer dans le chemin */
+          store.setPosition(pos.x, pos.y);
+          store.shiftPath(); // déclenche subscribe → met à jour targetRef
+          /* movingRef reste true : mouvement continu sans pause */
+        } else if (movingRef.current) {
+          /* Destination finale atteinte */
+          movingRef.current       = false;
           currentSpeedRef.current = 0;
           velRef.current          = { x: 0, y: 0 };
-          movingRef.current       = false;
+          store.setPosition(pos.x, pos.y);
 
           /* Détection d'entrée dans une zone */
           const entered = hotspots.find((hs) => pointInHotspot(pos.x, pos.y, hs));
@@ -99,14 +123,13 @@ export default function PlayerAvatar({ onZoneReached }: PlayerAvatarProps) {
           }
         }
       } else {
+        /* En mouvement */
         const nx = dx / dist;
         const ny = dy / dist;
 
-        /* Vitesse cible : pleine jusqu'à SLOW_RADIUS, puis décélération */
         const targetSpeed =
           dist > SLOW_RADIUS ? BASE_SPEED : BASE_SPEED * (dist / SLOW_RADIUS);
 
-        /* Accélération/décélération lisse */
         currentSpeedRef.current +=
           (targetSpeed - currentSpeedRef.current) * SPEED_LERP;
 
@@ -114,49 +137,41 @@ export default function PlayerAvatar({ onZoneReached }: PlayerAvatarProps) {
         pos.x += nx * Math.min(step, dist);
         pos.y += ny * Math.min(step, dist);
 
-        /* Vélocité lissée (pour tilt directionnel) */
         velRef.current.x += (nx * currentSpeedRef.current - velRef.current.x) * VEL_LERP;
         velRef.current.y += (ny * currentSpeedRef.current - velRef.current.y) * VEL_LERP;
 
         if (!movingRef.current) movingRef.current = true;
       }
 
-      /* ── Mise à jour position DOM ──────────────────────────────── */
+      /* ── Position DOM ─────────────────────────────────────────────── */
       if (containerRef.current) {
         containerRef.current.style.left = `${pos.x}%`;
         containerRef.current.style.top  = `${pos.y}%`;
       }
 
-      /* ── Animations organiques (direct DOM, 0 re-render) ─────────
-           Idle  : sway doux + respiration + légère rotation
-           Moving: rebond de marche + tilt directionnel + swing bras
-      */
+      /* ── Animations organiques ────────────────────────────────────── */
       if (animRef.current) {
         let transform: string;
-
         if (!movingRef.current) {
-          /* Idle */
-          const swayX   = smoothNoise(t * 0.55, seed)         * 2.0;
-          const breathY = Math.sin(t * 0.8  + seed * 0.01)    * 1.5;
-          const rotDeg  = smoothNoise(t * 0.38, seed + 137)   * 1.2;
+          const swayX   = smoothNoise(t * 0.55, seed)       * 2.0;
+          const breathY = Math.sin(t * 0.8 + seed * 0.01)   * 1.5;
+          const rotDeg  = smoothNoise(t * 0.38, seed + 137)  * 1.2;
           transform = `translateX(${swayX}px) translateY(${breathY}px) rotate(${rotDeg}deg)`;
         } else {
-          /* Moving */
           const bounceY   = -Math.abs(Math.sin(t * WALK_FREQ * Math.PI)) * 3.2;
           const tiltBase  = Math.max(-9, Math.min(9, velRef.current.x * 0.38));
-          const tiltNoise = smoothNoise(t * 1.4, seed + 42)   * 0.7;
+          const tiltNoise = smoothNoise(t * 1.4, seed + 42)  * 0.7;
           const swingX    = smoothNoise(t * WALK_FREQ * 0.45, seed + 73) * 1.6;
           transform = `translateX(${swingX}px) translateY(${bounceY}px) rotate(${tiltBase + tiltNoise}deg)`;
         }
-
         animRef.current.style.transform = transform;
       }
 
-      /* ── Ombre dynamique ───────────────────────────────────────── */
+      /* ── Ombre dynamique ──────────────────────────────────────────── */
       if (shadowRef.current) {
-        const speedRatio = currentSpeedRef.current / BASE_SPEED; // 0–1
-        const wPx  = 28 - speedRatio * 12;                       // 28px → 16px
-        const op   = Math.max(0.15, 0.45 - speedRatio * 0.20);   // 0.45 → 0.25
+        const sr   = currentSpeedRef.current / BASE_SPEED;
+        const wPx  = 28 - sr * 12;
+        const op   = Math.max(0.15, 0.45 - sr * 0.20);
         shadowRef.current.style.width   = `${wPx}px`;
         shadowRef.current.style.opacity = String(op);
       }
@@ -166,7 +181,7 @@ export default function PlayerAvatar({ onZoneReached }: PlayerAvatarProps) {
 
     rafId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafId);
-  }, [seed]); // seed stable ; redémarre uniquement si le nom change
+  }, [seed]);
 
   return (
     <div
@@ -180,18 +195,15 @@ export default function PlayerAvatar({ onZoneReached }: PlayerAvatarProps) {
       aria-label={`Personnage : ${name}`}
       role="img"
     >
-      {/* Wrapper organique — piloté par animRef dans le rAF */}
       <div
         ref={animRef}
         className="flex flex-col items-center gap-0.5"
         style={{ willChange: "transform" }}
       >
-        {/* Bulle nom */}
         <span className="mb-0.5 whitespace-nowrap rounded-full bg-gray-900/85 px-2 py-0.5 text-[10px] font-bold text-white shadow-md backdrop-blur-sm">
           {name}
         </span>
 
-        {/* Silhouette */}
         <div
           className={cn(
             "relative overflow-hidden rounded-lg shadow-lg",
@@ -209,7 +221,6 @@ export default function PlayerAvatar({ onZoneReached }: PlayerAvatarProps) {
           />
         </div>
 
-        {/* Ombre dynamique — pilotée par shadowRef dans le rAF */}
         <div
           ref={shadowRef}
           className="h-1 rounded-full bg-black/35 blur-sm"

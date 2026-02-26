@@ -298,7 +298,7 @@ export default function StorePage() {
   const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
   const [hoveredZoneId, setHoveredZoneId]   = useState<string | null>(null);
   const triggerRefs    = useRef<Map<string, HTMLButtonElement>>(new Map());
-  const setPlayerTarget = usePlayerStore((s) => s.setTarget);
+  const setPlayerTarget = usePlayerStore((s) => s.setTargetWithPath);
 
   const selectedZone = selectedZoneId
     ? (zones.find((z) => z.id === selectedZoneId) ?? null)
