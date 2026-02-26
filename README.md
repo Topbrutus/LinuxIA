@@ -1,265 +1,221 @@
-<!--
-LINUXIA_README_VNEXT_REBUILD
-Thème: NASA / Proxmox / Matrix — accents orange, animations fines, propres, GitHub-safe.
--->
-
 <div align="center">
-
-<!-- LOGO / HERO (SVG animé, fin et léger) -->
-<svg width="980" height="220" viewBox="0 0 980 220" role="img" aria-label="LinuxIA — Proof-First Agent Orchestration Framework" xmlns="http://www.w3.org/2000/svg">
+<svg width="600" height="600" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="svg-title svg-desc">
+  <title id="svg-title">LinuxIA — Proof-First Agent Orchestration</title>
+  <desc id="svg-desc">Animated diagram of LinuxIA: four architecture layers (L0 Proxmox Orchestrateur, L1 VM100 Usine, L2 Outils Duplicables, L3 GPU Workers), a signal trace connecting them, storage tiers (tmpfs RAM, NVMe Hot, SATA Cold, zRAM), the Proof-First pipeline (PLAN, EXECUTE, VERIFY, CRITIQUE, LOG), and a live status footer.</desc>
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#00ff9d" stop-opacity="0.18"/>
-      <stop offset="0.45" stop-color="#ff7a18" stop-opacity="0.28"/>
-      <stop offset="1" stop-color="#7c3aed" stop-opacity="0.16"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b0f14"/>
+      <stop offset="1" stop-color="#111827"/>
     </linearGradient>
-
-    <linearGradient id="o" x1="0" y1="0" x2="1" y2="0">
+    <linearGradient id="orange" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#ff7a18"/>
       <stop offset="1" stop-color="#ffb000"/>
     </linearGradient>
-
-    <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur stdDeviation="8" result="b"/>
-      <feMerge>
-        <feMergeNode in="b"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-
-    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
-      <path d="M24 0H0V24" fill="none" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
-    </pattern>
-
-    <style>
-      .t { font: 800 44px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial; letter-spacing: 1px; }
-      .s { font: 500 14px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial; letter-spacing: .4px; }
-      .m { font: 600 12px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; letter-spacing: .2px; }
-      .scan { animation: scan 5.2s linear infinite; }
-      .orb  { animation: drift 6.5s ease-in-out infinite; }
-      .dash { stroke-dasharray: 6 10; animation: dash 7s linear infinite; }
-      .pulse{ animation: pulse 3.2s ease-in-out infinite; transform-origin: 50% 50%; }
-      @keyframes scan { 0%{transform:translateX(-180px)} 100%{transform:translateX(1160px)} }
-      @keyframes dash { to { stroke-dashoffset: -120; } }
-      @keyframes drift{ 0%,100%{transform:translate(0,0)} 50%{transform:translate(10px,-6px)} }
-      @keyframes pulse{ 0%,100%{opacity:.72} 50%{opacity:1} }
-    </style>
-  </defs>
-
-  <!-- background -->
-  <rect x="0" y="0" width="980" height="220" rx="22" fill="#0b0f14"/>
-  <rect x="0" y="0" width="980" height="220" rx="22" fill="url(#g)"/>
-  <rect x="0" y="0" width="980" height="220" rx="22" fill="url(#grid)"/>
-
-  <!-- fine orbit lines -->
-  <g opacity="0.85">
-    <ellipse cx="720" cy="108" rx="210" ry="74" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
-    <ellipse cx="720" cy="108" rx="160" ry="56" fill="none" stroke="#ffffff" stroke-opacity="0.07" stroke-width="1"/>
-    <path d="M565 108 C610 50, 830 40, 880 108 C832 175, 610 168, 565 108 Z" fill="none" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1" class="dash"/>
-  </g>
-
-  <!-- drifting orb -->
-  <g class="orb" filter="url(#softGlow)">
-    <circle cx="820" cy="74" r="7" fill="url(#o)" opacity="0.95"/>
-    <circle cx="820" cy="74" r="18" fill="none" stroke="#ff7a18" stroke-opacity="0.25" stroke-width="1"/>
-  </g>
-
-  <!-- scanning line -->
-  <g class="scan">
-    <rect x="0" y="30" width="140" height="160" rx="14" fill="#ffffff" opacity="0.05"/>
-    <rect x="6" y="36" width="128" height="148" rx="12" fill="#ff7a18" opacity="0.06"/>
-  </g>
-
-  <!-- title -->
-  <text x="54" y="92" class="t" fill="#ffffff">LINUXIA</text>
-  <rect x="54" y="104" width="280" height="6" rx="3" fill="url(#o)" class="pulse" opacity="0.95"/>
-  <text x="54" y="136" class="s" fill="#d8dee9" opacity="0.95">Proof-First Agent Orchestration Framework • Proxmox Multi-Layer • Low-Latency Artifact Registry</text>
-  <text x="54" y="166" class="m" fill="#8b949e">Couches: 0 Hôte Proxmox → 1 VM100 Usine → 2 Outils duplicables → 3 Workers externes</text>
-
-  <!-- corner tag -->
-  <g transform="translate(772,154)">
-    <rect width="178" height="44" rx="14" fill="#0b0f14" opacity="0.86" stroke="#ffffff" stroke-opacity="0.08"/>
-    <text x="16" y="28" class="m" fill="#ffb000">NASA-style • ORANGE • MATRIX</text>
-  </g>
-</svg>
-
-<p>
-  <a href="https://github.com/Topbrutus/LinuxIA/actions"><img alt="CI" src="https://img.shields.io/badge/CI-GitHub%20Actions-2ea043?style=flat"/></a>
-  <a href="#"><img alt="Proxmox" src="https://img.shields.io/badge/Proxmox-VE%20(KVM%2FLXC)-ff7a18?style=flat"/></a>
-  <a href="#"><img alt="Proof-First" src="https://img.shields.io/badge/Proof%E2%80%91First-Logs%20%2B%20DoD-7c3aed?style=flat"/></a>
-  <a href="#"><img alt="Artifacts" src="https://img.shields.io/badge/Artifacts-RAM%E2%86%92NVMe%E2%86%92SATA-00ff9d?style=flat"/></a>
-</p>
-
-</div>
-
----
-
-## 🧠 LinuxIA — c'est quoi?
-
-LinuxIA est une infrastructure **multi-couches** bâtie autour de **Proxmox VE** (KVM + LXC) pour orchestrer des environnements duplicables, **pilotés par preuves** (logs, checks, DoD), avec un objectif clair :
-
-- **Latence minimale** (données "ultra-hot" en RAM + NVMe)
-- **Ordonnancement maîtrisé** (couches, templates, agents, règles de priorité)
-- **Résilience** (isolation VM/CT, quotas, dégradation progressive via zRAM)
-
----
-
-## 🛰️ Architecture en 4 couches (Proxmox-native)
-
-### Couche 0 — Hôte Proxmox (Orchestrateur)
-- Hyperviseur & gestion ressources CPU/RAM/IO
-- "Oracle mémoire" (pression RAM → actions correctives, priorité, protection)
-- Stockage central des artefacts & caches partagés
-
-### Couche 1 — VM100 "Usine" (Factory)
-- Forge de **templates** (CT/VM) et **artefacts**
-- Standardisation des environnements
-- Pipeline de mise à jour: rebuild → test → diffusion
-
-### Couche 2 — Outils duplicables ("Chromium")
-- Instances clonées depuis template (rapide, homogène, isolé)
-- Mini-agent local: exécution, supervision, dépôt d'artefacts, reporting
-- Scalabilité horizontale (création/destruction rapide)
-
-### Couche 3 — Workers externes
-- Extension de capacité (CPU/GPU) sur nœuds satellites (cluster ou SSH/API)
-- Déport de charges lourdes, tolérance accrue
-
----
-
-## ⚡ Mémoire & stockage "Thermal-Tier" (Ultra-Hot → Hot → Cold)
-
-- **tmpfs** en RAM (slots dédiés) pour données ultra-chaudes
-- **NVMe** pour artefacts chauds persistants et images actives
-- **SATA** pour archivage cold (artefacts peu consultés)
-- **zRAM** (swap compressé) en priorité, swap disque en dernier filet
-
----
-
-## 🧩 Principes "Proof-First"
-Chaque étape doit être:
-- **Reproductible**
-- **Vérifiable**
-- **Traçable** (logs, scripts, checks, artefacts)
-
----
-
-## 🖼️ Media Vault — Gallery (11)
-
-<div align="center">
-
-<a href="assets/readme/gallery/LinuxIA_02.jpg"><img src="assets/readme/gallery/LinuxIA_02.jpg" width="220" alt="LinuxIA_02" style="max-width:100%; border-radius:14px; margin:6px;"/></a>
-<a href="assets/readme/gallery/LinuxIA_03.jpg"><img src="assets/readme/gallery/LinuxIA_03.jpg" width="220" alt="LinuxIA_03" style="max-width:100%; border-radius:14px; margin:6px;"/></a>
-<a href="assets/readme/gallery/LinuxIA_04.jpg"><img src="assets/readme/gallery/LinuxIA_04.jpg" width="220" alt="LinuxIA_04" style="max-width:100%; border-radius:14px; margin:6px;"/></a>
-<a href="assets/readme/gallery/LinuxIA_05.jpg"><img src="assets/readme/gallery/LinuxIA_05.jpg" width="220" alt="LinuxIA_05" style="max-width:100%; border-radius:14px; margin:6px;"/></a>
-
-<a href="assets/readme/gallery/LinuxIA_06.jpg"><img src="assets/readme/gallery/LinuxIA_06.jpg" width="220" alt="LinuxIA_06" style="max-width:100%; border-radius:14px; margin:6px;"/></a>
-<a href="assets/readme/gallery/LinuxIA_07.jpg"><img src="assets/readme/gallery/LinuxIA_07.jpg" width="220" alt="LinuxIA_07" style="max-width:100%; border-radius:14px; margin:6px;"/></a>
-<a href="assets/readme/gallery/LinuxIA_08.jpg"><img src="assets/readme/gallery/LinuxIA_08.jpg" width="220" alt="LinuxIA_08" style="max-width:100%; border-radius:14px; margin:6px;"/></a>
-<a href="assets/readme/gallery/LinuxIA_09.jpg"><img src="assets/readme/gallery/LinuxIA_09.jpg" width="220" alt="LinuxIA_09" style="max-width:100%; border-radius:14px; margin:6px;"/></a>
-
-<a href="assets/readme/gallery/LinuxIA_10.jpg"><img src="assets/readme/gallery/LinuxIA_10.jpg" width="220" alt="LinuxIA_10" style="max-width:100%; border-radius:14px; margin:6px;"/></a>
-<a href="assets/readme/gallery/LinuxIA_11.jpg"><img src="assets/readme/gallery/LinuxIA_11.jpg" width="220" alt="LinuxIA_11" style="max-width:100%; border-radius:14px; margin:6px;"/></a>
-<a href="assets/readme/gallery/LinuxIA_12.jpg"><img src="assets/readme/gallery/LinuxIA_12.jpg" width="220" alt="LinuxIA_12" style="max-width:100%; border-radius:14px; margin:6px;"/></a>
-
-</div>
-
----
-
-## �� Animated "Matrix Trace" (SVG micro-animation)
-
-<div align="center">
-
-<svg width="980" height="140" viewBox="0 0 980 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LinuxIA signals and orchestration trace">
-  <defs>
-    <linearGradient id="mx" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#00ff9d" stop-opacity="0.0"/>
-      <stop offset="0.25" stop-color="#00ff9d" stop-opacity="0.55"/>
-      <stop offset="0.65" stop-color="#ff7a18" stop-opacity="0.60"/>
-      <stop offset="1" stop-color="#ff7a18" stop-opacity="0.0"/>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#00ff9d" stop-opacity="0"/>
+      <stop offset="0.3" stop-color="#00ff9d" stop-opacity="0.8"/>
+      <stop offset="0.7" stop-color="#ff7a18" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#ff7a18" stop-opacity="0"/>
     </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow2" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M30 0H0V30" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1"/>
+    </pattern>
     <style>
-      .wire { fill: none; stroke: #ffffff; stroke-opacity: .10; stroke-width: 1; }
-      .flow { fill: none; stroke: url(#mx); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 40 940; animation: f 3.4s linear infinite; }
-      .dot  { fill: #ff7a18; opacity: .9; animation: p 1.6s ease-in-out infinite; transform-origin: 50% 50%; }
-      .lbl  { font: 600 12px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; fill: #c9d1d9; opacity: .85; }
-      @keyframes f { from { stroke-dashoffset: 980; } to { stroke-dashoffset: 0; } }
-      @keyframes p { 0%,100% { transform: scale(1); opacity:.55 } 50% { transform: scale(1.2); opacity:1 } }
+      .title { font: 900 52px ui-sans-serif, system-ui, Arial; letter-spacing: 3px; }
+      .sub   { font: 500 13px ui-sans-serif, system-ui, Arial; letter-spacing: 0.5px; }
+      .mono  { font: 600 11px ui-monospace, 'Courier New', monospace; letter-spacing: 0.3px; }
+      .layer-label { font: 700 10px ui-monospace, 'Courier New', monospace; }
+      .scan  { animation: scan 5s linear infinite; }
+      .pulse { animation: pulse 2.8s ease-in-out infinite; }
+      .drift { animation: drift 7s ease-in-out infinite; }
+      .flow  { fill: none; stroke: url(#green); stroke-width: 2.5; stroke-linecap: round;
+               stroke-dasharray: 50 450; animation: flow 3.2s linear infinite; }
+      .wire  { fill: none; stroke: #ffffff; stroke-opacity: 0.08; stroke-width: 1; }
+      .dot   { animation: dotpulse 1.8s ease-in-out infinite; transform-origin: 50% 50%; }
+      .border-anim { animation: borderGlow 4s ease-in-out infinite; }
+      .corner-blink { animation: blink 2s step-end infinite; }
+      @keyframes scan    { 0%{transform:translateY(-40px)} 100%{transform:translateY(640px)} }
+      @keyframes pulse   { 0%,100%{opacity:0.7} 50%{opacity:1} }
+      @keyframes drift   { 0%,100%{transform:translate(0,0)} 50%{transform:translate(8px,-5px)} }
+      @keyframes flow    { from{stroke-dashoffset:500} to{stroke-dashoffset:0} }
+      @keyframes dotpulse{ 0%,100%{transform:scale(1);opacity:0.5} 50%{transform:scale(1.4);opacity:1} }
+      @keyframes borderGlow { 0%,100%{stroke-opacity:0.35} 50%{stroke-opacity:0.9} }
+      @keyframes blink   { 0%,100%{opacity:1} 50%{opacity:0.2} }
+      @media (prefers-reduced-motion: reduce) {
+        .scan,.pulse,.drift,.flow,.dot,.border-anim,.corner-blink { animation: none; }
+      }
     </style>
   </defs>
 
-  <rect x="0" y="0" width="980" height="140" rx="18" fill="#0b0f14"/>
-  <path class="wire" d="M60 70 C210 20, 320 20, 420 70 C520 120, 620 120, 740 70 C860 20, 910 40, 940 70"/>
-  <path class="flow" d="M60 70 C210 20, 320 20, 420 70 C520 120, 620 120, 740 70 C860 20, 910 40, 940 70"/>
+  <!-- Background -->
+  <rect width="600" height="600" rx="24" fill="url(#bg)"/>
+  <rect width="600" height="600" rx="24" fill="url(#grid)"/>
 
-  <circle class="dot" cx="60" cy="70" r="4"/>
-  <circle class="dot" cx="420" cy="70" r="4" style="animation-delay:.25s"/>
-  <circle class="dot" cx="740" cy="70" r="4" style="animation-delay:.5s"/>
-  <circle class="dot" cx="940" cy="70" r="4" style="animation-delay:.75s"/>
+  <!-- Animated border -->
+  <rect x="3" y="3" width="594" height="594" rx="22" fill="none" stroke="url(#orange)" stroke-width="2" class="border-anim"/>
 
-  <text class="lbl" x="44" y="28">L0: Proxmox</text>
-  <text class="lbl" x="392" y="28">L1: VM100 Usine</text>
-  <text class="lbl" x="700" y="28">L2: Outils</text>
-  <text class="lbl" x="898" y="28">L3: Workers</text>
+  <!-- Scan line -->
+  <g class="scan" opacity="0.07">
+    <rect x="0" y="0" width="600" height="50" rx="0" fill="#ff7a18"/>
+  </g>
 
-  <text class="lbl" x="44" y="120" opacity=".75">RAM tmpfs → NVMe → SATA • zRAM • Templates • Agents • Logs</text>
+  <!-- Orbit ellipses (right side) -->
+  <g opacity="0.6">
+    <ellipse cx="440" cy="180" rx="130" ry="46" fill="none" stroke="#ffffff" stroke-opacity="0.07" stroke-width="1"/>
+    <ellipse cx="440" cy="180" rx="100" ry="34" fill="none" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"
+             stroke-dasharray="6 8"/>
+  </g>
+
+  <!-- Drifting orb -->
+  <g class="drift" filter="url(#glow2)">
+    <circle cx="500" cy="130" r="9" fill="url(#orange)" opacity="0.95"/>
+    <circle cx="500" cy="130" r="22" fill="none" stroke="#ff7a18" stroke-opacity="0.2" stroke-width="1.5"/>
+    <circle cx="500" cy="130" r="36" fill="none" stroke="#ff7a18" stroke-opacity="0.08" stroke-width="1"/>
+  </g>
+
+  <!-- TITLE -->
+  <text x="50" y="116" class="title" fill="#ffffff">LINUXIA</text>
+  <rect x="50" y="128" width="320" height="5" rx="2.5" fill="url(#orange)" class="pulse"/>
+
+  <!-- Subtitle -->
+  <text x="50" y="158" class="sub" fill="#c9d1d9" opacity="0.9">Proof-First Agent Orchestration Framework</text>
+  <text x="50" y="176" class="mono" fill="#8b949e">Proxmox VE · KVM + LXC · Multi-Layer · Low-Latency</text>
+
+  <!-- Divider -->
+  <line x1="50" y1="196" x2="550" y2="196" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
+
+  <!-- Architecture layers (4 boxes) -->
+  <!-- L0 -->
+  <g filter="url(#glow)">
+    <rect x="50" y="216" width="112" height="62" rx="10" fill="#0b0f14" stroke="#ff7a18" stroke-opacity="0.5" stroke-width="1.2"/>
+    <text x="106" y="240" class="layer-label" fill="#ff7a18" text-anchor="middle">L0</text>
+    <text x="106" y="254" class="mono" fill="#c9d1d9" text-anchor="middle" opacity="0.9">Proxmox</text>
+    <text x="106" y="268" class="mono" fill="#8b949e" text-anchor="middle">Orchestrateur</text>
+  </g>
+  <!-- L1 -->
+  <g filter="url(#glow)">
+    <rect x="196" y="216" width="112" height="62" rx="10" fill="#0b0f14" stroke="#00ff9d" stroke-opacity="0.45" stroke-width="1.2"/>
+    <text x="252" y="240" class="layer-label" fill="#00ff9d" text-anchor="middle">L1</text>
+    <text x="252" y="254" class="mono" fill="#c9d1d9" text-anchor="middle" opacity="0.9">VM100</text>
+    <text x="252" y="268" class="mono" fill="#8b949e" text-anchor="middle">Usine / Factory</text>
+  </g>
+  <!-- L2 -->
+  <g filter="url(#glow)">
+    <rect x="342" y="216" width="112" height="62" rx="10" fill="#0b0f14" stroke="#7c3aed" stroke-opacity="0.55" stroke-width="1.2"/>
+    <text x="398" y="240" class="layer-label" fill="#a78bfa" text-anchor="middle">L2</text>
+    <text x="398" y="254" class="mono" fill="#c9d1d9" text-anchor="middle" opacity="0.9">Outils</text>
+    <text x="398" y="268" class="mono" fill="#8b949e" text-anchor="middle">Duplicables</text>
+  </g>
+  <!-- L3 -->
+  <g filter="url(#glow)">
+    <rect x="488" y="216" width="62" height="62" rx="10" fill="#0b0f14" stroke="#0ea5e9" stroke-opacity="0.5" stroke-width="1.2"/>
+    <text x="519" y="240" class="layer-label" fill="#38bdf8" text-anchor="middle">L3</text>
+    <text x="519" y="254" class="mono" fill="#c9d1d9" text-anchor="middle" opacity="0.9">GPU</text>
+    <text x="519" y="268" class="mono" fill="#8b949e" text-anchor="middle">Workers</text>
+  </g>
+
+  <!-- Arrows between boxes -->
+  <g opacity="0.5">
+    <line x1="162" y1="247" x2="193" y2="247" stroke="url(#orange)" stroke-width="1.5"/>
+    <polygon points="193,243 196,247 193,251" fill="#ff7a18" opacity="0.7"/>
+    <line x1="308" y1="247" x2="339" y2="247" stroke="#00ff9d" stroke-width="1.5" stroke-opacity="0.6"/>
+    <polygon points="339,243 342,247 339,251" fill="#00ff9d" opacity="0.6"/>
+    <line x1="454" y1="247" x2="485" y2="247" stroke="#a78bfa" stroke-width="1.5" stroke-opacity="0.6"/>
+    <polygon points="485,243 488,247 485,251" fill="#a78bfa" opacity="0.6"/>
+  </g>
+
+  <!-- Divider -->
+  <line x1="50" y1="300" x2="550" y2="300" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+
+  <!-- Matrix trace / signal wire -->
+  <path class="wire" d="M50 340 C140 310, 210 310, 300 340 C390 370, 460 370, 550 340"/>
+  <path class="flow" d="M50 340 C140 310, 210 310, 300 340 C390 370, 460 370, 550 340"/>
+
+  <!-- Signal dots -->
+  <circle class="dot" cx="50" cy="340" r="5" fill="#ff7a18"/>
+  <circle class="dot" cx="300" cy="340" r="5" fill="#00ff9d" style="animation-delay:.4s"/>
+  <circle class="dot" cx="550" cy="340" r="5" fill="#38bdf8" style="animation-delay:.8s"/>
+
+  <!-- Signal labels -->
+  <text x="40" y="328" class="mono" fill="#8b949e">L0</text>
+  <text x="285" y="328" class="mono" fill="#8b949e">L1&#x2192;L2</text>
+  <text x="535" y="328" class="mono" fill="#8b949e">L3</text>
+
+  <!-- Divider -->
+  <line x1="50" y1="372" x2="550" y2="372" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+
+  <!-- Storage tiers -->
+  <text x="50" y="398" class="mono" fill="#8b949e">STORAGE TIERS</text>
+  <g>
+    <rect x="50" y="408" width="80" height="22" rx="5" fill="#ff7a18" fill-opacity="0.15" stroke="#ff7a18" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="90" y="423" class="mono" fill="#ffb000" text-anchor="middle">tmpfs RAM</text>
+  </g>
+  <g>
+    <rect x="144" y="408" width="72" height="22" rx="5" fill="#00ff9d" fill-opacity="0.1" stroke="#00ff9d" stroke-opacity="0.35" stroke-width="1"/>
+    <text x="180" y="423" class="mono" fill="#00ff9d" text-anchor="middle">NVMe Hot</text>
+  </g>
+  <g>
+    <rect x="230" y="408" width="68" height="22" rx="5" fill="#38bdf8" fill-opacity="0.08" stroke="#38bdf8" stroke-opacity="0.3" stroke-width="1"/>
+    <text x="264" y="423" class="mono" fill="#38bdf8" text-anchor="middle">SATA Cold</text>
+  </g>
+  <g>
+    <rect x="312" y="408" width="52" height="22" rx="5" fill="#a78bfa" fill-opacity="0.1" stroke="#a78bfa" stroke-opacity="0.35" stroke-width="1"/>
+    <text x="338" y="423" class="mono" fill="#a78bfa" text-anchor="middle">zRAM</text>
+  </g>
+
+  <!-- Divider -->
+  <line x1="50" y1="446" x2="550" y2="446" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+
+  <!-- Proof-First pipeline -->
+  <text x="50" y="472" class="mono" fill="#8b949e">PROOF-FIRST PIPELINE</text>
+  <g>
+    <rect x="50" y="480" width="56" height="20" rx="4" fill="#0b0f14" stroke="#ff7a18" stroke-opacity="0.5" stroke-width="1"/>
+    <text x="78" y="494" class="mono" fill="#ff7a18" text-anchor="middle">PLAN</text>
+  </g>
+  <text x="108" y="493" class="mono" fill="#ff7a18" opacity="0.5">&#x2192;</text>
+  <g>
+    <rect x="122" y="480" width="72" height="20" rx="4" fill="#0b0f14" stroke="#00ff9d" stroke-opacity="0.45" stroke-width="1"/>
+    <text x="158" y="494" class="mono" fill="#00ff9d" text-anchor="middle">EXECUTE</text>
+  </g>
+  <text x="196" y="493" class="mono" fill="#00ff9d" opacity="0.5">&#x2192;</text>
+  <g>
+    <rect x="210" y="480" width="62" height="20" rx="4" fill="#0b0f14" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1"/>
+    <text x="241" y="494" class="mono" fill="#38bdf8" text-anchor="middle">VERIFY</text>
+  </g>
+  <text x="274" y="493" class="mono" fill="#38bdf8" opacity="0.5">&#x2192;</text>
+  <g>
+    <rect x="288" y="480" width="72" height="20" rx="4" fill="#0b0f14" stroke="#a78bfa" stroke-opacity="0.45" stroke-width="1"/>
+    <text x="324" y="494" class="mono" fill="#a78bfa" text-anchor="middle">CRITIQUE</text>
+  </g>
+  <text x="362" y="493" class="mono" fill="#a78bfa" opacity="0.5">&#x2192;</text>
+  <g>
+    <rect x="376" y="480" width="52" height="20" rx="4" fill="#0b0f14" stroke="#ffb000" stroke-opacity="0.5" stroke-width="1"/>
+    <text x="402" y="494" class="mono" fill="#ffb000" text-anchor="middle">LOG</text>
+  </g>
+
+  <!-- Divider -->
+  <line x1="50" y1="516" x2="550" y2="516" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+
+  <!-- Footer status -->
+  <circle cx="64" cy="536" r="4" fill="#00ff9d" class="pulse"/>
+  <text x="76" y="540" class="mono" fill="#00ff9d">ONLINE</text>
+  <text x="144" y="540" class="mono" fill="#8b949e">&#x00B7;  Agents actifs  &#x00B7;  Logs append-only  &#x00B7;  DoD enforced</text>
+
+  <!-- Corner tag -->
+  <g class="corner-blink">
+    <rect x="468" y="524" width="80" height="20" rx="5" fill="#0b0f14" stroke="#ff7a18" stroke-opacity="0.4" stroke-width="1"/>
+    <text x="508" y="538" class="mono" fill="#ffb000" text-anchor="middle">v2 &#x00B7; 2025</text>
+  </g>
+
+  <!-- Bottom border accent -->
+  <rect x="50" y="570" width="500" height="3" rx="1.5" fill="url(#orange)" class="pulse" opacity="0.6"/>
 </svg>
-
 </div>
-
----
-
-## 🎥 Vidéos
-
-<div align="center">
-
-| Fichier | Description |
-|---------|-------------|
-| [Trailer_01.mp4](assets/readme/videos/Trailer_01.mp4) | Trailer LinuxIA #1 |
-| [Trailer_02.mp4](assets/readme/videos/Trailer_02.mp4) | Trailer LinuxIA #2 |
-
-</div>
-
----
-
-## 🔊 Audio
-
-<div align="center">
-
-| Fichier | Description |
-|---------|-------------|
-| [Theme_01.mp3](assets/readme/audio/Theme_01.mp3) | Thème principal LinuxIA |
-
-</div>
-
----
-
-## 🧪 Quick Facts
-- Proxmox VE (Type-1) : **KVM + LXC** sur un orchestrateur central
-- Templates : **déploiement en secondes**
-- Artefacts multi-niveaux : **RAM → NVMe → SATA**
-- Protection mémoire : **zRAM prioritaire + quotas + isolation**
-- Extensible : **workers externes** (cluster ou orchestration SSH/API)
-- Philosophie : **Proof-First** (logs + checks + DoD)
-
----
-
-## 📁 Convention d'assets (repo)
-
-\`\`\`
-assets/
-  readme/
-    gallery/     LinuxIA_02.jpg … LinuxIA_12.jpg
-    videos/      Trailer_01.mp4, Trailer_02.mp4
-    audio/       Theme_01.mp3
-\`\`\`
-
----
-
-## 🔗 Docs
-
-- [Start here](docs/start-here.md) — prerequisites, quickstart
-- [Architecture](docs/architecture.md) — Mermaid diagrams, VM topology
-- [Runbook](docs/runbook.md) — troubleshooting
-- [RISKS.md](RISKS.md) — risk matrix R1–R7
-- [SECURITY.md](SECURITY.md) — disclosure policy
