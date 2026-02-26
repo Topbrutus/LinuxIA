@@ -27,3 +27,10 @@ html {
   outline: 2px solid #059669;
   outline-offset: 2px;
 }
+
+/* ── Navigation marker (destination click) ───────────────────────── */
+@keyframes pulseMarker {
+  0%   { transform: translate(-50%, -50%) scale(0.9); opacity: 0.8; }
+  50%  { transform: translate(-50%, -50%) scale(1.2); opacity: 0.4; }
+  100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.8; }
+}

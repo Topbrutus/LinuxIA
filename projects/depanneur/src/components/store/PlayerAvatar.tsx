@@ -39,9 +39,10 @@ export default function PlayerAvatar({ onZoneReached }: PlayerAvatarProps) {
   const seed = hashSeed(name);
 
   /* ── DOM refs ──────────────────────────────────────────────────────── */
-  const containerRef = useRef<HTMLDivElement>(null);
-  const animRef      = useRef<HTMLDivElement>(null);
-  const shadowRef    = useRef<HTMLDivElement>(null);
+  const containerRef    = useRef<HTMLDivElement>(null);
+  const animRef         = useRef<HTMLDivElement>(null);
+  const shadowRef       = useRef<HTMLDivElement>(null);
+  const destinationRef  = useRef<HTMLDivElement>(null);
 
   /* ── State refs (aucun re-render) ────────────────────────────────── */
   const posRef          = useRef({ x: DEFAULT_ANCHOR.ax, y: DEFAULT_ANCHOR.ay });
@@ -55,10 +56,10 @@ export default function PlayerAvatar({ onZoneReached }: PlayerAvatarProps) {
   const onZoneReachedRef = useRef(onZoneReached);
   useEffect(() => { onZoneReachedRef.current = onZoneReached; }, [onZoneReached]);
 
-  /* ── Sync cible depuis le store ───────────────────────────────────
-     Deux types de changements :
+  /* ── Sync cible + marqueur destination depuis le store ───────────
      1. currentPath change → pointer sur le premier waypoint
-     2. targetX/Y change sans path → destination directe
+     2. lastClickTarget change → repositionner le marqueur au sol
+     3. targetX/Y change sans path → destination directe
   */
   useEffect(() =>
     usePlayerStore.subscribe((state, prev) => {
@@ -73,6 +74,17 @@ export default function PlayerAvatar({ onZoneReached }: PlayerAvatarProps) {
       ) {
         if (state.currentPath.length === 0) {
           targetRef.current = { x: state.targetX, y: state.targetY };
+        }
+      }
+
+      /* Marqueur destination — repositionner + afficher/masquer */
+      if (state.lastClickTarget !== prev.lastClickTarget && destinationRef.current) {
+        if (state.lastClickTarget) {
+          destinationRef.current.style.left    = `${state.lastClickTarget.x}%`;
+          destinationRef.current.style.top     = `${state.lastClickTarget.y}%`;
+          destinationRef.current.style.opacity = "1";
+        } else {
+          destinationRef.current.style.opacity = "0";
         }
       }
     }),
@@ -184,17 +196,43 @@ export default function PlayerAvatar({ onZoneReached }: PlayerAvatarProps) {
   }, [seed]);
 
   return (
-    <div
-      ref={containerRef}
-      className="pointer-events-none absolute z-40"
-      style={{
-        left:      `${DEFAULT_ANCHOR.ax}%`,
-        top:       `${DEFAULT_ANCHOR.ay}%`,
-        transform: "translateX(-50%) translateY(-100%)",
-      }}
-      aria-label={`Personnage : ${name}`}
-      role="img"
-    >
+    <>
+      {/* ── Marqueur destination (cercle pulsant au sol) ──────────────
+          Positionné dans le même conteneur parent (la carte absolute).
+          La position left/top est mise à jour via destinationRef dans subscribe.
+      */}
+      <div
+        ref={destinationRef}
+        aria-hidden="true"
+        style={{
+          position:         "absolute",
+          width:            "32px",
+          height:           "32px",
+          border:           "2px solid rgba(255,255,255,0.8)",
+          borderRadius:     "9999px",
+          transform:        "translate(-50%,-50%)",
+          opacity:          0,
+          transition:       "opacity 0.3s ease",
+          pointerEvents:    "none",
+          zIndex:           39,
+          animation:        "pulseMarker 1.4s ease-in-out infinite",
+          left:             `${DEFAULT_ANCHOR.ax}%`,
+          top:              `${DEFAULT_ANCHOR.ay}%`,
+        }}
+      />
+
+      {/* ── Sprite personnage ─────────────────────────────────────── */}
+      <div
+        ref={containerRef}
+        className="pointer-events-none absolute z-40"
+        style={{
+          left:      `${DEFAULT_ANCHOR.ax}%`,
+          top:       `${DEFAULT_ANCHOR.ay}%`,
+          transform: "translateX(-50%) translateY(-100%)",
+        }}
+        aria-label={`Personnage : ${name}`}
+        role="img"
+      >
       <div
         ref={animRef}
         className="flex flex-col items-center gap-0.5"
@@ -229,5 +267,6 @@ export default function PlayerAvatar({ onZoneReached }: PlayerAvatarProps) {
         />
       </div>
     </div>
+    </>
   );
 }
