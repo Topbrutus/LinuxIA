@@ -1,0 +1,68 @@
+<svg width="980" height="140" viewBox="0 0 980 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LinuxIA signals and orchestration trace">
+  <defs>
+    <linearGradient id="mx" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#00ff9d" stop-opacity="0.0"/>
+      <stop offset="0.25" stop-color="#00ff9d" stop-opacity="0.55"/>
+      <stop offset="0.65" stop-color="#ff7a18" stop-opacity="0.60"/>
+      <stop offset="1" stop-color="#ff7a18" stop-opacity="0.0"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="980" height="140" rx="18" fill="#0b0f14"/>
+
+  <!-- static wire path -->
+  <path fill="none" stroke="#ffffff" stroke-opacity=".10" stroke-width="1"
+        d="M60 70 C210 20, 320 20, 420 70 C520 120, 620 120, 740 70 C860 20, 910 40, 940 70"/>
+
+  <!-- animated flow path (dash travelling along wire) -->
+  <path fill="none" stroke="url(#mx)" stroke-width="2" stroke-linecap="round"
+        stroke-dasharray="40 940"
+        d="M60 70 C210 20, 320 20, 420 70 C520 120, 620 120, 740 70 C860 20, 910 40, 940 70">
+    <animate attributeName="stroke-dashoffset" from="980" to="0"
+             dur="3.4s" calcMode="linear" repeatCount="indefinite"/>
+  </path>
+
+  <!-- pulsing dots at each layer node -->
+  <circle cx="60" cy="70" r="4" fill="#ff7a18" opacity=".9">
+    <animate attributeName="opacity" values=".55;1;.55" dur="1.6s" repeatCount="indefinite"/>
+    <animate attributeName="r" values="4;4.8;4" dur="1.6s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle cx="420" cy="70" r="4" fill="#ff7a18" opacity=".9">
+    <animate attributeName="opacity" values=".55;1;.55" dur="1.6s" begin="0.25s" repeatCount="indefinite"/>
+    <animate attributeName="r" values="4;4.8;4" dur="1.6s" begin="0.25s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle cx="740" cy="70" r="4" fill="#ff7a18" opacity=".9">
+    <animate attributeName="opacity" values=".55;1;.55" dur="1.6s" begin="0.5s" repeatCount="indefinite"/>
+    <animate attributeName="r" values="4;4.8;4" dur="1.6s" begin="0.5s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle cx="940" cy="70" r="4" fill="#ff7a18" opacity=".9">
+    <animate attributeName="opacity" values=".55;1;.55" dur="1.6s" begin="0.75s" repeatCount="indefinite"/>
+    <animate attributeName="r" values="4;4.8;4" dur="1.6s" begin="0.75s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- layer labels -->
+  <text font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
+        font-size="12" font-weight="600" fill="#c9d1d9" opacity=".85">
+    <tspan x="44" y="28">L0: Proxmox</tspan>
+  </text>
+  <text font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
+        font-size="12" font-weight="600" fill="#c9d1d9" opacity=".85">
+    <tspan x="392" y="28">L1: VM100 Usine</tspan>
+  </text>
+  <text font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
+        font-size="12" font-weight="600" fill="#c9d1d9" opacity=".85">
+    <tspan x="700" y="28">L2: Outils</tspan>
+  </text>
+  <text font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
+        font-size="12" font-weight="600" fill="#c9d1d9" opacity=".85">
+    <tspan x="898" y="28">L3: Workers</tspan>
+  </text>
+
+  <text font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
+        font-size="12" font-weight="600" fill="#c9d1d9" opacity=".75">
+    <tspan x="44" y="120">RAM tmpfs &#x2192; NVMe &#x2192; SATA &#x2022; zRAM &#x2022; Templates &#x2022; Agents &#x2022; Logs</tspan>
+  </text>
+</svg>
