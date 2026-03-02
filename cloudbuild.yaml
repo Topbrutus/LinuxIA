@@ -1,0 +1,31 @@
+steps:
+  # Build & Push (Buildpacks) — no custom substitutions
+  - name: gcr.io/k8s-skaffold/pack
+    entrypoint: bash
+    args:
+      - -lc
+      - |
+        set -euo pipefail
+        REGION="northamerica-northeast1"
+        REPO="cloud-run-source-deploy"
+        SERVICE="marche-backend"
+        IMAGE="${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPO}/${SERVICE}:${SHORT_SHA}"
+        echo "Building: ${IMAGE}"
+        pack build "${IMAGE}" --builder gcr.io/buildpacks/builder:v1 --publish
+
+  # Deploy Cloud Run
+  - name: gcr.io/cloud-builders/gcloud
+    args:
+      - run
+      - deploy
+      - marche-backend
+      - --image=northamerica-northeast1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/marche-backend:$SHORT_SHA
+      - --region=northamerica-northeast1
+      - --platform=managed
+      - --allow-unauthenticated
+
+images:
+  - northamerica-northeast1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/marche-backend:$SHORT_SHA
+
+options:
+  logging: CLOUD_LOGGING_ONLY

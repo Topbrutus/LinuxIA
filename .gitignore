@@ -10,6 +10,10 @@ data/
 logs/
 workspace/
 
+# Exceptions : sources de code dans les projets
+!projects/**/src/data/
+!projects/**/src/data/**
+
 # Node / build artifacts (showcase React app)
 assets/readme/showcase/**/node_modules/
 assets/readme/showcase/**/dist/
