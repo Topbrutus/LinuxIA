@@ -45,3 +45,7 @@ syntax: ## Fast syntax-only check (bash -n)
 .PHONY: release
 release: ## Build a release package: tarball + SHA256 checksums (Phase 12)
 	@bash $(SCRIPTS_DIR)/linuxia-release.sh
+
+.PHONY: repair
+repair: ## Réparer tous les fichiers manquants en une seule passe (nécessite sudo)
+	@sudo bash $(SCRIPTS_DIR)/linuxia-repair.sh

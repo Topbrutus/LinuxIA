@@ -131,6 +131,26 @@ LinuxIA is designed as:
 
 ---
 
+# 6. Palier 1-2 Operational Risks (Audit + LLM Local)
+
+The following risks apply specifically to Palier 1-2 operations (VM100 factory bootstrap,
+storage audit, Docker / local LLM deployment). They complement the generic risks above.
+
+| # | Icon | Risk | Impact | Likelihood | Mitigation |
+|---|------|------|--------|------------|-----------|
+| R8  | ⛔ | SSH access KO | Total blocker (no automation) | Low–Medium | Validate SSH at session start; full rollback if KO |
+| R9  | 🚩 | Clock / timezone inconsistency | Logs unverifiable, proof contested | Low | Sync NTP before session; verify `timedatectl` |
+| R10 | 🚩 | Disk space exhausted | Install / evidence impossible | Medium | Check `df -h` before install; require ≥ 5 GB free |
+| R11 | 🚩 | Ports / DNS / firewall misconfigured | Blocks install or LLM usage | Medium | Document every firewall rule; test DNS before install |
+| R12 | 🌀 | External disk mount error | Data corruption risk | Low | Document exact mount points; forbid simultaneous double-attach |
+| R13 | 🚨 | Docker or LLM install failure | Palier blocked | Low–Medium | Versioned scripts + `rollback.txt`; local Docker image backup |
+| R14 | ⚡ | Non-persistent logs | Proof loss, non-compliance | Medium | Store in `logs/session.jsonl` on local or mounted external filesystem |
+| R15 | 🔒 | Active root password or SSH password auth | Security exposure | Medium | Progressive disabling; validate via SSH log; public-key mandatory |
+
+**STOP_RULE**: any ⛔ anomaly, or two consecutive 🚩 anomalies, halts the session immediately → return to last stable checkpoint.
+
+---
+
 # Future Hardening (Palier 3+)
 
 | Item | Benefit |

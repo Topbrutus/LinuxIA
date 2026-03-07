@@ -4,6 +4,7 @@
 # To make this agent available, merge this file into the default repository branch.
 # For format details, see: https://gh.io/customagents/config
 Y a-t-il moyen de réparer tous les fichiers manquants d'un seul coup? Parce que là, ça fait maintenant quatre heures que j'essaie d'effacer, puis plus j'efface, plus il y a des erreurs.
+
 name:
 description:
 ---
