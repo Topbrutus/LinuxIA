@@ -27,6 +27,10 @@ import {
 import { CoreFeatures } from './components/CoreFeatures';
 
 // --- Constants & Theme ---
+const CLS_NAV_WEBSITE_BTN =
+  'hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-proxmox/40' +
+  ' text-xs font-mono uppercase tracking-widest text-proxmox hover:bg-proxmox hover:text-black transition-all duration-300';
+
 const COLORS = {
   proxmox: '#ff6a00',
   matrix: '#00ff7b',
@@ -187,6 +191,14 @@ const App: React.FC = () => {
                 <span className="text-xs font-mono text-matrix uppercase">Operational</span>
               </div>
             </div>
+            <a
+              href="https://topbrutus.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={CLS_NAV_WEBSITE_BTN}
+            >
+              Topbrutus.com
+            </a>
           </div>
         </div>
       </header>
@@ -320,8 +332,9 @@ const App: React.FC = () => {
           
           <div className="flex gap-8">
             <a href="#" className="text-xs font-mono uppercase tracking-widest text-white/40 hover:text-matrix transition-colors">Documentation</a>
-            <a href="#" className="text-xs font-mono uppercase tracking-widest text-white/40 hover:text-matrix transition-colors">GitHub</a>
+            <a href="https://github.com/Topbrutus/LinuxIA" target="_blank" rel="noopener noreferrer" className="text-xs font-mono uppercase tracking-widest text-white/40 hover:text-matrix transition-colors">GitHub</a>
             <a href="#" className="text-xs font-mono uppercase tracking-widest text-white/40 hover:text-matrix transition-colors">Security</a>
+            <a href="https://topbrutus.com" target="_blank" rel="noopener noreferrer" className="text-xs font-mono uppercase tracking-widest text-white/40 hover:text-proxmox transition-colors">Topbrutus.com</a>
           </div>
 
           <div className="flex items-center gap-6">
