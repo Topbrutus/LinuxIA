@@ -1,0 +1,76 @@
+<svg width="980" height="220" viewBox="0 0 980 220" role="img" aria-label="LinuxIA — Proof-First Agent Orchestration Framework" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#00ff9d" stop-opacity="0.18"/>
+      <stop offset="0.45" stop-color="#ff7a18" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#7c3aed" stop-opacity="0.16"/>
+    </linearGradient>
+
+    <linearGradient id="o" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ff7a18"/>
+      <stop offset="1" stop-color="#ffb000"/>
+    </linearGradient>
+
+    <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="8" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M24 0H0V24" fill="none" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+
+    <style>
+      .t { font: 800 44px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial; letter-spacing: 1px; }
+      .s { font: 500 14px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial; letter-spacing: .4px; }
+      .m { font: 600 12px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; letter-spacing: .2px; }
+      .scan { animation: scan 5.2s linear infinite; }
+      .orb  { animation: drift 6.5s ease-in-out infinite; }
+      .dash { stroke-dasharray: 6 10; animation: dash 7s linear infinite; }
+      .pulse{ animation: pulse 3.2s ease-in-out infinite; transform-origin: 50% 50%; }
+      @keyframes scan { 0%{transform:translateX(-180px)} 100%{transform:translateX(1160px)} }
+      @keyframes dash { to { stroke-dashoffset: -120; } }
+      @keyframes drift{ 0%,100%{transform:translate(0,0)} 50%{transform:translate(10px,-6px)} }
+      @keyframes pulse{ 0%,100%{opacity:.72} 50%{opacity:1} }
+    </style>
+  </defs>
+
+  <!-- background -->
+  <rect x="0" y="0" width="980" height="220" rx="22" fill="#0b0f14"/>
+  <rect x="0" y="0" width="980" height="220" rx="22" fill="url(#g)"/>
+  <rect x="0" y="0" width="980" height="220" rx="22" fill="url(#grid)"/>
+
+  <!-- fine orbit lines -->
+  <g opacity="0.85">
+    <ellipse cx="720" cy="108" rx="210" ry="74" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
+    <ellipse cx="720" cy="108" rx="160" ry="56" fill="none" stroke="#ffffff" stroke-opacity="0.07" stroke-width="1"/>
+    <path d="M565 108 C610 50, 830 40, 880 108 C832 175, 610 168, 565 108 Z" fill="none" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1" class="dash"/>
+  </g>
+
+  <!-- drifting orb -->
+  <g class="orb" filter="url(#softGlow)">
+    <circle cx="820" cy="74" r="7" fill="url(#o)" opacity="0.95"/>
+    <circle cx="820" cy="74" r="18" fill="none" stroke="#ff7a18" stroke-opacity="0.25" stroke-width="1"/>
+  </g>
+
+  <!-- scanning line -->
+  <g class="scan">
+    <rect x="0" y="30" width="140" height="160" rx="14" fill="#ffffff" opacity="0.05"/>
+    <rect x="6" y="36" width="128" height="148" rx="12" fill="#ff7a18" opacity="0.06"/>
+  </g>
+
+  <!-- title -->
+  <text x="54" y="92" class="t" fill="#ffffff">LINUXIA</text>
+  <rect x="54" y="104" width="280" height="6" rx="3" fill="url(#o)" class="pulse" opacity="0.95"/>
+  <text x="54" y="136" class="s" fill="#d8dee9" opacity="0.95">Proof-First Agent Orchestration Framework • Proxmox Multi-Layer • Low-Latency Artifact Registry</text>
+  <text x="54" y="166" class="m" fill="#8b949e">Couches: 0 Hôte Proxmox → 1 VM100 Usine → 2 Outils duplicables → 3 Workers externes</text>
+
+  <!-- corner tag -->
+  <g transform="translate(772,154)">
+    <rect width="178" height="44" rx="14" fill="#0b0f14" opacity="0.86" stroke="#ffffff" stroke-opacity="0.08"/>
+    <text x="16" y="28" class="m" fill="#ffb000">NASA-style • ORANGE • MATRIX</text>
+  </g>
+</svg>
