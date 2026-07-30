@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 200" fill="none">
+  <!-- Tête -->
+  <ellipse cx="50" cy="36" rx="22" ry="24" fill="#1a1a1a"/>
+  <!-- Corps -->
+  <path d="M18 100 Q18 72 50 68 Q82 72 82 100 L86 160 Q86 168 78 168 L70 168 L66 128 Q63 120 50 120 Q37 120 34 128 L30 168 L22 168 Q14 168 14 160 Z" fill="#1a1a1a"/>
+</svg>
