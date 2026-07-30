@@ -166,7 +166,7 @@ Chaque étape doit être:
 
 ---
 
-## �� Animated "Matrix Trace" (SVG micro-animation)
+## ✨ Animated "Matrix Trace" (SVG micro-animation)
 
 <div align="center">
 
