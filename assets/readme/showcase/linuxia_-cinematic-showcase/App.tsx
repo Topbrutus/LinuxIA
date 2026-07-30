@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 
 import { CoreFeatures } from './components/CoreFeatures';
+import { AgentRoster } from './components/AgentRoster';
 
 // --- Constants & Theme ---
 const COLORS = {
@@ -275,6 +276,9 @@ const App: React.FC = () => {
 
         {/* --- Core Features Section --- */}
         <CoreFeatures />
+
+        {/* --- Agent Roster with AI-generated avatars --- */}
+        <AgentRoster />
 
         {/* --- Gallery Section --- */}
         <section className="mt-40">
