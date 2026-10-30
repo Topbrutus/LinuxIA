@@ -223,7 +223,7 @@ function check_mounts() {
 
 function check_samba_status() {
   run_cmd "Samba services" systemctl --no-pager status smb nmb
-  run_cmd "Samba listening ports" bash -c 'ss -lntup | grep -E ":(139|445)\\b" || true'
+  run_cmd "Samba listening ports" bash -c 'ss -lntup | grep -E ":(139|445)\b" || true'
   run_cmd "Samba config (testparm)" testparm -s /etc/samba/smb.conf
   run_cmd "Samba shares status" smbstatus
 }
