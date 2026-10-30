@@ -41,3 +41,7 @@ apps/
 mailbox/
 vscode-extension/
 wow/
+
+# Local dev TypeScript modules (not yet part of repo structure)
+src/data/storeNav.ts
+src/lib/pathfinding.ts
