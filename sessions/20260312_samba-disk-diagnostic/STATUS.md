@@ -18,4 +18,4 @@ Date début: 2026-03-12 00:55 UTC
 | T6 | Recommandations | ⏸️ PENDING | - |
 
 ## Logs
-- logs/session.jsonl (append-only)
+- `logs/session.jsonl` absent de cette PR; aucun événement de session n’a été journalisé.
