@@ -16,11 +16,9 @@ declare -r VerifDir="${DocsDir}/verifications"
 declare -r SessionDir="${BaseDir}/sessions/20260312_samba-disk-diagnostic"
 declare -r EvidenceDir="${SessionDir}/evidence"
 
-declare ScriptName TimeStampUtc TimeStampLocal
-ScriptName="$(basename "${BASH_SOURCE[0]}")"
-TimeStampUtc="$(date -u +%Y%m%dT%H%M%SZ)"
-TimeStampLocal="$(date -Is)"
-declare -r ScriptName TimeStampUtc TimeStampLocal
+declare -r ScriptName="$(basename "${BASH_SOURCE[0]}")"
+declare -r TimeStampUtc="$(date -u +%Y%m%dT%H%M%SZ)"
+declare -r TimeStampLocal="$(date -Is)"
 
 declare ExpectedHost="vm100-factory"
 declare ExpectedPrefix="vm100"
@@ -214,7 +212,7 @@ function check_mounts() {
   )
 
   for mount in "${ExpectedMounts[@]}"; do
-    if findmnt -T "${mount}" >/dev/null 2>&1; then
+    if findmnt -M "${mount}" >/dev/null 2>&1; then
       printf '%s\n' "✅ ${mount}: MOUNTED"
     else
       printf '%s\n' "❌ ${mount}: NOT MOUNTED"
@@ -225,7 +223,7 @@ function check_mounts() {
 
 function check_samba_status() {
   run_cmd "Samba services" systemctl --no-pager status smb nmb
-  run_cmd "Samba listening ports" ss -lntup | grep -E ':(139|445)\b' || true
+  run_cmd "Samba listening ports" bash -c 'ss -lntup | grep -E ":(139|445)\\b" || true'
   run_cmd "Samba config (testparm)" testparm -s /etc/samba/smb.conf
   run_cmd "Samba shares status" smbstatus
 }
@@ -329,7 +327,7 @@ function git_best_effort() {
   export GIT_TERMINAL_PROMPT=0
   export GIT_ASKPASS=/bin/false
 
-  git -C "${BaseDir}" add "${EvidencePath}" "${SessionDir}/"*.md 2>/dev/null || true
+  git -C "${BaseDir}" add "${EvidencePath}" "${EvidenceDir}/diagnostic_${TimeStampUtc}.txt" "${SessionDir}/"*.md 2>/dev/null || true
   git -C "${BaseDir}" commit -m "diagnostic: Samba disk issue ${TimeStampUtc}" >/dev/null 2>&1 || add_warning "No commit created"
   git -C "${BaseDir}" push >/dev/null 2>&1 || add_warning "git push failed"
 
@@ -361,7 +359,7 @@ function main() {
     disk_smart_check
     summary
     yaml_output
-  } | tee "${EvidencePath}"
+  } > >(tee "${EvidencePath}")
 
   # Copy to session evidence
   cp "${EvidencePath}" "${EvidenceDir}/diagnostic_${TimeStampUtc}.txt"
