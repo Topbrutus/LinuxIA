@@ -359,7 +359,8 @@ function main() {
     disk_smart_check
     summary
     yaml_output
-  } > >(tee "${EvidencePath}")
+  } > "${EvidencePath}"
+  cat "${EvidencePath}"
 
   # Copy to session evidence
   cp "${EvidencePath}" "${EvidenceDir}/diagnostic_${TimeStampUtc}.txt"
