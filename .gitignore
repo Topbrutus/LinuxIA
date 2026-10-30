@@ -10,6 +10,12 @@ data/
 logs/
 workspace/
 
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
 # Node / build artifacts (showcase React app)
 assets/readme/showcase/**/node_modules/
 assets/readme/showcase/**/dist/
