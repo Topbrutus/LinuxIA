@@ -4,10 +4,10 @@ Je veux utiliser **Qwen 0.6B**, le plus petit modèle, uniquement comme premièr
 
 Son rôle serait très limité :
 
-- recevoir la première phrase de l’utilisateur;
-- répondre brièvement au besoin;
-- transmettre directement la demande au **System Job**;
-- le System Job envoie ensuite la demande à **Hermès**, qui fait le vrai travail de réflexion.
+- recevoir le message complet de l’utilisateur, avec toutes ses phrases et les contraintes/contexte transmis;
+- répondre brièvement au besoin sans remplacer ni résumer le contenu source;
+- transmettre au **System Job** le message original complet, sans perte de contraintes ni de contexte;
+- le System Job transmet ensuite ce contenu complet à **Hermès**, qui fait le vrai travail de réflexion.
 
 Qwen ne doit donc pas être le cerveau principal. Il sert surtout d’accueil léger et de relais.
 
